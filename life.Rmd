@@ -53,12 +53,12 @@ The dataset used in this project is a public dataset available on Kaggle website
 
 ## Data Import
 
-The data has been imported. Following is the raw data:
+Following show 10 randomly selected rows from the dataset:
 
 ```{r}
 life <- read.csv("Life Expectancy Data.csv")
   
-life
+sample_n(life, 10)
 
 ```
 
