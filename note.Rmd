@@ -1,0 +1,166 @@
+---
+title: "manova"
+author: "Kar"
+date: '2022-06-27'
+output: html_document
+---
+
+
+# ONE WAY MANOVA
+
+```{r}
+library(tibble)
+library(car)
+
+
+```
+
+```{r}
+data("Baumann")
+
+study <- Baumann %>% 
+  dplyr::select(group, post.test.1, post.test.2, post.test.3)
+
+```
+
+*Assumption tests*
+
+The first step is always test the assumption. 
+
+1. Independent Observations Assumption
+
+Look at variable 4, 5 and 6, they are post test results. 
+
+```{r}
+library(psych)
+
+ICC(study[, 2:4])
+
+```
+
+From the Intraclass correlation coefficients, we only need to look at the first one "Single_raters_absolute", the type 1 ICC, the associated ICC is -0.456, it shows a **medium degree of correlation**. It is not too correlated that to the negative side (doesn't matter is positive or negative). 
+
+So this assumption for the independent observations passess the test. 
+
+
+*2. Normality test with mshapiro.test*
+
+Normality test on individual continuous variables ONLY. 
+
+```{r}
+
+library(mvnormtest)
+
+mshapiro.test(t(study[, -1]))
+
+```
+
+Ho is normality distributed, and so we cannot reject the null hypothesis and conclude that data are normally distributed. 
+
+
+*3. Equal variance-covariance matrics assumption*
+
+
+```{r}
+library(biotools)
+
+boxM(data = study[, -1], grouping = study[, 1])
+  
+```
+
+We cannot reject the Ho that the levels in the grouping variable has the same variance-covariance matrics. 
+
+*4. Determinant of the variance-covariance matrix.* 
+
+```{r}
+det(cov(study[, -1]))
+
+```
+Positive and pass the assumption. 
+
+
+**One way MANOVA**
+
+```{r}
+oneway.manova <- manova(cbind(post.test.1, post.test.2, post.test.3) ~ group, data = study)
+  
+summary(oneway.manova, test = "Wilks")
+summary(oneway.manova, test = "Pillai")
+summary(oneway.manova, test = "Hotelling-Lawley")
+summary(oneway.manova, test = "Roy")
+
+
+```
+
+All four test statistics have p-value of less than 0.05, we can reject the null hypothesis and conclude that the joint mean of 3 tests (post test 1, post test 2, and post test 3) among the 3 teaching techniques ARE the same. 
+
+
+# Factorial MANOVA
+
+3 Ho:
+
+HO,1 : The joint mean of 3 variables (pH, Density and Conductivity) ARE NOT significantly different among the categories of the variable *Contours.*
+
+HO,2 : The joint mean of 3 variables (pH, Density and Conductivity) ARE NOT significantly different among the categories of the variable *Depths*
+
+HO,3 : The joint mean of the 3 variables (pH, Density, and Conductivity) ARE NOT statistically different for combinations of the Contour x Depths *interaction*
+
+```{r}
+library(car)
+data(Soils)
+
+Soils
+
+```
+
+
+```{r}
+summary(Soils)
+
+```
+
+
+We will use pH, Dens, and Conductivity. 
+
+```{r}
+soils.lm <- lm(cbind(pH, Dens, Conduc) ~ Contour + Depth + Contour*Depth -1, 
+               data = Soils)   # -1 remove intercept
+  
+summary(soils.lm)
+
+```
+
+* For all of the contour levels, p-values are lower than 0.05, so the contour variables is significantly affects the 3 variables (pH, Dens, Conduc). For the 3 variables, their means are different among the levels of contour.
+
+* Also, the mean of the 3 outcome variables are different among the 3 levels of soil depth. 
+
+* Interactions is considered not significant in influnencing the values of the 3 outcome variables.
+
+Therefore, among 3 types of sum of squares:
+
+* Type I SS --> For balanced data
+* Type II SS --> Most powerful when there is no significant interactions terms
+* Type III SS --> for when there is a significant interaction term
+
+I can just use the type II SS in order to test the null hypothesis.
+
+
+
+
+```{r}
+Manova(soils.lm, multivariate = T, type = "II", test = "Wilks")
+Manova(soils.lm, multivariate = T, type = "II", test = "Pillai")
+Manova(soils.lm, multivariate = T, type = "II", test = "Hotelling-Lawley")
+Manova(soils.lm, multivariate = T, type = "II", test = "Roy")
+```
+
+All interaction terms are insignificant. 
+
+Conclusion:
+
+* The joint mean of 3 variables (pH, Density, and Conductivity) are significantly different among the categories of the variables "Contour" and "Depths", p-values < 0.05.
+
+* The joint mean of 3  variables (pH, Density, and Conductivity) are Not significantly different for combinations of the Contours*Depth interaction. 
+
+
+ 

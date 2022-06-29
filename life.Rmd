@@ -1,0 +1,785 @@
+---
+title: "Life Expectancy Statistical Analysis (WHO)"
+author: "Kar"
+date: '2022-06-23'
+output: 
+  github_document: 
+    toc: yes
+    toc_depth: 4
+    df_print: paged
+  html_document:
+    toc: yes
+    toc_depth: '4'
+    number_section: true
+    df_print: paged
+always_allow_html: yes
+  
+---
+
+
+# R PACKAGES
+
+```{r, message=FALSE, warning=FALSE}
+# Environment setting (to remove scientific notation)
+
+options(scipen = 999)  
+
+# Packages loaded
+
+library(tidyverse)
+library(kableExtra)
+library(skimr)
+library(caret)
+library(tableone)
+library(factoextra)
+library(FactoMineR)
+library(car)
+library(mvnormtest)
+library(biotools)
+library(corrplot)
+library(cowplot)
+library(hrbrthemes)
+
+```
+
+
+
+# INTRODUCTION
+
+
+# DATA PREPARATION
+
+The dataset used in this project is a public dataset available on Kaggle website. Kaggle website is a well-known website for data analyst and data scientist for sharing data, codes, resources, and ideas. The dataset is accessible via this [Link](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who). 
+
+## Data Import
+
+The data has been imported. Following is the raw data:
+
+```{r}
+life <- read.csv("Life Expectancy Data.csv")
+  
+life
+
+```
+
+
+## Data Description
+
+```{r}
+
+No. <- c(1:22)
+
+Variable <- c("Country", 
+              "Year",
+              "Status",
+              "Life expectancy",
+              "Adult Mortality",
+              "infant deaths",
+              "Alcohol",
+              "percentage expenditure",
+              "Hepatitis B",
+              "Measles",
+              "BMI",
+              "under-five deaths",
+              "Polio",
+              "Total expenditure",
+              "Diphtheria",
+              "HIV/AIDS",
+              "GDP",
+              "Population",
+              "thinness 1-19 years",
+              "thinness 5-9 years",
+              "Income composition of resources",
+              "Schooling")
+
+Description <- c("Country", 
+                 "Year",
+                 "Developed or Developing status",
+                 "Life Expectancy in age",
+                 "Adult Mortality Rates of both sexes (probability of dying between 15 and 60 years per 1000 population)",
+                 "Number of Infant Deaths per 1000 population",
+                 "Alcohol, recorded per capita (15+) consumption (in litres of pure alcohol)",
+                 "Expenditure on health as a percentage of Gross Domestic Product per capita(%)",
+                 "Hepatitis B (HepB) immunization coverage among 1-year-olds (%)",
+                 "Measles - number of reported cases per 1000 population",
+                 "Average Body Mass Index of entire population",
+                 "Number of under-five deaths per 1000 population",
+                 "Polio (Pol3) immunization coverage among 1-year-olds (%)",
+                 "General government expenditure on health as a percentage of total government expenditure (%)",
+                 "Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds (%)",
+                 "Deaths per 1 000 live births HIV/AIDS (0-4 years)",
+                 "Gross Domestic Product per capita (in USD)",
+                 "Population of the country",
+                 "Prevalence of thinness among children and adolescents for Age 10 to 19 (%)",
+                 "Prevalence of thinness among children for Age 5 to 9(%)",
+                 "Human Development Index in terms of income composition of resources (index ranging from 0 to 1)",
+                 "Number of years of Schooling(years)"
+                 )
+
+data.frame(No., Variable, Description) %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered", "stripped", "hover"), 
+                full_width = T)
+
+```
+
+
+## Data Exploration
+
+### Data type and structure
+
+There are 2938 rows of data and 22 columns of variables. 
+
+```{r}
+glimpse(life)
+
+```
+
+### Vertical NA Check (Column)
+
+There are 2 character variables "Country" and "Status", and the rest of the variables are numerical. 
+
+```{r}
+skim_without_charts(life)
+
+```
+
+From the variables "n_missing" and "complete_rate", they detected a lot of missing data in a lot of the variables. Mean and standard deviation are also provided.
+
+A good thing is that there is no variable having more than 40% missing data because I will follow a 60% rule that if a column has less than 0.6 completion rate (0.4 or 40% missing data) I will consider dropping the variable.
+
+Alternatively, the missing data can be examined using following code:
+
+```{r}
+colSums(is.na(life))
+
+```
+
+### Horizontal NA Check (Row)
+
+Here performs horizontal missing value check. 
+
+```{r}
+life %>% 
+  mutate(row.id = c(1:nrow(life))) %>% 
+  relocate(row.id, .before = Country) %>% 
+  gather(key = "variables", value = "values", -row.id) %>% 
+  filter(is.na(values)) %>% 
+  group_by(row.id) %>% 
+  summarise(count = n()) %>% 
+  arrange(-count) %>% 
+  mutate(total.column = 22,
+         propor.NA.per.row = paste0(round(count/total.column*100,1), "%")) 
+
+
+```
+
+It is a common procedure that if a row (observation) contains too many missing values, it should be removed otherwise filling up its missing values by estimation would be too unrealistic and synthetic. It i
+
+There are 1289 rows out of the 2938 rows contain missing value. It will be less practical to remove all of these rows just to be able to ensure there is no missing data in the dataset. 
+
+I will adopt an imputation method using machine learning algorithm to fill up these missing values. The algorithm will make use entire dataset and predict what might the best possible values for these missing cells. 
+
+
+# DATA CLEANING
+
+## White Space Trimming and punctuation remove
+
+This section remove leading and/or trailing white spaces in character variables "Country" and "Status".
+
+```{r}
+life <- life %>% 
+  mutate(Country = str_replace_all(Country, "[[:punct:]]", " "),
+         Country = trimws(Country),
+         Status = trimws(Status))
+
+```
+
+
+## Rename Levels
+
+This section replaces spaces in some of the country names by underscore. For example "Antigua and Barbuda" to "Antigua_and_Barbuda". This is to avoid complication during imputation using machine learning technique. 
+
+```{r}
+life <- life %>% 
+  mutate(Country = str_replace_all(Country, " ", "_"))
+
+```
+
+## Factor conversion
+
+This section converts "Country", "Year", and "Status" into factor because of their categorical nature. 
+
+```{r}
+life <- life %>% 
+  mutate(Country = as.factor(Country),
+         Year = as.factor(Year),
+         Status = as.factor(Status))
+
+```
+
+From this point onward, the data object name will be changed from "life" to "life2", so to have "life" as a backup before further transformations.
+
+```{r}
+life2 <- life
+
+```
+
+
+## Bag imputation
+
+This section applies imputation model to fill up missing values in the dataset. There are many types of imputation methods including using mean, median and mode (most occurring values, generally applies to categorical data). However, machine learning models that make use of the entire dataset to predict the missing values is generally considered a better estimation technique, because it takes into account all information in the dataset when filling up these missing values. 
+
+However, one should note that it is still an estimation technique and is not 100% accurate representation of the truth. It is disputable that whether this technique is the best technique, it depends on a case-by-case basis and the goals of each analysis. For the simplistic of this project and the goal of this project is demonstration my data analysis skills instead of doing truth detail analysis for WHO, I will use the technique fill up missing value.
+
+Following codes complete the imputation of missing values using bagged-tree algorithm.
+
+*One hot encoding (Making dummies):*
+
+```{r}
+
+#dummy_function <- dummyVars(~., data = life2)
+#life_dummy <- dummy_function %>% predict(life2)
+```
+
+*Impute using bagged tree models*
+
+```{R}
+
+# bagimpute <- life_dummy %>% preProcess(method = "bagImpute")
+# life_dummy_imputed <- bagimpute %>% predict(life_dummy)
+# life_dummy_df <- as.tibble(life_dummy_imputed)
+
+```
+
+Replace the columns that has missing values in the original dataset "life2". 
+
+```{r}
+# Extract imputed columns into life2
+
+# life2$Life.expectancy <- life_dummy_df$Life.expectancy
+# life2$Adult.Mortality <- life_dummy_df$Adult.Mortality
+# life2$Alcohol <- life_dummy_df$Alcohol
+# life2$Hepatitis.B <- life_dummy_df$Hepatitis.B
+# life2$BMI <- life_dummy_df$BMI
+# life2$Polio <- life_dummy_df$Polio
+# life2$Total.expenditure <- life_dummy_df$Total.expenditure
+# life2$Diphtheria <- life_dummy_df$Diphtheria
+# life2$GDP <- life_dummy_df$GDP
+# life2$Population <- life_dummy_df$Population
+# life2$thinness..1.19.years <- life_dummy_df$thinness..1.19.years
+# life2$thinness.5.9.years <- life_dummy_df$thinness.5.9.years
+# life2$Income.composition.of.resources <- life_dummy_df$Income.composition.of.resources
+# life2$Schooling <- life_dummy_df$Schooling
+  
+```
+
+The above imputation has been completed and the completed dataset has been saveld. Following section imports the imputated dataset back to R with a manipuation to makesure it is perfect prior to analysis. 
+
+```{r}
+# write.csv(life2, "life2.csv")
+
+life.data <- read.csv("life2.csv", header = T, stringsAsFactors = T)
+
+life.data <- life.data %>% 
+  dplyr::select(-X) %>% 
+  mutate(Year = as.factor(Year))
+
+glimpse(life.data)
+
+```
+
+
+# EDA 
+
+## Histogram for Distribution
+
+Most of the variables have skewed distribution, except that life expectancy, schooling, total expenditure and income composition of resources look light having their data normally distributed. BMI has a clear bimodal distribution and which may implies due to the effect of country status (developed vs developing). 
+
+```{r, fig.width=14, fig.height=10, message=FALSE, warning=FALSE}
+# set up df
+
+life.data.num <- life.data %>% select_if(is.numeric)
+
+# plot
+
+life.data.num %>% 
+  gather(key = key, value = value) %>% 
+  mutate(key = as.factor(key)) %>% 
+  ggplot(aes(x = value, fill = key)) +
+  geom_histogram(colour = "black") +
+  facet_wrap(~key, scales = "free", ncol = 5) +
+  theme_classic() +
+  theme(legend.position = "none",
+        strip.background = element_rect(fill = "grey"),
+        strip.text = element_text(colour = "black", face = "bold", size = 8)) +
+  labs(x = "Values", y = "Count")
+
+
+```
+
+## Boxplot for Outliers
+
+From following boxplot, almost all numerical independent variables have outliers except BMI.
+
+```{r, fig.width=14, fig.height=10, message=FALSE, warning=FALSE}
+
+life.data.num %>% 
+  gather(key = key, value = value) %>% 
+  mutate(key = as.factor(key)) %>% 
+  ggplot(aes(x = value, fill = key)) +
+  geom_boxplot(colour = "black") +
+  facet_wrap(~key, scales = "free") +
+  theme_classic() +
+  theme(legend.position = "none",
+        strip.background = element_rect(fill = "grey"),
+        strip.text = element_text(colour = "black", face = "bold", size = 9),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+
+```
+Following shows the amount of outliers in each variable, in percentage. 
+
+```{r, fig.width=9, fig.height=9}
+
+variable.name <- colnames(life.data.num)
+
+outlier.percentage <- c(
+(length(boxplot.stats(life.data.num$Life.expectancy)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Adult.Mortality)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$infant.deaths)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Alcohol)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$percentage.expenditure)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Hepatitis.B)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Measles)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$BMI)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$under.five.deaths)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Polio)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Total.expenditure)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Diphtheria)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$HIV.AIDS)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$GDP)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Population)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$thinness..1.19.years)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$thinness.5.9.years)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Income.composition.of.resources)$out)/2938)*100,
+(length(boxplot.stats(life.data.num$Schooling)$out)/2938)*100
+)
+
+data.frame(variable.name, outlier.percentage) %>% 
+  mutate(variable.name = as.factor(variable.name),
+         outlier.percentage = round(outlier.percentage, 2)) %>% 
+  ggplot(aes(y = fct_reorder(variable.name, outlier.percentage), x = outlier.percentage)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  theme(plot.title = element_text(face = "bold")) +
+  labs(x = "Outlier Count (%)",
+       y = "Variables",
+       title = "Proportion of Outliers in Each Variable (By IQR Method)") +
+  geom_label(aes(label = paste0(outlier.percentage, "%"))) +
+  scale_x_continuous(limits = c(0, 20))
+
+```
+
+
+There are different outliers and are broadly categorised into (1) *false outliers* that caused by data input error or typo (which I assume won't be happening in this dataset) and (2) *true outliers* that the outlier data point is naturally just too different from other data points. 
+
+There are many ways to deal with outliers, one can simply rectify it if it is caused by human error, however if it is not, there are two main methods to use: (1) *Trimming*, remove the entire row in a table if the row contains an outlier and this will cause a reduction in sample size, (2) *Winsorisation*, capping the outliers by changing them to a pre-specified quantile value, such as the 95% quantile. and the 5% quantile. However, trimming and winsorisation are only feasible if we have less than 5% outliers otherwise the hypothesis testing outcome will be affected statistically and may not revealing desirable trends. 
+
+I will not the outliers and using the other rule of outlier definition in multiple linear regression model in later section, like leverage, influence, and cooks distance value. It is a slightly different procedure to define a outliers by assessing their influence on the model. 
+
+
+## MFA
+
+There are 19 numerical variables in the dataset and a correlation plot is usually used to find the relationship among these variables, however this will be used in the later statistical analysis section for multicollinearity assessment. 
+
+Instead, Multiple Factor Analysis (MFA) will be used in this section to find the relationships among these variables all at once. It is a type of unsupervised machine learning techniques to reduce the dimensions of the datasets into a few principal components for trend mining purposes. 
+
+One of the "specific effect" of MFA is that all variables (both categorical and numerical) can be grouped together and have their trends and inter-relationships monitored all at once.  
+
+Defining the themes of grouping and found that the variables in the dataset can be grouped into following 6 subcategories for MFA.  
+---
+
+**status** 
+Country
+Year
+Status
+
+**longevity**
+Life.expectancy
+Adult.Mortality
+infant.deaths
+under.five.deaths
+
+**health**
+Alcohol
+BMI
+
+**healthcare**
+percentage.expenditure
+Hepatitis.B
+Polio
+Total.expenditure
+Diphtheria
+
+**disease**
+Measles
+HIV.AIDS
+thinness..1.19.years
+thinness.5.9.years
+
+**economic**
+GDP
+Population
+Schooling
+Income.composition.of.resources
+
+---
+
+The "status" group will be identified as *supplementary group* in the analysis which means that the group will not be participating in the MFA but will be used to understand the data better as supplementary information. All other groups will be treated as *active group* and be part of the MFA computation. 
+
+```{r}
+
+# Data set rearrangement
+
+life.data.mfa <- life.data %>% 
+  dplyr::select(Country, Year, Status, Life.expectancy, Adult.Mortality, infant.deaths, under.five.deaths, Alcohol, BMI, percentage.expenditure, Hepatitis.B, Polio, Total.expenditure, Diphtheria, Measles, HIV.AIDS, thinness..1.19.years, thinness.5.9.years, GDP, Population, Schooling, Income.composition.of.resources)
+
+# mfa 
+
+res.mfa <- MFA(life.data.mfa,
+               group = c(3, 4, 2, 5, 4, 4),
+               type = c("n", "s", "s", "s", "s", "s"),
+               name.group = c("status", "longevity", "health", "healthcare", "disease", "economic"),
+               num.group.sup = c(1),
+               graph = F)  
+
+
+```
+
+
+Total variation in the datasets has been extracted and are being expressed in 10 principal components (Dimensions). The first two dimensions explain the most variation (34.6% and 13.5%), and the amount of variation explains in subsequent dimensions hit a drastic reduction after the second dimension (Knee Method of Scree plot), therefore I will use the first two dimensions for the factor map in followed up section. 
+
+```{r}
+fviz_screeplot(res.mfa, addlabels = T, ylim = c(0, 40))
+
+```
+
+Therefore, following plot is graphed using the first two principal components. Supplementary group "status" is colored with green and red for the active groups. 
+
+```{r, fig.height=9, fig.width=12}
+f1 <- fviz_mfa_var(res.mfa, choice = "group", repel = T)
+f2 <- fviz_contrib(res.mfa, choice = "group", axes = 1:2)
+f3 <- fviz_contrib(res.mfa, choice = "group", axes = 1)
+f4 <- fviz_contrib(res.mfa, choice = "group", axes = 2)
+  
+f234 <- plot_grid(f2, f3, f4, ncol = 3)
+
+plot_grid(f1, f234, ncol = 1)  
+  
+```
+
+Insights: 
+
+* In dimension 1 (34.6%), variables in all active groups except "healthcare" have almost identical coordinates, which means they contribute similarly to the first dimension. Healthcare group contribution is slightly lesser than the rest. The red line is "expected average value", group that higher than this line are important groups in explaining the variability in the dataset. 
+
+* In dimension 2 (13.5%), the variables in the group "longevity" contribute the most to the second dimension, followed by the variables in the "economic" group.
+
+* Variables that contribute the most to both axes are longevity and economic.  
+
+Now, let's look at the most exciting Factor map of MFA:
+
+```{r, fig.width=10, fig.height=10, warning=FALSE, message=FALSE}
+
+fviz_mfa_var(res.mfa,
+             choice = "quanti.var",  
+             palette = "jco",  
+             repel = T, 
+             habillage = "Status")    
+
+```
+
+Guides to read this plot:
+
+1. Positively related variables are grouped together.
+
+2. Negatively related variables are positioned on opposite sides of the plot origin.  
+
+3. Arrows of each variables indicate the quality of the variable on the factor map, variables with long arrows are well represented on the factor map (more important to look at). The metric that related to the representation of variables is technically known as "Cosine-squared".  
+
+Insights:
+
+* The variables associated with the "**economic**" group and "**healthcare**" group are positively associated with each other, except the variable "population". It indicates the better the economic of a country, the better healthcare system a country can establish, and therefore, people of that country can have a longer lifespan, as indicated by the positively related "Life expectancy" variable.  
+
+* "Body mass index - BMI" and "Alcohol consumption" will become the main issues of health when economic increases.  
+
+* The "**economic**" group and "**healthcare**" group are less associated and negatively associated with variables in the "**disease**" group. When economics and healthcare variables have reduction in values, the variables in the **disease** group increase their magnitudes.
+
+* HIV_AIDS is most likely the reason causing adult mortality.  
+
+* Measles is strongly associated with "death under 5 years old" and "infant deaths". Measles is a typical infectious viral disease that causing fever and skin red rash in early childhood. Both the variables "death under 5 years old" and "infant deaths" have a near-perfect positive correlation.
+
+* "Thinness in 5 to 9 years old" and "Thinness in 10 to 19 years old" are also having a near-perfect positive correlation.
+
+Following shows the "MFA-Individual" map. This plot shows all the data points from the dataset onto the same factor map as above, with overlapping of supplementary categorical variables, which are "Country", "Year", and "Development Status". Three bar plots located at the bottom are guides to see what variables contribute the most to each dimension (Dimension 1, Dimension 2, or botn Dimension 1-2). Variables that contribute the most are the most important variables in explaining the variability in the data. 
+
+```{r, fig.width=18, fig.height=14, warning=FALSE, message=FALSE}
+
+f1 <- fviz_mfa_ind(res.mfa, 
+             repel = T,
+             palette = "jco",
+             habillage = "Status",
+             addEllipses = T,
+             ellipse.type = "convex")
+
+f2 <- fviz_contrib(res.mfa, choice = "quanti.var", axes = 1) + theme(legend.position = "top")
+f3 <- fviz_contrib(res.mfa, choice = "quanti.var", axes = 2) + theme(legend.position = "top")
+f4 <- fviz_mfa_axes(res.mfa)
+
+plot_grid(f1, f4, 
+          f2, f3,
+          ncol = 2)
+
+```
+Insights:
+
+* There is a cluster for developing countries with their data points, and a cluster for developed countries with their data points. The separation is moderately good with some overlapping.  
+
+* Data points (or called "Individual" technically in PC methods) with similar profile are grouped together.
+
+* Dimension 1 is contributed the most by BMI, Life expectancy, schooling, Income composition of resources, Alcohol consumption, thinness between 10 to 19 years old, and thinness between 5 to 9 years old. The red horizontal line is a line of average contribution by all variables, variables that having contribution higher than the red line is considered important.  
+
+* Dimension 2 is contributed to most by Infant deaths, under-5 death, population, and measles. India is the most associated country to these attributes. 
+
+* Developing countries have higher positive association with "thinness between 10 to 19 years old" and "thinness between 5 to 9 years old". They have negative relationship or lower association with BMI, Life expectancy, schooling, Income composition of resources, and Alcohol consumption. Whereas, developed countries are the opposite of these characteristics.
+
+Now we roughly know where are the data points (individuals) of developing and developed countries located. 
+
+Following shows the partial points of each data points. Since there are so many data points crowded together, We can only draw some general trends. On **disease** group point of view, developing countries (many are located at the left side of the vertical line in the graph) has high value for **disease** group ("Measles", "HIV.AIDS", "thinness..1.19.years", and "thinness.5.9.years"). "Thinness..1.19.years" and "thinness.5.9.years" contributed the most to dimension 1 and many developing countries have high value in these diseases. This partial analysis is not very effective at capturing trends in this dataset, lets move on to the next section. 
+
+```{r, fig.width=14, fig.height=10}
+fviz_mfa_ind(res.mfa, 
+             partial = "all",
+             palette = "jco"
+             ) +
+  
+  labs(title = "Partial Individuals Analysis",
+       subtitle = "Individual - MFA")
+
+```
+
+
+# SUMMARY STATISTICS
+
+Following show the summary statistics. 
+
+```{r}
+life.df <- life.data %>% 
+  dplyr::select(- Country)
+
+mytable <- CreateTableOne(data = life.df, strata = "Status", test = F)
+summary(mytable) 
+```
+
+
+
+
+# STATISTICAL ANALYSIS 
+
+
+
+## Q1. Interaction of Year with Country Status
+
+**Question: Please test the interaction of Year on the data among both country status.**
+
+Multivariate analysis of variance (MANOVA) is used to test is there statistical difference in data between the categories within year and status. 
+
+There are 16 levels of the factor variable "Year", indicates that the data in the dataset are recorded in a yearly basis.  
+
+```{r}
+levels(life.data$Year) 
+
+```
+
+There are 2 levels in the factor variable "Status", which are:
+
+```{r}
+levels(life.data$Status)
+```
+
+
+
+
+**MANOVA**
+
+Performing MANOVA.
+
+```{r}
+manova.output <- manova(cbind(Life.expectancy, Adult.Mortality, infant.deaths, Alcohol, percentage.expenditure, Hepatitis.B, Measles, BMI, under.five.deaths, Polio, Total.expenditure, Diphtheria, HIV.AIDS, GDP, Population, thinness..1.19.years, thinness.5.9.years, Income.composition.of.resources, Schooling) ~  Year + Status, data = life.data)
+
+summary(manova.output)
+
+```
+
+There is sufficient evidence to reject the null hypothesis that there is no difference in mean between years and development status on the numerical findings in the dataset and conclude that:
+
+* There is statistical difference among different years of recording (P < 0.001)
+* There is statistical difference among different years of recording (P < 0.001)
+
+Following are 4 different tests of MANOVA being performed, which are "Pillai's trace", "Wilks", "Hotelling-Lawley trace", and "Roy's largest root". All 4 different statistics that devised because of multivariate nature of MANOVA suggests the same outcome, and especially the R default test "Pillai's trace" which is commonly said the most robust method (and especially if assumptions of linearity are not match in the real life data). 
+
+```{r}
+summary(manova.output, test = "Pillai", intercept = T)
+```
+
+```{r}
+summary(manova.output, test = "Hotelling-Lawley", intercept = T)
+```
+
+```{r}
+summary(manova.output, test = "Wilks", intercept = T)
+```
+
+```{r}
+summary(manova.output, test = "Roy", intercept = T)
+```
+
+
+```{r}
+summary.aov(manova.output)
+
+```
+
+
+
+
+
+
+```{r}
+lm.life <- lm(cbind(Life.expectancy, Adult.Mortality, infant.deaths, Alcohol, percentage.expenditure, Hepatitis.B, Measles, BMI, under.five.deaths, Polio, Total.expenditure, Diphtheria, HIV.AIDS, GDP, Population, thinness..1.19.years, thinness.5.9.years, Income.composition.of.resources, Schooling) ~  Year + Status + Year*Status -1, data = life.data)
+
+summary(lm.life)
+
+```
+
+The data-set aims to answer the following key questions:
+
+## Q2. Factors that Affacting Life Expectancy
+
+**Question: Does various predicting factors which has been chosen initially really affect the Life expectancy? What are the predicting variables actually affecting the life expectancy?**
+
+In this question, *life expectancy* will be the dependent variables and the other variables are independent variables.
+
+### Multicollinearity Test 
+
+First, I will test multicollinearity among numerical independent variables. Multicollinearity is an extreme problem when there is high correlation among two or more independent numerical variables. The consequences are that (1) standard errors will be inflated, and which affects the accuracy of the Beta coefficient estimates, (2) Lower down the t statistics, and (3) therefore increase the P-value. It is usually understood as redundancy in the data when two variables are highly correlated. 
+
+Two thresholds will be used to tackle multicollinearity
+
+* Correlation > 0.7 (Anderson, Sweeney & Williams 2006)
+* VIF > 5 (James et al. 2014)
+
+When correlation higher than 7 or VIF (Variance inflation factor) > 5, then there would be a serious multicollinearity problem. Though there are these maximum thresholds but the aim is try to keep them as low as possible.  
+
+From the correlation graph below, highly correlated independent variables (both negatively and positively) are identified:
+
+* **Under.five.deaths** and **infant.deaths**, at a perfect correlation of 1. Under.five.deaths will be selected during multiple linear regression because it has slightly better relationship with life expectancy.
+
+* **GDP** and **percentage expenditure**, at a correlation of 0.9. GDP will be selected with the same reason as Under.five.death.  
+
+* Both **thinness** variables will are highly correlated (0.94). I will keep **thinness prevalence between 5 to 9 years old** as it might be more important to look at because children are more vulnerable compared to 10 to 19 years old teenagers.   
+
+* **Schooling** and **income.composition.of.resource** are highly correlated, I will choose schooling for the same reason as the variable  **Under.five.death**. 
+
+```{r, fig.width=12, fig.height=12}
+# correlation computation
+num.var <- life.data %>% select_if(is.numeric)
+num.var_cor <- cor(num.var)
+
+# plot
+corrplot(num.var_cor, method = "number", type = "upper")
+
+```
+
+Building my muliple linear regression model without following numerical variables:
+
+```{r}
+Removed_Variables <- c("under.five.deaths", "thinness..1.19.years", "percentage.expenditure", "Income.composition.of.resources")
+Removed_Variables <- data.frame(Removed_Variables)
+Removed_Variables %>% kbl() %>% kable_styling(bootstrap_options = c("bordered", "striped", "hover"), full_width = F)
+
+```
+
+### Multiple Linear Regression Model
+
+Building the model:
+
+```{r}
+res.mlr <- lm(Life.expectancy ~ .- Country - Year - Status - under.five.deaths - thinness..1.19.years - percentage.expenditure - Income.composition.of.resources, data = life.data)
+
+```
+
+
+### VIF check
+
+```{r}
+vifout <- car::vif(res.mlr)
+vifout %>% kbl(col.names = "VIF") %>% 
+  kable_styling(bootstrap_options = c("stripped", "bordered", "hover"), full_width = F)
+
+
+```
+
+The multicollinearity problem has been solved.
+
+### Assumption diagnostics 
+
+The purpose 
+
+* In "**Residuals vs Fitter**" graph, the data points of residuals follow roughly a straight line at approximate 0. Therefore, I assume that the relationship between the independent variables and life expectancy is linear. 
+
+* The **Q-Q plot**, most of the data in the middle follows a straight line. It indicates that the residuals are roughly normally distributed. 
+
+* In **Scale-Location**, there is a gradually decreasing variance indicating a 
+
+```{r, fig.width=10, fig.height=10}
+par(mfrow = c(2, 2))
+plot(res.mlr)
+
+```
+
+
+
+
+
+
+## 3. Investigate the Effectiveness of Health Expenditure
+
+**Question: Should a country having a lower life expectancy value(<65) increase its healthcare expenditure in order to improve its average lifespan?**
+
+## 4. How does Infant and Adult mortality rates affect life expectancy?
+
+
+
+## 5. Does Life Expectancy has positive or negative correlation with eating habits, lifestyle, exercise, smoking, drinking alcohol etc. What is the impact of schooling on the lifespan of humans?
+
+## 6. Does Life Expectancy have positive or negative relationship with drinking alcohol?
+
+## 7. Do densely populated countries tend to have lower life expectancy?
+
+## 8. What is the impact of Immunization coverage on life Expectancy?
+
+
+# ACKNOWLEDGEMENTS
+
+The data used in this project was collected from WHO and United Nations website with the help of Deeksha Russell and Duan Wang (KUMARRAJARSHI 2018).
+
+# REFERENCE
+
+Anderson D.R., Sweeney D.J, Williams T.A., 2006, *Essentials of Statistics for Business & Economics*, South-Western, Division of Thomson Learning, United States of America
+
+Kassambara.A 2018, *Machine Learning Essentials: Practical Guide in R*, eBook.
+
+Kumarrajarshi 2018, "Life Expectancy (WHO)", viewed 23 June 2022, https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who 
+
+
