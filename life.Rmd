@@ -4,17 +4,13 @@ author: "Kar Ng"
 date: '2022-07'
 output: 
   github_document: 
-    toc: yes
+    toc: true
     toc_depth: 4
-    df_print: paged
-  html_document:
-    toc: yes
-    toc_depth: '4'
-    number_section: true
     df_print: paged
 always_allow_html: yes
   
 ---
+
 
 ***
 
@@ -81,7 +77,9 @@ Following are 10 randomly selected observations (rows) from the dataset:
 ```{r}
 life <- read.csv("Life Expectancy Data.csv")
   
-sample_n(life, 10)
+sample_n(life, 10) %>% 
+  kbl() %>% 
+  kable_material_dark()
 
 ```
 
