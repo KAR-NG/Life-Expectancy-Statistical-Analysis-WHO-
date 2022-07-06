@@ -134,7 +134,7 @@ summary(soils.lm)
 
 * Also, the mean of the 3 outcome variables are different among the 3 levels of soil depth. 
 
-* Interactions is considered not significant in influnencing the values of the 3 outcome variables.
+* Interactions is considered not significant in influencing the values of the 3 outcome variables.
 
 Therefore, among 3 types of sum of squares:
 
@@ -142,10 +142,7 @@ Therefore, among 3 types of sum of squares:
 * Type II SS --> Most powerful when there is no significant interactions terms
 * Type III SS --> for when there is a significant interaction term
 
-I can just use the type II SS in order to test the null hypothesis.
-
-
-
+I can just use the type II SS in order to test the null hypothesis.  
 
 ```{r}
 Manova(soils.lm, multivariate = T, type = "II", test = "Wilks")
@@ -163,4 +160,27 @@ Conclusion:
 * The joint mean of 3  variables (pH, Density, and Conductivity) are Not significantly different for combinations of the Contours*Depth interaction. 
 
 
+# Multilevel models, Mixed-effects models
+
+
+```{r}
+library(nlme)
+
+```
+```{r}
+library(lme4)
+```
+```{r}
+sleepstudy
+```
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
