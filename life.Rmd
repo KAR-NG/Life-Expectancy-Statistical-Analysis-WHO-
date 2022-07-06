@@ -180,7 +180,7 @@ colSums(is.na(life))
 
 Here performs horizontal missing value check. 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 df_horiz_na <- life %>% 
   mutate(row.id = c(1:nrow(life))) %>% 
   relocate(row.id, .before = Country) %>% 
@@ -190,13 +190,29 @@ df_horiz_na <- life %>%
   summarise(count = n()) %>% 
   arrange(-count) %>% 
   mutate(total.column = 22,
-         propor.NA.per.row = paste0(round(count/total.column*100,1), "%")) 
+         propor.NA.per.row = paste0(round(count/total.column*100,1), "%"),
+         label = paste0(propor.NA.per.row, " (", count, "/22)"),
+         label = as.factor(label)) 
 
-df_horiz_na %>% 
-   kbl() %>% 
-  kable_material_dark()
+df_horiz_na %>%
+  group_by(label) %>% 
+  summarise(count = n()) %>% 
+  ggplot(aes(x = fct_reorder(label, -count), y = count)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  labs(title = "Proportion of Missing Values") +
+  theme(plot.title = element_text(face = "bold")) +
+  geom_label(aes(label = count))
 
 ```
+**Insight**
+
+* 657 rows of observation have 4.5% of missing values horizontally across variables.
+
+* 360 rows of observations have 9.1% of missing values horizontally across variables.
+
+* 9 rows of observations have 40.9% of missing values (maximum amount) horizontally across variables.  
+
 
 If a row (observation) contains too many missing values, it should be removed otherwise filling up its missing values by estimation would be too unrealistic and synthetic. Generally, one should remove a row if it contains 60% of missing values. One can also choose not to remove a row with many missing values if some of its data is useful to analyse a particular important business question.  
 
