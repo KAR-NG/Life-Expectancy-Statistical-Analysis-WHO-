@@ -1,10 +1,10 @@
 Life Expectancy Statistical Analysis (WHO)
 ================
-Kar
-2022-06-23
+Kar Ng
+2022-07
 
+-   [ABSTRACT](#abstract)
 -   [R PACKAGES](#r-packages)
--   [INTRODUCTION](#introduction)
 -   [DATA PREPARATION](#data-preparation)
     -   [Data Import](#data-import)
     -   [Data Description](#data-description)
@@ -22,39 +22,105 @@ Kar
     -   [Histogram for Distribution](#histogram-for-distribution)
     -   [Boxplot for Outliers](#boxplot-for-outliers)
     -   [MFA](#mfa)
-    -   [Defining the themes of grouping and found that the variables in
-        the dataset can be grouped into following 6 subcategories for
-        MFA.](#defining-the-themes-of-grouping-and-found-that-the-variables-in-the-dataset-can-be-grouped-into-following-6-subcategories-for-mfa)
 -   [SUMMARY STATISTICS](#summary-statistics)
+    -   [Categorical variables](#categorical-variables)
+    -   [Sample size assessment](#sample-size-assessment)
+    -   [Central tendency statistics](#central-tendency-statistics)
 -   [STATISTICAL ANALYSIS](#statistical-analysis)
-    -   [Q1. Interaction of Year with Country
-        Status](#q1-interaction-of-year-with-country-status)
-    -   [Q2. Factors that Affacting Life
-        Expectancy](#q2-factors-that-affacting-life-expectancy)
+    -   [Q1. Factors that Affecting Life
+        Expectancy](#q1-factors-that-affecting-life-expectancy)
         -   [Multicollinearity Test](#multicollinearity-test)
-        -   [Multiple Linear Regression
-            Model](#multiple-linear-regression-model)
+        -   [MLR Model](#mlr-model)
         -   [VIF check](#vif-check)
-        -   [Assumption diagnostics](#assumption-diagnostics)
-    -   [3. Investigate the Effectiveness of Health
-        Expenditure](#3-investigate-the-effectiveness-of-health-expenditure)
-    -   [4. How does Infant and Adult mortality rates affect life
-        expectancy?](#4-how-does-infant-and-adult-mortality-rates-affect-life-expectancy)
-    -   [5. Does Life Expectancy has positive or negative correlation
-        with eating habits, lifestyle, exercise, smoking, drinking
-        alcohol etc. What is the impact of schooling on the lifespan of
-        humans?](#5-does-life-expectancy-has-positive-or-negative-correlation-with-eating-habits-lifestyle-exercise-smoking-drinking-alcohol-etc-what-is-the-impact-of-schooling-on-the-lifespan-of-humans)
-    -   [6. Does Life Expectancy have positive or negative relationship
-        with drinking
-        alcohol?](#6-does-life-expectancy-have-positive-or-negative-relationship-with-drinking-alcohol)
-    -   [7. Do densely populated countries tend to have lower life
-        expectancy?](#7-do-densely-populated-countries-tend-to-have-lower-life-expectancy)
-    -   [8. What is the impact of Immunization coverage on life
-        Expectancy?](#8-what-is-the-impact-of-immunization-coverage-on-life-expectancy)
+        -   [Assumptions diagnostic](#assumptions-diagnostic)
+        -   [MLR Model 2](#mlr-model-2)
+        -   [Model Interpretation](#model-interpretation)
+    -   [Q2. Investigate the Effectiveness of Health
+        Expenditure](#q2-investigate-the-effectiveness-of-health-expenditure)
+        -   [Welch’s T-test](#welchs-t-test)
+    -   [Q3. Infant and Adult Mortality versus Life
+        Expectancy](#q3-infant-and-adult-mortality-versus-life-expectancy)
+    -   [Q4. Correlation of schooling, BMI, and alcohol with Life
+        Expectancy](#q4-correlation-of-schooling-bmi-and-alcohol-with-life-expectancy)
+        -   [Correlation](#correlation)
+        -   [PCA](#pca)
+        -   [Regression](#regression)
+    -   [Q5. Population versus lower life
+        expectancy?](#q5-population-versus-lower-life-expectancy)
+    -   [Q6. Does developed countries have higher life
+        expectancy?](#q6-does-developed-countries-have-higher-life-expectancy)
+        -   [Shapiro-Wilk test](#shapiro-wilk-test)
+        -   [Wilcoxon Signed Rank Test](#wilcoxon-signed-rank-test)
+    -   [Q7. What is the impact of Immunization coverage on life
+        Expectancy?](#q7-what-is-the-impact-of-immunization-coverage-on-life-expectancy)
+    -   [Q8 Longiditudinal Multilevel Modeling with
+        Years](#q8-longiditudinal-multilevel-modeling-with-years)
+        -   [Time-transformation](#time-transformation)
+        -   [Multicollinearity Check](#multicollinearity-check)
+        -   [Visualisation](#visualisation)
+        -   [Unconditional Mean Model](#unconditional-mean-model)
+        -   [Unconditional Growth Model](#unconditional-growth-model)
+        -   [Conditional Growth Model](#conditional-growth-model)
+-   [Conclusion](#conclusion)
 -   [ACKNOWLEDGEMENTS](#acknowledgements)
 -   [REFERENCE](#reference)
 
+------------------------------------------------------------------------
+
+![](https://raw.githubusercontent.com/KAR-NG/life/main/pic2_thumbnails.png)
+
+------------------------------------------------------------------------
+
+# ABSTRACT
+
+This project analyses the factors related to life expectancy based on a
+public dataset from WHO. The data was collected between 2000 and 2015.
+Studied factors include development status of a country, GDP,
+population, schooling years, alcohol consumption, BMI, government
+expenditure on health, per-capital expenditure on health, various
+immunisation coverage, thinness disease, measles cases, HIV/AIDS deaths,
+and mortality rate of adult, children, and infants.
+
+During data processing, data were thoroughly checked (horizontally and
+vertically), cleaned, and transformed. Missing values were imputed using
+Bagged-trees algorithm. During exploratory data analysis (EDA), box and
+whisker plot, histogram, and multiple factor analysis (MFA) were applied
+to explore and mine the overall trends within the data. MFA is an
+unsupervised machine learning technique. 8 questions were designed and
+answered statistically in this project. Depending on the nature of each
+question, multiple analysis techniques were applied such as multiple
+linear regression, correlation matrix, VIF, assumption diagnostic plots,
+Welch’s t-test, principal component analysis (PCA), Shapiro-wilk test,
+Wilcoxon signed-rank test, and longitudinal multilevel mixed-effect
+modelling.
+
+Multiple linear regression model that passed the assumption tests shown
+that the positively correlated significant variables (p \< 0.05) in
+relation to life expectancy are schooling (Coeff. Est: 1.15), total
+expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP
+(Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est:
+0.03) and Polio (Coeff. Est: 0.02), whereas, the negatively correlated
+significant variables (p \< 0.05) are developing country status (Coeff.
+Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality
+rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002)
+(adjusted R-squared: 0.85, F(15, 2775) = 1087, p \< 0.001). A partial
+analysis from the full model of longitudinal multilevel modeling
+supports similar outcomes and it detected that if a country has lower
+initial life expectancy in year-2000, it would have a higher rate in
+life expectancy improvement across the year between 2000 and 2015
+(intercept-slope corr = -0.55). It implies improvement of life
+expectancy in developing countries that associated with lower life
+expectancy since 2000 to 2015. The full model also concludes that life
+expectancy of human increases each year by 0.25 year on average, with a
+confidence level between 0.16 year and 0.34 year (p \< 0.001).
+
+**Highlights**
+
+![](https://raw.githubusercontent.com/KAR-NG/life/main/pic1_graphs.png)
+
 # R PACKAGES
+
+Following R packages are loaded for this project.
 
 ``` r
 # Environment setting (to remove scientific notation)
@@ -76,21 +142,24 @@ library(biotools)
 library(corrplot)
 library(cowplot)
 library(hrbrthemes)
+library(broom)
+library(ggpubr)
+library(rstatix)
+library(nlme)
+library(performance)
 ```
-
-# INTRODUCTION
 
 # DATA PREPARATION
 
-The dataset used in this project is a public dataset available on Kaggle
-website. Kaggle website is a well-known website for data analyst and
-data scientist for sharing data, codes, resources, and ideas. The
-dataset is accessible via this
+Dataset used in this project is publicly available on *Kaggle* website.
+*Kaggle* is a well-known platform for data analysts and data scientists
+for sharing data, codes, resources, and ideas. The dataset is accessible
+via this
 [Link](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who).
 
 ## Data Import
 
-Following show 10 randomly selected rows from the dataset:
+Following are 10 randomly selected observations (rows) from the dataset:
 
 ``` r
 life <- read.csv("Life Expectancy Data.csv")
@@ -101,7 +170,7 @@ sample_n(life, 10)
 <div data-pagedtable="false">
 
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["int"],"align":["right"]},{"label":["Status"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Life.expectancy"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Adult.Mortality"],"name":[5],"type":["int"],"align":["right"]},{"label":["infant.deaths"],"name":[6],"type":["int"],"align":["right"]},{"label":["Alcohol"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["percentage.expenditure"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Hepatitis.B"],"name":[9],"type":["int"],"align":["right"]},{"label":["Measles"],"name":[10],"type":["int"],"align":["right"]},{"label":["BMI"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["under.five.deaths"],"name":[12],"type":["int"],"align":["right"]},{"label":["Polio"],"name":[13],"type":["int"],"align":["right"]},{"label":["Total.expenditure"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["Diphtheria"],"name":[15],"type":["int"],"align":["right"]},{"label":["HIV.AIDS"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["GDP"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["Population"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["thinness..1.19.years"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["thinness.5.9.years"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["Income.composition.of.resources"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["Schooling"],"name":[22],"type":["dbl"],"align":["right"]}],"data":[{"1":"Yemen","2":"2012","3":"Developing","4":"64.7","5":"236","6":"36","7":"0.04","8":"0.000000","9":"67","10":"2177","11":"38.7","12":"46","13":"68","14":"5.73","15":"67","16":"0.1","17":"NA","18":"NA","19":"13.7","20":"13.6","21":"0.494","22":"9.0"},{"1":"Gabon","2":"2009","3":"Developing","4":"61.7","5":"31","6":"2","7":"8.64","8":"52.310863","9":"79","10":"0","11":"33.0","12":"3","13":"74","14":"3.43","15":"76","16":"8.0","17":"763.6622","18":"1586754","19":"6.7","20":"6.5","21":"0.652","22":"12.4"},{"1":"Swaziland","2":"2006","3":"Developing","4":"47.8","5":"564","6":"3","7":"5.53","8":"437.080244","9":"93","10":"0","11":"28.2","12":"4","13":"88","14":"6.81","15":"87","16":"43.7","17":"2937.3672","18":"112514","19":"6.9","20":"7.1","21":"0.502","22":"9.9"},{"1":"Nigeria","2":"2008","3":"Developing","4":"59.0","5":"386","6":"536","7":"9.30","8":"105.591063","9":"41","10":"9960","11":"21.0","12":"848","13":"6","14":"4.00","15":"53","16":"5.0","17":"1383.8934","18":"1534739","19":"12.0","20":"11.9","21":"0.481","22":"9.2"},{"1":"Fiji","2":"2004","3":"Developing","4":"68.1","5":"218","6":"0","7":"1.63","8":"43.994525","9":"99","10":"37","11":"54.2","12":"0","13":"96","14":"3.61","15":"95","16":"0.1","17":"3332.9185","18":"818354","19":"4.2","20":"3.9","21":"0.691","22":"13.4"},{"1":"Republic of Korea","2":"2000","3":"Developing","4":"76.0","5":"116","6":"4","7":"10.33","8":"0.000000","9":"93","10":"32647","11":"24.7","12":"4","13":"99","14":"4.23","15":"97","16":"0.1","17":"NA","18":"NA","19":"1.6","20":"1.1","21":"NA","22":"NA"},{"1":"Pakistan","2":"2015","3":"Developing","4":"66.4","5":"161","6":"352","7":"NA","8":"0.000000","9":"72","10":"386","11":"25.4","12":"433","13":"72","14":"NA","15":"72","16":"0.1","17":"1431.2449","18":"18938513","19":"19.2","20":"19.6","21":"0.548","22":"8.1"},{"1":"Guinea","2":"2002","3":"Developing","4":"52.9","5":"337","6":"35","7":"0.21","8":"21.337818","9":"NA","10":"2151","11":"17.3","12":"56","13":"56","14":"3.76","15":"53","16":"3.0","17":"322.8112","18":"9137345","19":"9.9","20":"9.9","21":"0.329","22":"5.5"},{"1":"Tunisia","2":"2002","3":"Developing","4":"73.5","5":"19","6":"4","7":"1.17","8":"262.818494","9":"93","10":"98","11":"49.7","12":"5","13":"96","14":"5.32","15":"96","16":"0.1","17":"2346.5937","18":"9864326","19":"6.5","20":"6.4","21":"0.662","22":"13.3"},{"1":"Ethiopia","2":"2004","3":"Developing","4":"55.0","5":"354","6":"217","7":"0.86","8":"1.506962","9":"NA","10":"73","11":"13.5","12":"342","13":"54","14":"4.23","15":"4","16":"4.1","17":"135.7624","18":"7462445","19":"11.5","20":"11.3","21":"0.310","22":"5.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["int"],"align":["right"]},{"label":["Status"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Life.expectancy"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Adult.Mortality"],"name":[5],"type":["int"],"align":["right"]},{"label":["infant.deaths"],"name":[6],"type":["int"],"align":["right"]},{"label":["Alcohol"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["percentage.expenditure"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Hepatitis.B"],"name":[9],"type":["int"],"align":["right"]},{"label":["Measles"],"name":[10],"type":["int"],"align":["right"]},{"label":["BMI"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["under.five.deaths"],"name":[12],"type":["int"],"align":["right"]},{"label":["Polio"],"name":[13],"type":["int"],"align":["right"]},{"label":["Total.expenditure"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["Diphtheria"],"name":[15],"type":["int"],"align":["right"]},{"label":["HIV.AIDS"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["GDP"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["Population"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["thinness..1.19.years"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["thinness.5.9.years"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["Income.composition.of.resources"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["Schooling"],"name":[22],"type":["dbl"],"align":["right"]}],"data":[{"1":"Indonesia","2":"2006","3":"Developing","4":"67.3","5":"191","6":"159","7":"0.06","8":"72.015932","9":"66","10":"20422","11":"19.7","12":"194","13":"78","14":"2.91","15":"72","16":"0.1","17":"1586.25400","18":"22983822","19":"1.8","20":"1.8","21":"0.632","22":"10.9"},{"1":"Somalia","2":"2015","3":"Developing","4":"55.0","5":"312","6":"50","7":"NA","8":"0.000000","9":"42","10":"7497","11":"24.3","12":"80","13":"47","14":"NA","15":"42","16":"0.7","17":"426.98537","18":"NA","19":"6.6","20":"6.4","21":"NA","22":"NA"},{"1":"Bangladesh","2":"2004","3":"Developing","4":"67.3","5":"158","6":"185","7":"0.01","8":"4.114697","9":"11","10":"9743","11":"12.0","12":"247","13":"88","14":"2.62","15":"99","16":"0.1","17":"46.75792","18":"14137489","19":"2.1","20":"2.7","21":"0.491","22":"8.1"},{"1":"Guinea","2":"2009","3":"Developing","4":"57.3","5":"297","6":"29","7":"0.18","8":"24.847636","9":"57","10":"264","11":"2.3","12":"46","13":"6","14":"3.85","15":"57","16":"2.3","17":"436.68955","18":"1556524","19":"8.4","20":"8.4","21":"0.376","22":"8.1"},{"1":"Uruguay","2":"2011","3":"Developing","4":"77.0","5":"111","6":"0","7":"5.97","8":"417.911744","9":"95","10":"0","11":"61.8","12":"1","13":"95","14":"8.55","15":"95","16":"0.1","17":"14166.49980","18":"3385624","19":"1.5","20":"1.5","21":"0.780","22":"15.5"},{"1":"Venezuela (Bolivarian Republic of)","2":"2014","3":"Developing","4":"73.9","5":"158","6":"9","7":"6.47","8":"0.000000","9":"78","10":"0","11":"61.5","12":"10","13":"79","14":"5.26","15":"78","16":"0.1","17":"NA","18":"NA","19":"1.6","20":"1.5","21":"0.771","22":"14.2"},{"1":"Madagascar","2":"2011","3":"Developing","4":"63.8","5":"241","6":"31","7":"0.97","8":"78.799672","9":"73","10":"0","11":"18.5","12":"43","13":"73","14":"4.24","15":"73","16":"0.4","17":"454.96346","18":"21743949","19":"7.5","20":"7.4","21":"0.504","22":"10.2"},{"1":"Spain","2":"2005","3":"Developed","4":"81.0","5":"77","6":"2","7":"11.92","8":"405.447598","9":"96","10":"22","11":"6.5","12":"2","13":"96","14":"8.12","15":"96","16":"0.1","17":"2651.71745","18":"43653155","19":"0.6","20":"0.5","21":"0.837","22":"15.8"},{"1":"Libya","2":"2001","3":"Developing","4":"71.0","5":"147","6":"3","7":"0.01","8":"362.381795","9":"93","10":"633","11":"53.4","12":"3","13":"94","14":"4.60","15":"94","16":"0.1","17":"6269.58123","18":"NA","19":"5.6","20":"5.5","21":"0.732","22":"15.7"},{"1":"Barbados","2":"2012","3":"Developing","4":"75.1","5":"12","6":"0","7":"8.61","8":"260.004386","9":"87","10":"0","11":"52.2","12":"0","13":"88","14":"7.43","15":"87","16":"0.1","17":"15384.87490","18":"NA","19":"3.8","20":"3.8","21":"0.785","22":"15.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 
 </div>
@@ -129,7 +198,7 @@ Variable <- c("Country",
               "HIV/AIDS",
               "GDP",
               "Population",
-              "thinness 1-19 years",
+              "thinness 10-19 years",
               "thinness 5-9 years",
               "Income composition of resources",
               "Schooling")
@@ -387,7 +456,7 @@ Population of the country
 19
 </td>
 <td style="text-align:left;">
-thinness 1-19 years
+thinness 10-19 years
 </td>
 <td style="text-align:left;">
 Prevalence of thinness among children and adolescents for Age 10 to 19
@@ -435,7 +504,7 @@ Number of years of Schooling(years)
 
 ### Data type and structure
 
-There are 2938 rows of data and 22 columns of variables.
+There are 2938 rows of observations and 22 columns of variables.
 
 ``` r
 glimpse(life)
@@ -1321,15 +1390,16 @@ Schooling
 </table>
 
 From the variables “n_missing” and “complete_rate”, they detected a lot
-of missing data in a lot of the variables. Mean and standard deviation
-are also provided.
+of missing data in many variables. Mean and standard deviation are also
+being computed.
 
 A good thing is that there is no variable having more than 40% missing
-data because I will follow a 60% rule that if a column has less than 0.6
-completion rate (0.4 or 40% missing data) I will consider dropping the
-variable.
+data because I will follow a 60% rule that if a column (variable) has
+less than 0.6 completion rate (having 0.4 or 40% missing data), I will
+consider dropping the variable.
 
-Alternatively, the missing data can be examined using following code:
+The number of missing data in each column can also be examined using
+following code:
 
 ``` r
 colSums(is.na(life))
@@ -1383,24 +1453,30 @@ life %>%
 
 </div>
 
-It is a common procedure that if a row (observation) contains too many
-missing values, it should be removed otherwise filling up its missing
-values by estimation would be too unrealistic and synthetic. It i
+If a row (observation) contains too many missing values, it should be
+removed otherwise filling up its missing values by estimation would be
+too unrealistic and synthetic. Generally, one should remove a row if it
+contains 60% of missing values. One can also choose not to remove a row
+with many missing values if some of its data is useful to analyse a
+particular important business question.
 
-There are 1289 rows out of the 2938 rows contain missing value. It will
-be less practical to remove all of these rows just to be able to ensure
-there is no missing data in the dataset.
+From the table above, there are 1289 rows out of the 2938 rows contain
+missing value. It will be less practical to remove all of these rows
+just to be able to ensure there is no missing data in the dataset.
+Furthermore, the maximum proportion of missing value is 40.9% which is
+less than 60%.
 
-I will adopt an imputation method using machine learning algorithm to
-fill up these missing values. The algorithm will make use entire dataset
-and predict what might the best possible values for these missing cells.
+In this project, I will adopt an imputation method using machine
+learning algorithm to fill up these missing values. The algorithm will
+make use of the entire dataset and predict what might the best possible
+estimates for these missing cells.
 
 # DATA CLEANING
 
 ## White Space Trimming and punctuation remove
 
-This section remove leading and/or trailing white spaces in character
-variables “Country” and “Status”.
+Remove leading and/or trailing white spaces in character variables
+“Country” and “Status”.
 
 ``` r
 life <- life %>% 
@@ -1411,9 +1487,9 @@ life <- life %>%
 
 ## Rename Levels
 
-This section replaces spaces in some of the country names by underscore.
-For example “Antigua and Barbuda” to “Antigua_and_Barbuda”. This is to
-avoid complication during imputation using machine learning technique.
+Replacing spaces in some of the country names by underscore. For example
+“Antigua and Barbuda” to “Antigua_and_Barbuda”. This is to avoid
+complication during imputation using the machine learning technique.
 
 ``` r
 life <- life %>% 
@@ -1432,8 +1508,8 @@ life <- life %>%
          Status = as.factor(Status))
 ```
 
-From this point onward, the data object name will be changed from “life”
-to “life2”, so to have “life” as a backup before further
+From this point onward, the dataset object name will be changed from
+“life” to “life2”, so to have “life” object as a backup before further
 transformations.
 
 ``` r
@@ -1444,19 +1520,23 @@ life2 <- life
 
 This section applies imputation model to fill up missing values in the
 dataset. There are many types of imputation methods including using
-mean, median and mode (most occurring values, generally applies to
-categorical data). However, machine learning models that make use of the
-entire dataset to predict the missing values is generally considered a
-better estimation technique, because it takes into account all
-information in the dataset when filling up these missing values.
+mean, median, and mode (most occurring values, generally applied to
+categorical data). One of the methods is applying machine learning
+algorithms for imputation. They will make use of the entire dataset to
+predict possible estimates for these missing values. It is generally
+considered a better estimation technique if missing values are not too
+much. This machine learning imputation technique I am applying will take
+into account all information in the dataset when filling up missing
+values.
 
 However, one should note that it is still an estimation technique and is
-not 100% accurate representation of the truth. It is disputable that
-whether this technique is the best technique, it depends on a
-case-by-case basis and the goals of each analysis. For the simplistic of
-this project and the goal of this project is demonstration my data
-analysis skills instead of doing truth detail analysis for WHO, I will
-use the technique fill up missing value.
+not 100% accurate representation of the truth, checking and
+transformation might be required, depends on the nature of the variable.
+It is disputable that whether this technique is the best technique, it
+depends on a case-by-case basis and the goals of each analysis. Since
+the goal of this project is to demonstrate my skills instead of doing
+real, detail analysis for WHO, I will use the machine learning technique
+to fill up these missing value.
 
 Following codes complete the imputation of missing values using
 bagged-tree algorithm.
@@ -1464,8 +1544,8 @@ bagged-tree algorithm.
 *One hot encoding (Making dummies):*
 
 ``` r
-#dummy_function <- dummyVars(~., data = life2)
-#life_dummy <- dummy_function %>% predict(life2)
+# dummy_function <- dummyVars(~., data = life2)
+# life_dummy <- dummy_function %>% predict(life2)
 ```
 
 *Impute using bagged tree models*
@@ -1498,9 +1578,10 @@ Replace the columns that has missing values in the original dataset
 # life2$Schooling <- life_dummy_df$Schooling
 ```
 
-The above imputation has been completed and the completed dataset has
-been saveld. Following section imports the imputated dataset back to R
-with a manipuation to makesure it is perfect prior to analysis.
+The above imputation has actually been completed and the new imputed
+dataset has been saved to my computer. Following section imports the
+imputed dataset back to R with some manipulation to make sure it is
+perfect prior to analysis.
 
 ``` r
 # write.csv(life2, "life2.csv")
@@ -1509,45 +1590,79 @@ life.data <- read.csv("life2.csv", header = T, stringsAsFactors = T)
 
 life.data <- life.data %>% 
   dplyr::select(-X) %>% 
-  mutate(Year = as.factor(Year))
-
-glimpse(life.data)
+  mutate(Year = as.factor(Year)) %>% 
+  rename("thinness.btw.10.19years" = "thinness..1.19.years",
+         "thinness.btw.5.9years" = "thinness.5.9.years"
+         )
 ```
 
-    ## Rows: 2,938
-    ## Columns: 22
-    ## $ Country                         <fct> Afghanistan, Afghanistan, Afghanistan,…
-    ## $ Year                            <fct> 2015, 2014, 2013, 2012, 2011, 2010, 20…
-    ## $ Status                          <fct> Developing, Developing, Developing, De…
-    ## $ Life.expectancy                 <dbl> 65.0, 59.9, 59.9, 59.5, 59.2, 58.8, 58…
-    ## $ Adult.Mortality                 <dbl> 263, 271, 268, 272, 275, 279, 281, 287…
-    ## $ infant.deaths                   <int> 62, 64, 66, 69, 71, 74, 77, 80, 82, 84…
-    ## $ Alcohol                         <dbl> 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.…
-    ## $ percentage.expenditure          <dbl> 71.279624, 73.523582, 73.219243, 78.18…
-    ## $ Hepatitis.B                     <dbl> 65, 62, 64, 67, 68, 66, 63, 64, 63, 64…
-    ## $ Measles                         <int> 1154, 492, 430, 2787, 3013, 1989, 2861…
-    ## $ BMI                             <dbl> 19.1, 18.6, 18.1, 17.6, 17.2, 16.7, 16…
-    ## $ under.five.deaths               <int> 83, 86, 89, 93, 97, 102, 106, 110, 113…
-    ## $ Polio                           <dbl> 6, 58, 62, 67, 68, 66, 63, 64, 63, 58,…
-    ## $ Total.expenditure               <dbl> 8.16, 8.18, 8.13, 8.52, 7.87, 9.20, 9.…
-    ## $ Diphtheria                      <dbl> 65, 62, 64, 67, 68, 66, 63, 64, 63, 58…
-    ## $ HIV.AIDS                        <dbl> 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1…
-    ## $ GDP                             <dbl> 584.25921, 612.69651, 631.74498, 669.9…
-    ## $ Population                      <dbl> 33736494, 327582, 31731688, 3696958, 2…
-    ## $ thinness..1.19.years            <dbl> 17.2, 17.5, 17.7, 17.9, 18.2, 18.4, 18…
-    ## $ thinness.5.9.years              <dbl> 17.3, 17.5, 17.7, 18.0, 18.2, 18.4, 18…
-    ## $ Income.composition.of.resources <dbl> 0.479, 0.476, 0.470, 0.463, 0.454, 0.4…
-    ## $ Schooling                       <dbl> 10.1, 10.0, 9.9, 9.8, 9.5, 9.2, 8.9, 8…
+Checking the data structure.
+
+``` r
+str(life.data)
+```
+
+    ## 'data.frame':    2938 obs. of  22 variables:
+    ##  $ Country                        : Factor w/ 193 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ Year                           : Factor w/ 16 levels "2000","2001",..: 16 15 14 13 12 11 10 9 8 7 ...
+    ##  $ Status                         : Factor w/ 2 levels "Developed","Developing": 2 2 2 2 2 2 2 2 2 2 ...
+    ##  $ Life.expectancy                : num  65 59.9 59.9 59.5 59.2 58.8 58.6 58.1 57.5 57.3 ...
+    ##  $ Adult.Mortality                : num  263 271 268 272 275 279 281 287 295 295 ...
+    ##  $ infant.deaths                  : int  62 64 66 69 71 74 77 80 82 84 ...
+    ##  $ Alcohol                        : num  0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.03 0.02 0.03 ...
+    ##  $ percentage.expenditure         : num  71.3 73.5 73.2 78.2 7.1 ...
+    ##  $ Hepatitis.B                    : num  65 62 64 67 68 66 63 64 63 64 ...
+    ##  $ Measles                        : int  1154 492 430 2787 3013 1989 2861 1599 1141 1990 ...
+    ##  $ BMI                            : num  19.1 18.6 18.1 17.6 17.2 16.7 16.2 15.7 15.2 14.7 ...
+    ##  $ under.five.deaths              : int  83 86 89 93 97 102 106 110 113 116 ...
+    ##  $ Polio                          : num  6 58 62 67 68 66 63 64 63 58 ...
+    ##  $ Total.expenditure              : num  8.16 8.18 8.13 8.52 7.87 9.2 9.42 8.33 6.73 7.43 ...
+    ##  $ Diphtheria                     : num  65 62 64 67 68 66 63 64 63 58 ...
+    ##  $ HIV.AIDS                       : num  0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ...
+    ##  $ GDP                            : num  584.3 612.7 631.7 670 63.5 ...
+    ##  $ Population                     : num  33736494 327582 31731688 3696958 2978599 ...
+    ##  $ thinness.btw.10.19years        : num  17.2 17.5 17.7 17.9 18.2 18.4 18.6 18.8 19 19.2 ...
+    ##  $ thinness.btw.5.9years          : num  17.3 17.5 17.7 18 18.2 18.4 18.7 18.9 19.1 19.3 ...
+    ##  $ Income.composition.of.resources: num  0.479 0.476 0.47 0.463 0.454 0.448 0.434 0.433 0.415 0.405 ...
+    ##  $ Schooling                      : num  10.1 10 9.9 9.8 9.5 9.2 8.9 8.7 8.4 8.1 ...
+
+Checking the missing data.
+
+``` r
+colSums(is.na(life.data))
+```
+
+    ##                         Country                            Year 
+    ##                               0                               0 
+    ##                          Status                 Life.expectancy 
+    ##                               0                               0 
+    ##                 Adult.Mortality                   infant.deaths 
+    ##                               0                               0 
+    ##                         Alcohol          percentage.expenditure 
+    ##                               0                               0 
+    ##                     Hepatitis.B                         Measles 
+    ##                               0                               0 
+    ##                             BMI               under.five.deaths 
+    ##                               0                               0 
+    ##                           Polio               Total.expenditure 
+    ##                               0                               0 
+    ##                      Diphtheria                        HIV.AIDS 
+    ##                               0                               0 
+    ##                             GDP                      Population 
+    ##                               0                               0 
+    ##         thinness.btw.10.19years           thinness.btw.5.9years 
+    ##                               0                               0 
+    ## Income.composition.of.resources                       Schooling 
+    ##                               0                               0
 
 # EDA
 
 ## Histogram for Distribution
 
 Most of the variables have skewed distribution, except that life
-expectancy, schooling, total expenditure and income composition of
-resources look light having their data normally distributed. BMI has a
-clear bimodal distribution and which may implies due to the effect of
-country status (developed vs developing).
+expectancy, schooling, total expenditure, and income composition of
+resources have a distribution near normal. BMI has a clear bimodal
+distribution.
 
 ``` r
 # set up df
@@ -1569,7 +1684,7 @@ life.data.num %>%
   labs(x = "Values", y = "Count")
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ## Boxplot for Outliers
 
@@ -1591,8 +1706,8 @@ life.data.num %>%
         axis.ticks.y = element_blank())
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-17-1.png)<!-- --> Following
-shows the amount of outliers in each variable, in percentage.
+![](life_files/figure-gfm/unnamed-chunk-19-1.png)<!-- --> Checking out
+the proportion of outliers in each variable (%):
 
 ``` r
 variable.name <- colnames(life.data.num)
@@ -1633,74 +1748,79 @@ data.frame(variable.name, outlier.percentage) %>%
   scale_x_continuous(limits = c(0, 20))
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
-There are different outliers and are broadly categorised into (1) *false
-outliers* that caused by data input error or typo (which I assume won’t
-be happening in this dataset) and (2) *true outliers* that the outlier
-data point is naturally just too different from other data points.
+There are different types of outliers and are broadly categorised into
+(1) *false outliers* that caused by data input error or typo (which I
+assume would not happen to this dataset) and (2) *true outliers* that
+the outlier data points are naturally just too different from other data
+points.
 
 There are many ways to deal with outliers, one can simply rectify it if
 it is caused by human error, however if it is not, there are two main
-methods to use: (1) *Trimming*, remove the entire row in a table if the
-row contains an outlier and this will cause a reduction in sample size,
-(2) *Winsorisation*, capping the outliers by changing them to a
-pre-specified quantile value, such as the 95% quantile. and the 5%
-quantile. However, trimming and winsorisation are only feasible if we
-have less than 5% outliers otherwise the hypothesis testing outcome will
-be affected statistically and may not revealing desirable trends.
+methods to use:
 
-I will not the outliers and using the other rule of outlier definition
-in multiple linear regression model in later section, like leverage,
-influence, and cooks distance value. It is a slightly different
-procedure to define a outliers by assessing their influence on the
-model.
+1)  *Trimming*, remove the entire row in a table if the row contains an
+    outlier and this may cause a substantial reduction of sample size,
+
+2)  *Winsorisation*, capping the outliers by changing them to
+    pre-specified maximum and minimum quantile values, such as the 95%
+    quantile and the 5% quantile.
+
+However, trimming and winsorisation are only feasible if we have less
+than 5% outliers otherwise the hypothesis testing outcome would be
+affected statistically and may not revealing desirable trends.
+
+I will not manage the outliers now, instead I will use other outlier
+definitions (leverage, influential value, and cooks distance values)
+when building a multiple linear regression model in later section.
+Outliers will be defined based on their impact on the regression model.
 
 ## MFA
 
-There are 19 numerical variables in the dataset and a correlation plot
-is usually used to find the relationship among these variables, however
-this will be used in the later statistical analysis section for
-multicollinearity assessment.
+Multiple Factor Analysis (MFA) is used in this section to find the
+relationships among all variables at once. It is a type of unsupervised
+machine learning technique. It reduces the dimensions of the datasets
+into a few principal components for trend mining purposes.
 
-Instead, Multiple Factor Analysis (MFA) will be used in this section to
-find the relationships among these variables all at once. It is a type
-of unsupervised machine learning techniques to reduce the dimensions of
-the datasets into a few principal components for trend mining purposes.
+One of the “special feature” of MFA is that all variables (both
+categorical and numerical) can be grouped into sub-group based on their
+nature and having their trends and inter-relationships monitored all at
+once.
 
-One of the “specific effect” of MFA is that all variables (both
-categorical and numerical) can be grouped together and have their trends
-and inter-relationships monitored all at once.
+The variables in the dataset can be grouped into following 6
+subcategories.
 
-## Defining the themes of grouping and found that the variables in the dataset can be grouped into following 6 subcategories for MFA.
+------------------------------------------------------------------------
 
-**status** Country Year Status
+**status**: Country, Year, Status
 
-**longevity** Life.expectancy Adult.Mortality infant.deaths
+**longevity**: Life.expectancy, Adult.Mortality, infant.deaths,
 under.five.deaths
 
-**health** Alcohol BMI
+**health**: Alcohol, BMI
 
-**healthcare** percentage.expenditure Hepatitis.B Polio
-Total.expenditure Diphtheria
+**healthcare**: percentage.expenditure, Hepatitis.B, Polio,
+Total.expenditure, Diphtheria
 
-**disease** Measles HIV.AIDS thinness..1.19.years thinness.5.9.years
+**disease**: Measles, HIV.AIDS, thinness..1.19.years, thinness.5.9.years
 
-**economic** GDP Population Schooling Income.composition.of.resources
+**economic**: GDP, Population, Schooling,
+Income.composition.of.resources
 
 ------------------------------------------------------------------------
 
 The “status” group will be identified as *supplementary group* in the
-analysis which means that the group will not be participating in the MFA
-but will be used to understand the data better as supplementary
-information. All other groups will be treated as *active group* and be
-part of the MFA computation.
+analysis which means that the variables in the “status” group will not
+be participating in the MFA computation but will be used to understand
+the output as supplementary information. All other groups will be
+treated as *active group* and they will take part in MFA computation.
 
 ``` r
 # Data set rearrangement
 
 life.data.mfa <- life.data %>% 
-  dplyr::select(Country, Year, Status, Life.expectancy, Adult.Mortality, infant.deaths, under.five.deaths, Alcohol, BMI, percentage.expenditure, Hepatitis.B, Polio, Total.expenditure, Diphtheria, Measles, HIV.AIDS, thinness..1.19.years, thinness.5.9.years, GDP, Population, Schooling, Income.composition.of.resources)
+  dplyr::select(Country, Year, Status, Life.expectancy, Adult.Mortality, infant.deaths, under.five.deaths, Alcohol, BMI, percentage.expenditure, Hepatitis.B, Polio, Total.expenditure, Diphtheria, Measles, HIV.AIDS, thinness.btw.10.19years, thinness.btw.5.9years, GDP, Population, Schooling, Income.composition.of.resources)
 
 # mfa 
 
@@ -1708,55 +1828,58 @@ res.mfa <- MFA(life.data.mfa,
                group = c(3, 4, 2, 5, 4, 4),
                type = c("n", "s", "s", "s", "s", "s"),
                name.group = c("status", "longevity", "health", "healthcare", "disease", "economic"),
-               num.group.sup = c(1),
+               num.group.sup = 1,
                graph = F)  
 ```
 
-Total variation in the datasets has been extracted and are being
-expressed in 10 principal components (Dimensions). The first two
-dimensions explain the most variation (34.6% and 13.5%), and the amount
-of variation explains in subsequent dimensions hit a drastic reduction
-after the second dimension (Knee Method of Scree plot), therefore I will
-use the first two dimensions for the factor map in followed up section.
+Total variation in the dataset has been extracted and are expressed in
+10 principal components (Dimensions). The first two dimensions explain
+the most variation (34.6% and 13.5%), and the amount of variation
+explains in subsequent dimensions hit a drastic reduction after the
+second dimension, based on the “Knee Method” of scree plot, I will use
+the first two dimensions for factor map.
 
 ``` r
 fviz_screeplot(res.mfa, addlabels = T, ylim = c(0, 40))
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
-Therefore, following plot is graphed using the first two principal
-components. Supplementary group “status” is colored with green and red
-for the active groups.
+In following plot, supplementary group “status” is colored with green
+and red for the active groups.
 
 ``` r
 f1 <- fviz_mfa_var(res.mfa, choice = "group", repel = T)
-f2 <- fviz_contrib(res.mfa, choice = "group", axes = 1:2)
-f3 <- fviz_contrib(res.mfa, choice = "group", axes = 1)
-f4 <- fviz_contrib(res.mfa, choice = "group", axes = 2)
+f2 <- fviz_contrib(res.mfa, choice = "group", axes = 1)
+f3 <- fviz_contrib(res.mfa, choice = "group", axes = 2)
+f4 <- fviz_contrib(res.mfa, choice = "group", axes = 1:2)
   
 f234 <- plot_grid(f2, f3, f4, ncol = 3)
 
 plot_grid(f1, f234, ncol = 1)  
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
-Insights:
+**Insights**:
 
--   In dimension 1 (34.6%), variables in all active groups except
-    “healthcare” have almost identical coordinates, which means they
-    contribute similarly to the first dimension. Healthcare group
-    contribution is slightly lesser than the rest. The red line is
-    “expected average value”, group that higher than this line are
-    important groups in explaining the variability in the dataset.
+-   In dimension 1 (34.6%) on the top factor map, variables in all
+    active groups except “healthcare” have almost identical coordinates,
+    which means they contribute similarly to the first dimension.
+    Healthcare group contribution is slightly lesser than the rest.
 
--   In dimension 2 (13.5%), the variables in the group “longevity”
-    contribute the most to the second dimension, followed by the
-    variables in the “economic” group.
+-   In dimension 2 (13.5%) on the top factor map, the variables in the
+    group “longevity” contribute the most to the second dimension,
+    followed by the variables in the “economic” group.
 
--   Variables that contribute the most to both axes are longevity and
-    economic.
+-   In three of the following plots, the red line is “expected average
+    value”, group that higher than this line are important groups in
+    explaining the variability in the dataset. Variables important to
+    Dim-1 belong to economic, longevity and health group. Variables
+    important to Dim-2 belong to “longevity” and “economic”.
+
+-   Variables from both “longevity” and “economic” groups are most
+    important to both axes.
 
 Now, let’s look at the most exciting Factor map of MFA:
 
@@ -1768,41 +1891,40 @@ fviz_mfa_var(res.mfa,
              habillage = "Status")    
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
-Guides to read this plot:
+**Guides**:
 
 1.  Positively related variables are grouped together.
 
 2.  Negatively related variables are positioned on opposite sides of the
     plot origin.
 
-3.  Arrows of each variables indicate the quality of the variable on the
+3.  Arrows of each variable indicate the quality of the variable on the
     factor map, variables with long arrows are well represented on the
-    factor map (more important to look at). The metric that related to
-    the representation of variables is technically known as
+    factor map (more important to look). The metric that related to the
+    representation of variables is technically known as
     “Cosine-squared”.
 
-Insights:
+**Insights**:
 
--   The variables associated with the “**economic**” group and
-    “**healthcare**” group are positively associated with each other,
+-   The variables associated with the “*economic*” group and
+    “*healthcare*” group are positively associated with each other,
     except the variable “population”. It indicates the better the
     economic of a country, the better healthcare system a country can
-    establish, and therefore, people of that country can have a longer
-    lifespan, as indicated by the positively related “Life expectancy”
-    variable.
+    establish. Therefore, people in countries with better economic and
+    healthcare have longer lifespan, as indicated by the positively
+    related “Life expectancy” variable.
 
--   “Body mass index - BMI” and “Alcohol consumption” will become the
+-   High “Body mass index - BMI” and “Alcohol consumption” would be the
     main issues of health when economic increases.
 
--   The “**economic**” group and “**healthcare**” group are less
-    associated and negatively associated with variables in the
-    “**disease**” group. When economics and healthcare variables have
-    reduction in values, the variables in the **disease** group increase
-    their magnitudes.
+-   The “*economic*” group and “*healthcare*” group are less associated
+    and negatively associated with variables in the “**disease**” group.
+    When economics and healthcare variables have reduction in values,
+    the variables in the *disease* group increase their magnitudes.
 
--   HIV_AIDS is most likely the reason causing adult mortality.
+-   HIV/AIDS is most likely the reason causing adult mortality.
 
 -   Measles is strongly associated with “death under 5 years old” and
     “infant deaths”. Measles is a typical infectious viral disease that
@@ -1818,7 +1940,7 @@ points from the dataset onto the same factor map as above, with
 overlapping of supplementary categorical variables, which are “Country”,
 “Year”, and “Development Status”. Three bar plots located at the bottom
 are guides to see what variables contribute the most to each dimension
-(Dimension 1, Dimension 2, or botn Dimension 1-2). Variables that
+(Dimension 1, Dimension 2, or both Dimension 1-2). Variables that
 contribute the most are the most important variables in explaining the
 variability in the data.
 
@@ -1832,14 +1954,14 @@ f1 <- fviz_mfa_ind(res.mfa,
 
 f2 <- fviz_contrib(res.mfa, choice = "quanti.var", axes = 1) + theme(legend.position = "top")
 f3 <- fviz_contrib(res.mfa, choice = "quanti.var", axes = 2) + theme(legend.position = "top")
-f4 <- fviz_mfa_axes(res.mfa)
 
-plot_grid(f1, f4, 
-          f2, f3,
-          ncol = 2)
+bottom <- plot_grid(f2, f3, ncol = 2)
+
+plot_grid(f1, bottom,
+          ncol = 1)
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-23-1.png)<!-- --> Insights:
+![](life_files/figure-gfm/unnamed-chunk-25-1.png)<!-- --> **Insights**:
 
 -   There is a cluster for developing countries with their data points,
     and a cluster for developed countries with their data points. The
@@ -1850,10 +1972,11 @@ plot_grid(f1, f4,
 
 -   Dimension 1 is contributed the most by BMI, Life expectancy,
     schooling, Income composition of resources, Alcohol consumption,
-    thinness between 10 to 19 years old, and thinness between 5 to 9
-    years old. The red horizontal line is a line of average contribution
-    by all variables, variables that having contribution higher than the
-    red line is considered important.
+    thinness between 5 to 9 years old, and thinness between 10 to 19
+    years old. The red horizontal line in the bottom plots is a line of
+    average contribution by all variables, variables that having a
+    contribution higher than the red line is considered important for
+    interpretation.
 
 -   Dimension 2 is contributed to most by Infant deaths, under-5 death,
     population, and measles. India is the most associated country to
@@ -1864,21 +1987,12 @@ plot_grid(f1, f4,
     They have negative relationship or lower association with BMI, Life
     expectancy, schooling, Income composition of resources, and Alcohol
     consumption. Whereas, developed countries are the opposite of these
-    characteristics.
+    characterization.
 
 Now we roughly know where are the data points (individuals) of
 developing and developed countries located.
 
-Following shows the partial points of each data points. Since there are
-so many data points crowded together, We can only draw some general
-trends. On **disease** group point of view, developing countries (many
-are located at the left side of the vertical line in the graph) has high
-value for **disease** group (“Measles”, “HIV.AIDS”,
-“thinness..1.19.years”, and “thinness.5.9.years”).
-“Thinness..1.19.years” and “thinness.5.9.years” contributed the most to
-dimension 1 and many developing countries have high value in these
-diseases. This partial analysis is not very effective at capturing
-trends in this dataset, lets move on to the next section.
+Following shows the partial points of each data points.
 
 ``` r
 fviz_mfa_ind(res.mfa, 
@@ -1890,11 +2004,151 @@ fviz_mfa_ind(res.mfa,
        subtitle = "Individual - MFA")
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+
+Since there are so many data points crowded together, We can only draw
+some general trends.
+
+-   On **disease** group point of view, developing countries (many are
+    located at the left side of the vertical line in the graph) has high
+    value for **disease** group (“Measles”, “HIV.AIDS”,
+    “thinness..1.19.years”, and “thinness.5.9.years”).
+
+-   “Thinness..1.19.years” and “thinness.5.9.years” contributed the most
+    to dimension 1 and many developing countries have high value in
+    these disease variables. This partial analysis is not very effective
+    at capturing trends clearly in this dataset because of large sample
+    size, let’s move on to the next section.
 
 # SUMMARY STATISTICS
 
-Following show the summary statistics.
+## Categorical variables
+
+Key points:
+
+-   There are 193 countries contributed to this survey.
+
+-   Data in this dataset are recorded between 2000 and 2015.
+
+-   All data are recorded for developed and developing countries.
+
+``` r
+length(unique(life.data$Country))
+```
+
+    ## [1] 193
+
+``` r
+unique(life.data$Year)
+```
+
+    ##  [1] 2015 2014 2013 2012 2011 2010 2009 2008 2007 2006 2005 2004 2003 2002 2001
+    ## [16] 2000
+    ## 16 Levels: 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 ... 2015
+
+``` r
+unique(life.data$Status)
+```
+
+    ## [1] Developing Developed 
+    ## Levels: Developed Developing
+
+## Sample size assessment
+
+Sample size needs to be big enough or statistically enough to represent
+the profile of a particular population. There are many theories about
+what is the best sample size:
+
+-   In an environmental-controlled experiment, the absolute minimum is
+    suggested to be 6
+
+-   When a sample size reach 23 to 25, the t-distribution will become
+    quite close to z-distribution (population distribution)
+
+-   Therefore, in a rule of thumb, a minimum of 30 is commonly suggested
+    the best sample size
+
+The best sample size depends on situation and application really. The
+more is better but depends on the costs allowed. There is math to help
+achieving a desired sample size (using means plus/minus the margin of
+error), but this usually suggests a large sample size and the
+feasibility depends on approved resources. In short, the bigger the
+sample size, we will hope it would start represent the population
+statistics, with smaller margin of error, and the confidence interval at
+a confidence level of interest (95% generally).
+
+1)  Following are the sample sizes for the “developed” and “developing”
+    category. These sample sizes are suggesting a feasibility of using
+    statistical test to find significant difference between the two
+    groups.
+
+``` r
+table(life.data$Status)
+```
+
+    ## 
+    ##  Developed Developing 
+    ##        512       2426
+
+2)  Following are the sample sizes for the Years category. They are
+    quite similar to each other. These sample sizes are suggesting a
+    feasibility of using statistical tests to find significant
+    difference between the year groups.
+
+``` r
+life.data %>% dplyr::select( Year) %>% group_by(Year) %>% summarise(count = n()) %>% 
+  ggplot(aes(x = Year, y = count)) +
+  geom_bar(stat= "identity") +
+  geom_text(aes(label = paste0("(", count, ")"), vjust = -1)) +
+  theme_classic() +
+    scale_y_continuous(limits = c(0, 220)) +
+  labs(title = "There are 183 data recorded for each Year (193 for 2013)")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+
+3)  The sample size of each country might be too small for statistical
+    comparison.
+
+There are 10 countries with only 1 sample collected and all remaining
+183 countries have only 16 samples collected. There would be a lot of
+sampling bias if the factor variable “Country” is involved in
+statistical comparison, the data might be too small to represent each
+country.
+
+``` r
+life.data %>% dplyr::select(Country) %>% 
+  group_by(Country) %>% 
+  summarise(sample.size = n()) %>% 
+  arrange(sample.size) %>% 
+  mutate(sample.size = as.factor(sample.size)) %>% 
+  group_by(sample.size) %>% 
+  summarise(count = n()) %>% 
+  ggplot(aes(x = "", y = count, fill = sample.size)) +
+  geom_histogram(stat = "identity") +
+  coord_polar(theta = "y", start = 0) +
+  geom_text(aes(label = paste0("Countries with Sample Size ", sample.size, ": \n", count)),
+            position = position_stack(vjust = 0.5)) +
+  theme_minimal() +
+  theme(axis.title = element_blank(),
+        legend.position = "none",
+        strip.text = element_text(size = 15), 
+        plot.title = element_text(hjust = 0.5, face = "bold", vjust = 2),
+        plot.subtitle = element_text(hjust = 0.5, vjust = 2)) 
+```
+
+    ## Warning: Ignoring unknown parameters: binwidth, bins, pad
+
+![](life_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+
+## Central tendency statistics
+
+Following show the summary statistics of developed and developing
+countries. The “skew” stands for skewness of data distribution, a 0
+value of skew means normal distribution. The “kurt” stands for
+“Kurtosis”, it is a metric measures the spread of the data, a positive
+value indicates a less spread of the data (better), a negative value
+indicates more spread of the data (flat-shape distribution).
 
 ``` r
 life.df <- life.data %>% 
@@ -1924,8 +2178,8 @@ summary(mytable)
     ## HIV.AIDS                        512    0      0       0.1        0.00       0.1
     ## GDP                             512    0      0   19393.8    22520.46    8477.3
     ## Population                      512    0      0 6988754.9 13340196.29 3180573.5
-    ## thinness..1.19.years            512    0      0       1.3        0.76       1.1
-    ## thinness.5.9.years              512    0      0       1.3        0.83       1.0
+    ## thinness.btw.10.19years         512    0      0       1.3        0.76       1.1
+    ## thinness.btw.5.9years           512    0      0       1.3        0.83       1.0
     ## Income.composition.of.resources 512    0      0       0.8        0.05       0.9
     ## Schooling                       512    0      0      15.8        1.72      15.5
     ##                                      p25       p75    min        max  skew
@@ -1944,8 +2198,8 @@ summary(mytable)
     ## HIV.AIDS                             0.1       0.1   0.10        0.1   NaN
     ## GDP                               2192.4   33607.7  12.28   119172.7  1.47
     ## Population                      308063.2 7334141.7 123.00 82534176.0  3.80
-    ## thinness..1.19.years                 0.7       1.9   0.30        4.0  0.82
-    ## thinness.5.9.years                   0.6       1.9   0.20        4.3  0.93
+    ## thinness.btw.10.19years              0.7       1.9   0.30        4.0  0.82
+    ## thinness.btw.5.9years                0.6       1.9   0.20        4.3  0.93
     ## Income.composition.of.resources      0.8       0.9   0.70        0.9 -0.43
     ## Schooling                           14.8      16.6  11.50       20.7  0.44
     ##                                  kurt
@@ -1964,8 +2218,8 @@ summary(mytable)
     ## HIV.AIDS                          NaN
     ## GDP                              2.16
     ## Population                      15.75
-    ## thinness..1.19.years             0.07
-    ## thinness.5.9.years               0.44
+    ## thinness.btw.10.19years          0.07
+    ## thinness.btw.5.9years            0.44
     ## Income.composition.of.resources -0.46
     ## Schooling                        0.28
     ## ------------------------------------------------------------ 
@@ -1986,8 +2240,8 @@ summary(mytable)
     ## HIV.AIDS                        2426    0      0        2.1        5.5
     ## GDP                             2426    0      0     3731.1     8149.3
     ## Population                      2426    0      0 12954433.8 58911004.3
-    ## thinness..1.19.years            2426    0      0        5.6        4.5
-    ## thinness.5.9.years              2426    0      0        5.7        4.6
+    ## thinness.btw.10.19years         2426    0      0        5.6        4.5
+    ## thinness.btw.5.9years           2426    0      0        5.7        4.6
     ## Income.composition.of.resources 2426    0      0        0.6        0.2
     ## Schooling                       2426    0      0       11.2        3.0
     ##                                    median      p25       p75   min          max
@@ -2006,8 +2260,8 @@ summary(mytable)
     ## HIV.AIDS                              0.1      0.1       1.4  0.10         50.6
     ## GDP                                 777.1    464.5    3527.8  1.68      88564.8
     ## Population                      3742413.0 463420.2 8474064.0 34.00 1293859294.0
-    ## thinness..1.19.years                  4.8      2.1       7.9  0.10         27.7
-    ## thinness.5.9.years                    4.7      2.1       7.9  0.10         28.6
+    ## thinness.btw.10.19years               4.8      2.1       7.9  0.10         27.7
+    ## thinness.btw.5.9years                 4.7      2.1       7.9  0.10         28.6
     ## Income.composition.of.resources       0.6      0.5       0.7  0.00          0.9
     ## Schooling                            11.7      9.3      13.2  0.00         18.3
     ##                                  skew  kurt
@@ -2026,8 +2280,8 @@ summary(mytable)
     ## HIV.AIDS                         4.89  28.5
     ## GDP                              4.81  29.8
     ## Population                      16.64 323.0
-    ## thinness..1.19.years             1.54   3.4
-    ## thinness.5.9.years               1.61   3.8
+    ## thinness.btw.10.19years          1.54   3.4
+    ## thinness.btw.5.9years            1.61   3.8
     ## Income.composition.of.resources -1.17   1.5
     ## Schooling                       -0.82   1.3
     ## 
@@ -2048,8 +2302,8 @@ summary(mytable)
     ## HIV.AIDS                        0.5089256
     ## GDP                             0.9248812
     ## Population                      0.1396753
-    ## thinness..1.19.years            1.3359964
-    ## thinness.5.9.years              1.3273474
+    ## thinness.btw.10.19years         1.3359964
+    ## thinness.btw.5.9years           1.3273474
     ## Income.composition.of.resources 1.8289669
     ## Schooling                       1.8549254
     ## 
@@ -2108,1375 +2362,126 @@ summary(mytable)
     ## Year   0.01574
     ## Status     NaN
 
+A box plot will help visually compares the central tendency statistics
+of developed and developing countries. Following shows the box plots of
+each numerical variables in the dataset, categorized by country status,
+and overlapped with respective data points.
+
+Note:
+
+-   The central line of box plot is the **median**, and should be used
+    when the distribution is skewed by outliers.  
+-   I added the “cross shape” point in each box plot to indicate where
+    the **mean** is.  
+-   Data points that located outside of the boxplot tails (top and
+    bottom) are known as **outliers**.
+
+``` r
+life.data %>% 
+  dplyr::select(-Country, -Year) %>% 
+  pivot_longer(c(2:20), names_to = "my.var", values_to = "my.val") %>% 
+  mutate(my.var = as.factor(my.var)) %>% 
+  ggplot(aes(x = Status, y = my.val, color = Status)) +
+  geom_jitter(alpha = 0.1) +
+  geom_boxplot(outlier.shape = NA, color = "black", alpha = 0) +
+  stat_summary(fun = mean, geom = "point", color = "black", shape = 4, size = 5) +
+  facet_wrap(~my.var, scales = "free") +
+  stat_boxplot(geom = "errorbar", width = 0.2, color = "black") +
+  theme_bw() +
+  theme(legend.position = "top",
+        plot.title = element_text(face = "bold", hjust = 0.5)) +
+  labs(x = "Country Status",
+       y = "Values",
+       title = "Box Plot")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+
+*Insights*
+
+I will use the 5 grouping themes in MFA to help interpretation.
+Following are general trends detected from the box plot:
+
+-   Regarding **longevity**, developed countries has higher life
+    expectancy, lower adult mortality, infant deaths, and deaths among
+    children under 5 years old.
+
+-   Regarding **health**, alcohol consumption and BMI are the main
+    concerns of most developed countries. However, both of the issues
+    also happen in many developing countries.
+
+-   Regarding **healthcare**, based on median point, developed countries
+    have higher “percentage.expenditure”, which is the expenditure on
+    health as a percentage of Gross Domestic Product per capita(%), and
+    higher “Total expenditure”, which is the general government
+    expenditure on health as a percentage of total government
+    expenditure (%). Both developing countries and developed countries
+    have similar immunisation coverage of “Hepatitis.B”, “Polio”, and
+    “Diphtheria”. However, there are many data points showing some
+    developing countries need improvement in immunisation of these
+    diseases.
+
+-   Regarding **disease**, Measles cases, HIV/AIDS deaths, thinness
+    between 5 and 9 years old, and thinness between 10 and 19 years old
+    are more severe in developing countries.
+
+-   Regarding **economic**, GDP is generally substantially higher in
+    developed countries, whereas population is generally higher in
+    developing countries. People in developed countries have higher
+    years of schooling. Developed countries also have higher
+    “Income.composition.of.resources” which is the Human Development
+    Index in terms of income composition of resources.
+
 # STATISTICAL ANALYSIS
 
-## Q1. Interaction of Year with Country Status
+In following sections, a series of business questions have been designed
+and will be answered using statistical techniques.
 
-**Question: Please test the interaction of Year on the data among both
-country status.**
+## Q1. Factors that Affecting Life Expectancy
 
-Multivariate analysis of variance (MANOVA) is used to test is there
-statistical difference in data between the categories within year and
-status.
-
-There are 16 levels of the factor variable “Year”, indicates that the
-data in the dataset are recorded in a yearly basis.
-
-``` r
-levels(life.data$Year) 
-```
-
-    ##  [1] "2000" "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009"
-    ## [11] "2010" "2011" "2012" "2013" "2014" "2015"
-
-There are 2 levels in the factor variable “Status”, which are:
-
-``` r
-levels(life.data$Status)
-```
-
-    ## [1] "Developed"  "Developing"
-
-**MANOVA**
-
-Performing MANOVA.
-
-``` r
-manova.output <- manova(cbind(Life.expectancy, Adult.Mortality, infant.deaths, Alcohol, percentage.expenditure, Hepatitis.B, Measles, BMI, under.five.deaths, Polio, Total.expenditure, Diphtheria, HIV.AIDS, GDP, Population, thinness..1.19.years, thinness.5.9.years, Income.composition.of.resources, Schooling) ~  Year + Status, data = life.data)
-
-summary(manova.output)
-```
-
-    ##             Df  Pillai approx F num Df den Df                Pr(>F)    
-    ## Year        15 0.26954    2.809    285  43755 < 0.00000000000000022 ***
-    ## Status       1 0.49042  147.047     19   2903 < 0.00000000000000022 ***
-    ## Residuals 2921                                                         
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-There is sufficient evidence to reject the null hypothesis that there is
-no difference in mean between years and development status on the
-numerical findings in the dataset and conclude that:
-
--   There is statistical difference among different years of recording
-    (P \< 0.001)
--   There is statistical difference among different years of recording
-    (P \< 0.001)
-
-Following are 4 different tests of MANOVA being performed, which are
-“Pillai’s trace”, “Wilks”, “Hotelling-Lawley trace”, and “Roy’s largest
-root”. All 4 different statistics that devised because of multivariate
-nature of MANOVA suggests the same outcome, and especially the R default
-test “Pillai’s trace” which is commonly said the most robust method (and
-especially if assumptions of linearity are not match in the real life
-data).
-
-``` r
-summary(manova.output, test = "Pillai", intercept = T)
-```
-
-    ##               Df  Pillai approx F num Df den Df                Pr(>F)    
-    ## (Intercept)    1 0.99599    37912     19   2903 < 0.00000000000000022 ***
-    ## Year          15 0.26954        3    285  43755 < 0.00000000000000022 ***
-    ## Status         1 0.49042      147     19   2903 < 0.00000000000000022 ***
-    ## Residuals   2921                                                         
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-``` r
-summary(manova.output, test = "Hotelling-Lawley", intercept = T)
-```
-
-    ##               Df Hotelling-Lawley approx F num Df den Df                Pr(>F)
-    ## (Intercept)    1          248.135    37912     19   2903 < 0.00000000000000022
-    ## Year          15            0.302        3    285  43517 < 0.00000000000000022
-    ## Status         1            0.962      147     19   2903 < 0.00000000000000022
-    ## Residuals   2921                                                              
-    ##                
-    ## (Intercept) ***
-    ## Year        ***
-    ## Status      ***
-    ## Residuals      
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-``` r
-summary(manova.output, test = "Wilks", intercept = T)
-```
-
-    ##               Df   Wilks approx F num Df den Df                Pr(>F)    
-    ## (Intercept)    1 0.00401    37912     19   2903 < 0.00000000000000022 ***
-    ## Year          15 0.75209        3    285  34365 < 0.00000000000000022 ***
-    ## Status         1 0.50958      147     19   2903 < 0.00000000000000022 ***
-    ## Residuals   2921                                                         
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-``` r
-summary(manova.output, test = "Roy", intercept = T)
-```
-
-    ##               Df     Roy approx F num Df den Df                Pr(>F)    
-    ## (Intercept)    1 248.135    37912     19   2903 < 0.00000000000000022 ***
-    ## Year          15   0.184       28     19   2917 < 0.00000000000000022 ***
-    ## Status         1   0.962      147     19   2903 < 0.00000000000000022 ***
-    ## Residuals   2921                                                         
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-``` r
-summary.aov(manova.output)
-```
-
-    ##  Response Life.expectancy :
-    ##               Df Sum Sq Mean Sq  F value                Pr(>F)    
-    ## Year          15   7825     522   7.7624 < 0.00000000000000022 ***
-    ## Status         1  61638   61638 917.1556 < 0.00000000000000022 ***
-    ## Residuals   2921 196308      67                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Adult.Mortality :
-    ##               Df   Sum Sq Mean Sq  F value               Pr(>F)    
-    ## Year          15   387725   25848   1.8702              0.02168 *  
-    ## Status         1  4483723 4483723 324.4158 < 0.0000000000000002 ***
-    ## Residuals   2921 40370887   13821                                  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response infant.deaths :
-    ##               Df   Sum Sq Mean Sq F value         Pr(>F)    
-    ## Year          15    57616    3841  0.2786         0.9971    
-    ## Status         1   515441  515441 37.3870 0.000000001098 ***
-    ## Residuals   2921 40270803   13787                           
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Alcohol :
-    ##               Df  Sum Sq Mean Sq   F value                Pr(>F)    
-    ## Year          15   597.1    39.8    3.9377          0.0000004371 ***
-    ## Status         1 16963.8 16963.8 1678.1738 < 0.00000000000000022 ***
-    ## Residuals   2921 29527.0    10.1                                    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response percentage.expenditure :
-    ##               Df     Sum Sq    Mean Sq  F value                Pr(>F)    
-    ## Year          15  223230310   14882021   4.8369        0.000000002108 ***
-    ## Status         1 2395929496 2395929496 778.7117 < 0.00000000000000022 ***
-    ## Residuals   2921 8987292897    3076786                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Hepatitis.B :
-    ##               Df  Sum Sq Mean Sq F value                Pr(>F)    
-    ## Year          15   78942    5263  8.7765 < 0.00000000000000022 ***
-    ## Status         1   44629   44629 74.4254 < 0.00000000000000022 ***
-    ## Residuals   2921 1751573     600                                  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Measles :
-    ##               Df       Sum Sq    Mean Sq F value     Pr(>F)    
-    ## Year          15   3574437030  238295802  1.8301    0.02576 *  
-    ## Status         1   2295103259 2295103259 17.6263 0.00002769 ***
-    ## Residuals   2921 380341079422  130209202                       
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response BMI :
-    ##               Df  Sum Sq Mean Sq  F value                Pr(>F)    
-    ## Year          15   15722    1048   2.9273             0.0001234 ***
-    ## Status         1  116309  116309 324.8463 < 0.00000000000000022 ***
-    ## Residuals   2921 1045848     358                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response under.five.deaths :
-    ##               Df   Sum Sq Mean Sq F value          Pr(>F)    
-    ## Year          15   140068    9338  0.3663           0.987    
-    ## Status         1  1004966 1004966 39.4231 0.0000000003919 ***
-    ## Residuals   2921 74461493   25492                            
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Polio :
-    ##               Df  Sum Sq Mean Sq  F value                Pr(>F)    
-    ## Year          15   23466    1564   3.0398            0.00006754 ***
-    ## Status         1   79028   79028 153.5582 < 0.00000000000000022 ***
-    ## Residuals   2921 1503284     515                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Total.expenditure :
-    ##               Df  Sum Sq Mean Sq  F value                Pr(>F)    
-    ## Year          15   248.3   16.55   3.1422            0.00003875 ***
-    ## Status         1  1582.0 1581.99 300.2744 < 0.00000000000000022 ***
-    ## Residuals   2921 15389.3    5.27                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Diphtheria :
-    ##               Df  Sum Sq Mean Sq  F value                Pr(>F)    
-    ## Year          15   39730    2649   5.0733       0.0000000005013 ***
-    ## Status         1   77968   77968 149.3407 < 0.00000000000000022 ***
-    ## Residuals   2921 1524993     522                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response HIV.AIDS :
-    ##               Df Sum Sq Mean Sq F value                Pr(>F)    
-    ## Year          15   1555  103.67  4.1772 0.0000001080110241631 ***
-    ## Status         1   1679 1678.99 67.6521 0.0000000000000002901 ***
-    ## Residuals   2921  72493   24.82                                  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response GDP :
-    ##               Df       Sum Sq      Mean Sq  F value                Pr(>F)    
-    ## Year          15   8145660021    543044001   3.8497          0.0000007272 ***
-    ## Status         1 103743590059 103743590059 735.4503 < 0.00000000000000022 ***
-    ## Residuals   2921 412040103345    141061316                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Population :
-    ##               Df              Sum Sq           Mean Sq F value  Pr(>F)  
-    ## Year          15   27489282251233536  1832618816748902  0.6313 0.85139  
-    ## Status         1   15058079446803406 15058079446803406  5.1872 0.02283 *
-    ## Residuals   2921 8479414988835587072  2902915093747206                  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response thinness..1.19.years :
-    ##               Df Sum Sq Mean Sq  F value              Pr(>F)    
-    ## Year          15    165    11.0   0.6557              0.8297    
-    ## Status         1   7845  7845.2 466.5575 <0.0000000000000002 ***
-    ## Residuals   2921  49117    16.8                                 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response thinness.5.9.years :
-    ##               Df Sum Sq Mean Sq  F value              Pr(>F)    
-    ## Year          15    195    13.0   0.7404              0.7448    
-    ## Status         1   8101  8101.5 462.3282 <0.0000000000000002 ***
-    ## Residuals   2921  51185    17.5                                 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Income.composition.of.resources :
-    ##               Df Sum Sq Mean Sq F value                Pr(>F)    
-    ## Year          15  7.698  0.5132  16.619 < 0.00000000000000022 ***
-    ## Status         1 30.195 30.1949 977.792 < 0.00000000000000022 ***
-    ## Residuals   2921 90.202  0.0309                                  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ##  Response Schooling :
-    ##               Df  Sum Sq Mean Sq  F value                Pr(>F)    
-    ## Year          15  1445.4    96.4   12.655 < 0.00000000000000022 ***
-    ## Status         1  8812.5  8812.5 1157.395 < 0.00000000000000022 ***
-    ## Residuals   2921 22240.6     7.6                                   
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-``` r
-lm.life <- lm(cbind(Life.expectancy, Adult.Mortality, infant.deaths, Alcohol, percentage.expenditure, Hepatitis.B, Measles, BMI, under.five.deaths, Polio, Total.expenditure, Diphtheria, HIV.AIDS, GDP, Population, thinness..1.19.years, thinness.5.9.years, Income.composition.of.resources, Schooling) ~  Year + Status + Year*Status -1, data = life.data)
-
-summary(lm.life)
-```
-
-    ## Response Life.expectancy :
-    ## 
-    ## Call:
-    ## lm(formula = Life.expectancy ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -31.609  -5.507   1.288   6.389  22.139 
-    ## 
-    ## Coefficients:
-    ##                              Estimate  Std. Error t value             Pr(>|t|)
-    ## Year2000                   76.8031250   1.4524546  52.878 < 0.0000000000000002
-    ## Year2001                   77.1281250   1.4524546  53.102 < 0.0000000000000002
-    ## Year2002                   77.5468750   1.4524546  53.390 < 0.0000000000000002
-    ## Year2003                   77.9406250   1.4524546  53.661 < 0.0000000000000002
-    ## Year2004                   78.3843750   1.4524546  53.967 < 0.0000000000000002
-    ## Year2005                   78.5906250   1.4524546  54.109 < 0.0000000000000002
-    ## Year2006                   79.1312500   1.4524546  54.481 < 0.0000000000000002
-    ## Year2007                   79.3000000   1.4524546  54.597 < 0.0000000000000002
-    ## Year2008                   78.9312500   1.4524546  54.343 < 0.0000000000000002
-    ## Year2009                   79.5843750   1.4524546  54.793 < 0.0000000000000002
-    ## Year2010                   80.1468750   1.4524546  55.180 < 0.0000000000000002
-    ## Year2011                   80.7062500   1.4524546  55.565 < 0.0000000000000002
-    ## Year2012                   80.4437500   1.4524546  55.385 < 0.0000000000000002
-    ## Year2013                   80.6812500   1.4524546  55.548 < 0.0000000000000002
-    ## Year2014                   81.1375000   1.4524546  55.862 < 0.0000000000000002
-    ## Year2015                   80.7093750   1.4524546  55.568 < 0.0000000000000002
-    ## StatusDeveloping          -12.1832575   1.5989675  -7.619   0.0000000000000342
-    ## Year2001:StatusDeveloping   0.0650662   2.2612816   0.029                0.977
-    ## Year2002:StatusDeveloping  -0.1728891   2.2612816  -0.076                0.939
-    ## Year2003:StatusDeveloping  -0.5507450   2.2612816  -0.244                0.808
-    ## Year2004:StatusDeveloping  -0.8302566   2.2612816  -0.367                0.714
-    ## Year2005:StatusDeveloping  -0.3980960   2.2612816  -0.176                0.860
-    ## Year2006:StatusDeveloping  -0.4976614   2.2612816  -0.220                0.826
-    ## Year2007:StatusDeveloping  -0.2558154   2.2612816  -0.113                0.910
-    ## Year2008:StatusDeveloping   0.6659147   2.2612816   0.294                0.768
-    ## Year2009:StatusDeveloping   0.4929222   2.2612816   0.218                0.827
-    ## Year2010:StatusDeveloping  -0.0550083   2.2612816  -0.024                0.981
-    ## Year2011:StatusDeveloping   0.0008485   2.2612816   0.000                1.000
-    ## Year2012:StatusDeveloping   0.6375207   2.2612816   0.282                0.778
-    ## Year2013:StatusDeveloping   0.9140569   2.2551332   0.405                0.685
-    ## Year2014:StatusDeveloping   0.5477442   2.2612816   0.242                0.809
-    ## Year2015:StatusDeveloping   1.1639487   2.2612816   0.515                0.607
-    ##                              
-    ## Year2000                  ***
-    ## Year2001                  ***
-    ## Year2002                  ***
-    ## Year2003                  ***
-    ## Year2004                  ***
-    ## Year2005                  ***
-    ## Year2006                  ***
-    ## Year2007                  ***
-    ## Year2008                  ***
-    ## Year2009                  ***
-    ## Year2010                  ***
-    ## Year2011                  ***
-    ## Year2012                  ***
-    ## Year2013                  ***
-    ## Year2014                  ***
-    ## Year2015                  ***
-    ## StatusDeveloping          ***
-    ## Year2001:StatusDeveloping    
-    ## Year2002:StatusDeveloping    
-    ## Year2003:StatusDeveloping    
-    ## Year2004:StatusDeveloping    
-    ## Year2005:StatusDeveloping    
-    ## Year2006:StatusDeveloping    
-    ## Year2007:StatusDeveloping    
-    ## Year2008:StatusDeveloping    
-    ## Year2009:StatusDeveloping    
-    ## Year2010:StatusDeveloping    
-    ## Year2011:StatusDeveloping    
-    ## Year2012:StatusDeveloping    
-    ## Year2013:StatusDeveloping    
-    ## Year2014:StatusDeveloping    
-    ## Year2015:StatusDeveloping    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 8.216 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.9863, Adjusted R-squared:  0.9862 
-    ## F-statistic:  6551 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Adult.Mortality :
-    ## 
-    ## Call:
-    ## lm(formula = Adult.Mortality ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -197.50  -70.33  -13.44   59.56  532.83 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value   Pr(>|t|)    
-    ## Year2000                    91.719     20.827   4.404 0.00001102 ***
-    ## Year2001                    90.281     20.827   4.335 0.00001509 ***
-    ## Year2002                    86.469     20.827   4.152 0.00003395 ***
-    ## Year2003                    81.937     20.827   3.934 0.00008544 ***
-    ## Year2004                    84.469     20.827   4.056 0.00005130 ***
-    ## Year2005                    89.594     20.827   4.302 0.00001750 ***
-    ## Year2006                    93.531     20.827   4.491 0.00000737 ***
-    ## Year2007                    75.906     20.827   3.645   0.000273 ***
-    ## Year2008                    77.062     20.827   3.700   0.000220 ***
-    ## Year2009                    76.750     20.827   3.685   0.000233 ***
-    ## Year2010                    74.531     20.827   3.579   0.000351 ***
-    ## Year2011                    65.687     20.827   3.154   0.001627 ** 
-    ## Year2012                    71.094     20.827   3.414   0.000650 ***
-    ## Year2013                    66.656     20.827   3.200   0.001387 ** 
-    ## Year2014                    74.406     20.827   3.573   0.000359 ***
-    ## Year2015                    74.875     20.827   3.595   0.000330 ***
-    ## StatusDeveloping           108.778     22.928   4.744 0.00000219 ***
-    ## Year2001:StatusDeveloping   -5.900     32.425  -0.182   0.855623    
-    ## Year2002:StatusDeveloping   -5.803     32.425  -0.179   0.857978    
-    ## Year2003:StatusDeveloping   -3.106     32.425  -0.096   0.923690    
-    ## Year2004:StatusDeveloping   14.588     32.425   0.450   0.652824    
-    ## Year2005:StatusDeveloping  -14.200     32.425  -0.438   0.661480    
-    ## Year2006:StatusDeveloping  -15.614     32.425  -0.482   0.630174    
-    ## Year2007:StatusDeveloping   -7.095     32.425  -0.219   0.826818    
-    ## Year2008:StatusDeveloping    9.332     32.425   0.288   0.773526    
-    ## Year2009:StatusDeveloping   -3.773     32.425  -0.116   0.907376    
-    ## Year2010:StatusDeveloping   -2.938     32.425  -0.091   0.927802    
-    ## Year2011:StatusDeveloping    1.323     32.425   0.041   0.967466    
-    ## Year2012:StatusDeveloping  -14.613     32.425  -0.451   0.652254    
-    ## Year2013:StatusDeveloping  -11.811     32.337  -0.365   0.714964    
-    ## Year2014:StatusDeveloping  -18.754     32.425  -0.578   0.563060    
-    ## Year2015:StatusDeveloping  -14.262     32.425  -0.440   0.660079    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 117.8 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.677,  Adjusted R-squared:  0.6735 
-    ## F-statistic: 190.4 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response infant.deaths :
-    ## 
-    ## Call:
-    ## lm(formula = infant.deaths ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ##  -45.12  -33.56  -24.22   -1.25 1755.74 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value Pr(>|t|)  
-    ## Year2000                    1.7812    20.8071   0.086   0.9318  
-    ## Year2001                    1.7500    20.8071   0.084   0.9330  
-    ## Year2002                    1.7187    20.8071   0.083   0.9342  
-    ## Year2003                    1.6562    20.8071   0.080   0.9366  
-    ## Year2004                    1.6562    20.8071   0.080   0.9366  
-    ## Year2005                    1.5937    20.8071   0.077   0.9389  
-    ## Year2006                    1.5937    20.8071   0.077   0.9389  
-    ## Year2007                    1.5625    20.8071   0.075   0.9401  
-    ## Year2008                    1.5000    20.8071   0.072   0.9425  
-    ## Year2009                    1.4375    20.8071   0.069   0.9449  
-    ## Year2010                    1.3437    20.8071   0.065   0.9485  
-    ## Year2011                    1.3437    20.8071   0.065   0.9485  
-    ## Year2012                    1.2812    20.8071   0.062   0.9509  
-    ## Year2013                    1.2500    20.8071   0.060   0.9521  
-    ## Year2014                    1.2500    20.8071   0.060   0.9521  
-    ## Year2015                    1.1875    20.8071   0.057   0.9545  
-    ## StatusDeveloping           43.3380    22.9060   1.892   0.0586 .
-    ## Year2001:StatusDeveloping  -0.8297    32.3939  -0.026   0.9796  
-    ## Year2002:StatusDeveloping  -2.2951    32.3939  -0.071   0.9435  
-    ## Year2003:StatusDeveloping  -3.0803    32.3939  -0.095   0.9243  
-    ## Year2004:StatusDeveloping  -4.5704    32.3939  -0.141   0.8878  
-    ## Year2005:StatusDeveloping  -6.0443    32.3939  -0.187   0.8520  
-    ## Year2006:StatusDeveloping  -6.7198    32.3939  -0.207   0.8357  
-    ## Year2007:StatusDeveloping  -8.1322    32.3939  -0.251   0.8018  
-    ## Year2008:StatusDeveloping  -9.3214    32.3939  -0.288   0.7736  
-    ## Year2009:StatusDeveloping  -9.9874    32.3939  -0.308   0.7579  
-    ## Year2010:StatusDeveloping -11.1188    32.3939  -0.343   0.7314  
-    ## Year2011:StatusDeveloping -12.4499    32.3939  -0.384   0.7008  
-    ## Year2012:StatusDeveloping -12.9702    32.3939  -0.400   0.6889  
-    ## Year2013:StatusDeveloping -16.1035    32.3059  -0.498   0.6182  
-    ## Year2014:StatusDeveloping -15.0913    32.3939  -0.466   0.6413  
-    ## Year2015:StatusDeveloping -15.9294    32.3939  -0.492   0.6229  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 117.7 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.07538,    Adjusted R-squared:  0.0652 
-    ## F-statistic: 7.404 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Alcohol :
-    ## 
-    ## Call:
-    ## lm(formula = Alcohol ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -8.7388 -2.5479 -0.5401  1.9826 13.9988 
-    ## 
-    ## Coefficients:
-    ##                            Estimate Std. Error t value            Pr(>|t|)    
-    ## Year2000                   9.930625   0.562884  17.642 <0.0000000000000002 ***
-    ## Year2001                   9.861250   0.562884  17.519 <0.0000000000000002 ***
-    ## Year2002                  10.018125   0.562884  17.798 <0.0000000000000002 ***
-    ## Year2003                  10.126563   0.562884  17.990 <0.0000000000000002 ***
-    ## Year2004                  10.188750   0.562884  18.101 <0.0000000000000002 ***
-    ## Year2005                  10.108125   0.562884  17.958 <0.0000000000000002 ***
-    ## Year2006                  10.230938   0.562884  18.176 <0.0000000000000002 ***
-    ## Year2007                  10.307813   0.562884  18.312 <0.0000000000000002 ***
-    ## Year2008                  10.263125   0.562884  18.233 <0.0000000000000002 ***
-    ## Year2009                   9.906875   0.562884  17.600 <0.0000000000000002 ***
-    ## Year2010                   9.814063   0.562884  17.435 <0.0000000000000002 ***
-    ## Year2011                   9.780000   0.562884  17.375 <0.0000000000000002 ***
-    ## Year2012                   9.811875   0.562884  17.431 <0.0000000000000002 ***
-    ## Year2013                   9.699688   0.562884  17.232 <0.0000000000000002 ***
-    ## Year2014                   7.734063   0.562884  13.740 <0.0000000000000002 ***
-    ## Year2015                   9.597581   0.562884  17.051 <0.0000000000000002 ***
-    ## StatusDeveloping          -6.513822   0.619664 -10.512 <0.0000000000000002 ***
-    ## Year2001:StatusDeveloping  0.065931   0.876337   0.075               0.940    
-    ## Year2002:StatusDeveloping  0.002699   0.876337   0.003               0.998    
-    ## Year2003:StatusDeveloping -0.094749   0.876337  -0.108               0.914    
-    ## Year2004:StatusDeveloping -0.092297   0.876337  -0.105               0.916    
-    ## Year2005:StatusDeveloping  0.123809   0.876337   0.141               0.888    
-    ## Year2006:StatusDeveloping  0.054257   0.876337   0.062               0.951    
-    ## Year2007:StatusDeveloping  0.077250   0.876337   0.088               0.930    
-    ## Year2008:StatusDeveloping  0.122997   0.876337   0.140               0.888    
-    ## Year2009:StatusDeveloping  0.412690   0.876337   0.471               0.638    
-    ## Year2010:StatusDeveloping  0.590735   0.876337   0.674               0.500    
-    ## Year2011:StatusDeveloping  0.547546   0.876337   0.625               0.532    
-    ## Year2012:StatusDeveloping -0.377409   0.876337  -0.431               0.667    
-    ## Year2013:StatusDeveloping -0.391092   0.873955  -0.447               0.655    
-    ## Year2014:StatusDeveloping  1.094241   0.876337   1.249               0.212    
-    ## Year2015:StatusDeveloping  0.738122   0.876337   0.842               0.400    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 3.184 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.7306, Adjusted R-squared:  0.7276 
-    ## F-statistic: 246.2 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response percentage.expenditure :
-    ## 
-    ## Call:
-    ## lm(formula = percentage.expenditure ~ Year + Status + Year * 
-    ##     Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -4283.5  -358.7  -208.7     0.0 16488.2 
-    ## 
-    ## Coefficients:
-    ##                                       Estimate           Std. Error t value
-    ## Year2000                   1897.60799714375412   304.03369772823271   6.241
-    ## Year2001                   2042.07181938676035   304.03369772823140   6.717
-    ## Year2002                   1741.77228602157220   304.03369772822828   5.729
-    ## Year2003                   1532.33553219688815   304.03369772822828   5.040
-    ## Year2004                   2962.75973825530946   304.03369772822748   9.745
-    ## Year2005                   2955.57337835687576   304.03369772822793   9.721
-    ## Year2006                   3507.07645071812749   304.03369772822964  11.535
-    ## Year2007                   3818.03309434689709   304.03369772823055  12.558
-    ## Year2008                   4283.47963250687280   304.03369772822805  14.089
-    ## Year2009                   2607.10828200470451   304.03369772823009   8.575
-    ## Year2010                   2719.69766076439009   304.03369772822958   8.945
-    ## Year2011                   4133.73831318157499   304.03369772822919  13.596
-    ## Year2012                   3122.59981279063686   304.03369772822970  10.271
-    ## Year2013                   2610.84349423062940   304.03369772823009   8.587
-    ## Year2014                   3322.90858170912770   304.03369772822867  10.929
-    ## Year2015                      0.00000000002878   304.03369772822765   0.000
-    ## StatusDeveloping          -1725.48059965513221   334.70237398506896  -5.155
-    ## Year2001:StatusDeveloping  -123.23861545274202   473.34063664815784  -0.260
-    ## Year2002:StatusDeveloping   192.42803550012133   473.34063664814795   0.407
-    ## Year2003:StatusDeveloping   467.95672992973846   473.34063664814806   0.989
-    ## Year2004:StatusDeveloping  -929.13870884200333   473.34063664814602  -1.963
-    ## Year2005:StatusDeveloping  -858.64333526126609   473.34063664814749  -1.814
-    ## Year2006:StatusDeveloping -1520.40631460243776   473.34063664815130  -3.212
-    ## Year2007:StatusDeveloping -1744.94427805708528   473.34063664815494  -3.686
-    ## Year2008:StatusDeveloping -2137.73055533841261   473.34063664814960  -4.516
-    ## Year2009:StatusDeveloping  -561.75381728862237   473.34063664815505  -1.187
-    ## Year2010:StatusDeveloping  -639.55355892689181   473.34063664815312  -1.351
-    ## Year2011:StatusDeveloping -2036.56743241351774   473.34063664815051  -4.303
-    ## Year2012:StatusDeveloping  -833.03886968168092   473.34063664815443  -1.760
-    ## Year2013:StatusDeveloping  -401.37881322950602   472.05363936666987  -0.850
-    ## Year2014:StatusDeveloping -1087.38214101282028   473.34063664815187  -2.297
-    ## Year2015:StatusDeveloping  1728.36970463735997   473.34063664814869   3.651
-    ##                                       Pr(>|t|)    
-    ## Year2000                       0.0000000004967 ***
-    ## Year2001                       0.0000000000223 ***
-    ## Year2002                       0.0000000111452 ***
-    ## Year2003                       0.0000004940110 ***
-    ## Year2004                  < 0.0000000000000002 ***
-    ## Year2005                  < 0.0000000000000002 ***
-    ## Year2006                  < 0.0000000000000002 ***
-    ## Year2007                  < 0.0000000000000002 ***
-    ## Year2008                  < 0.0000000000000002 ***
-    ## Year2009                  < 0.0000000000000002 ***
-    ## Year2010                  < 0.0000000000000002 ***
-    ## Year2011                  < 0.0000000000000002 ***
-    ## Year2012                  < 0.0000000000000002 ***
-    ## Year2013                  < 0.0000000000000002 ***
-    ## Year2014                  < 0.0000000000000002 ***
-    ## Year2015                              1.000000    
-    ## StatusDeveloping               0.0000002702453 ***
-    ## Year2001:StatusDeveloping             0.794605    
-    ## Year2002:StatusDeveloping             0.684382    
-    ## Year2003:StatusDeveloping             0.322929    
-    ## Year2004:StatusDeveloping             0.049749 *  
-    ## Year2005:StatusDeveloping             0.069780 .  
-    ## Year2006:StatusDeveloping             0.001332 ** 
-    ## Year2007:StatusDeveloping             0.000232 ***
-    ## Year2008:StatusDeveloping      0.0000065447691 ***
-    ## Year2009:StatusDeveloping             0.235409    
-    ## Year2010:StatusDeveloping             0.176753    
-    ## Year2011:StatusDeveloping      0.0000174423418 ***
-    ## Year2012:StatusDeveloping             0.078528 .  
-    ## Year2013:StatusDeveloping             0.395238    
-    ## Year2014:StatusDeveloping             0.021675 *  
-    ## Year2015:StatusDeveloping             0.000265 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 1720 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.3492, Adjusted R-squared:  0.342 
-    ## F-statistic: 48.72 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Hepatitis.B :
-    ## 
-    ## Call:
-    ## lm(formula = Hepatitis.B ~ Year + Status + Year * Status - 1, 
-    ##     data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -85.332  -6.956   7.668  15.894  32.619 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value            Pr(>|t|)    
-    ## Year2000                   75.8337     4.3253  17.533 <0.0000000000000002 ***
-    ## Year2001                   81.1093     4.3253  18.752 <0.0000000000000002 ***
-    ## Year2002                   86.8907     4.3253  20.089 <0.0000000000000002 ***
-    ## Year2003                   87.5650     4.3253  20.245 <0.0000000000000002 ***
-    ## Year2004                   89.4472     4.3253  20.680 <0.0000000000000002 ***
-    ## Year2005                   86.1679     4.3253  19.922 <0.0000000000000002 ***
-    ## Year2006                   91.0347     4.3253  21.047 <0.0000000000000002 ***
-    ## Year2007                   90.9583     4.3253  21.029 <0.0000000000000002 ***
-    ## Year2008                   88.6718     4.3253  20.501 <0.0000000000000002 ***
-    ## Year2009                   90.7071     4.3253  20.971 <0.0000000000000002 ***
-    ## Year2010                   85.2922     4.3253  19.719 <0.0000000000000002 ***
-    ## Year2011                   87.3318     4.3253  20.191 <0.0000000000000002 ***
-    ## Year2012                   82.9239     4.3253  19.172 <0.0000000000000002 ***
-    ## Year2013                   89.4474     4.3253  20.680 <0.0000000000000002 ***
-    ## Year2014                   86.5074     4.3253  20.000 <0.0000000000000002 ***
-    ## Year2015                   87.2842     4.3253  20.180 <0.0000000000000002 ***
-    ## StatusDeveloping           -8.9294     4.7616  -1.875              0.0609 .  
-    ## Year2001:StatusDeveloping  -5.7987     6.7339  -0.861              0.3892    
-    ## Year2002:StatusDeveloping  -9.2786     6.7339  -1.378              0.1683    
-    ## Year2003:StatusDeveloping -10.3958     6.7339  -1.544              0.1227    
-    ## Year2004:StatusDeveloping  -9.1169     6.7339  -1.354              0.1759    
-    ## Year2005:StatusDeveloping  -1.3308     6.7339  -0.198              0.8434    
-    ## Year2006:StatusDeveloping  -5.7252     6.7339  -0.850              0.3953    
-    ## Year2007:StatusDeveloping  -4.2434     6.7339  -0.630              0.5286    
-    ## Year2008:StatusDeveloping   1.5640     6.7339   0.232              0.8164    
-    ## Year2009:StatusDeveloping   0.3287     6.7339   0.049              0.9611    
-    ## Year2010:StatusDeveloping   2.7054     6.7339   0.402              0.6879    
-    ## Year2011:StatusDeveloping   4.0985     6.7339   0.609              0.5428    
-    ## Year2012:StatusDeveloping   7.8017     6.7339   1.159              0.2467    
-    ## Year2013:StatusDeveloping   0.7187     6.7156   0.107              0.9148    
-    ## Year2014:StatusDeveloping   4.1518     6.7339   0.617              0.5376    
-    ## Year2015:StatusDeveloping   2.9757     6.7339   0.442              0.6586    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 24.47 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.9124, Adjusted R-squared:  0.9114 
-    ## F-statistic: 945.6 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Measles :
-    ## 
-    ## Call:
-    ## lm(formula = Measles ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##    Min     1Q Median     3Q    Max 
-    ##  -5480  -2447  -1748   -608 206703 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value Pr(>|t|)  
-    ## Year2000                     810.7     2020.9   0.401   0.6883  
-    ## Year2001                     956.8     2020.9   0.473   0.6359  
-    ## Year2002                    1531.5     2020.9   0.758   0.4486  
-    ## Year2003                     701.2     2020.9   0.347   0.7287  
-    ## Year2004                     331.4     2020.9   0.164   0.8697  
-    ## Year2005                     201.0     2020.9   0.099   0.9208  
-    ## Year2006                     250.2     2020.9   0.124   0.9015  
-    ## Year2007                     120.2     2020.9   0.059   0.9526  
-    ## Year2008                     573.9     2020.9   0.284   0.7764  
-    ## Year2009                     216.3     2020.9   0.107   0.9148  
-    ## Year2010                     795.6     2020.9   0.394   0.6939  
-    ## Year2011                     608.4     2020.9   0.301   0.7634  
-    ## Year2012                     386.5     2020.9   0.191   0.8483  
-    ## Year2013                     275.8     2020.9   0.136   0.8915  
-    ## Year2014                     103.4     2020.9   0.051   0.9592  
-    ## Year2015                     121.3     2020.9   0.060   0.9521  
-    ## StatusDeveloping            4669.6     2224.8   2.099   0.0359 *
-    ## Year2001:StatusDeveloping   -205.5     3146.3  -0.065   0.9479  
-    ## Year2002:StatusDeveloping  -2641.7     3146.3  -0.840   0.4012  
-    ## Year2003:StatusDeveloping  -1024.6     3146.3  -0.326   0.7447  
-    ## Year2004:StatusDeveloping  -1671.2     3146.3  -0.531   0.5953  
-    ## Year2005:StatusDeveloping  -1034.4     3146.3  -0.329   0.7424  
-    ## Year2006:StatusDeveloping  -2472.3     3146.3  -0.786   0.4321  
-    ## Year2007:StatusDeveloping  -2927.6     3146.3  -0.930   0.3522  
-    ## Year2008:StatusDeveloping  -3519.1     3146.3  -1.118   0.2635  
-    ## Year2009:StatusDeveloping  -3086.5     3146.3  -0.981   0.3267  
-    ## Year2010:StatusDeveloping  -3356.9     3146.3  -1.067   0.2861  
-    ## Year2011:StatusDeveloping  -3027.3     3146.3  -0.962   0.3360  
-    ## Year2012:StatusDeveloping  -3629.9     3146.3  -1.154   0.2487  
-    ## Year2013:StatusDeveloping  -3255.8     3137.8  -1.038   0.2995  
-    ## Year2014:StatusDeveloping  -2575.6     3146.3  -0.819   0.4131  
-    ## Year2015:StatusDeveloping  -2995.2     3146.3  -0.952   0.3412  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 11430 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.05855,    Adjusted R-squared:  0.04818 
-    ## F-statistic: 5.648 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response BMI :
-    ## 
-    ## Call:
-    ## lm(formula = BMI ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -49.694 -15.742   3.838  14.808  46.905 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value            Pr(>|t|)    
-    ## Year2000                   45.5812     3.3478  13.615 <0.0000000000000002 ***
-    ## Year2001                   48.9500     3.3478  14.622 <0.0000000000000002 ***
-    ## Year2002                   52.3156     3.3478  15.627 <0.0000000000000002 ***
-    ## Year2003                   49.4875     3.3478  14.782 <0.0000000000000002 ***
-    ## Year2004                   50.0313     3.3478  14.945 <0.0000000000000002 ***
-    ## Year2005                   49.7313     3.3478  14.855 <0.0000000000000002 ***
-    ## Year2006                   51.9406     3.3478  15.515 <0.0000000000000002 ***
-    ## Year2007                   52.4656     3.3478  15.672 <0.0000000000000002 ***
-    ## Year2008                   55.5188     3.3478  16.584 <0.0000000000000002 ***
-    ## Year2009                   54.3531     3.3478  16.236 <0.0000000000000002 ***
-    ## Year2010                   54.8594     3.3478  16.387 <0.0000000000000002 ***
-    ## Year2011                   55.3938     3.3478  16.547 <0.0000000000000002 ***
-    ## Year2012                   50.8469     3.3478  15.188 <0.0000000000000002 ***
-    ## Year2013                   49.6906     3.3478  14.843 <0.0000000000000002 ***
-    ## Year2014                   51.9031     3.3478  15.504 <0.0000000000000002 ***
-    ## Year2015                   55.7938     3.3478  16.666 <0.0000000000000002 ***
-    ## StatusDeveloping          -13.7236     3.6855  -3.724              0.0002 ***
-    ## Year2001:StatusDeveloping  -2.0317     5.2120  -0.390              0.6967    
-    ## Year2002:StatusDeveloping  -4.9423     5.2120  -0.948              0.3431    
-    ## Year2003:StatusDeveloping  -2.3182     5.2120  -0.445              0.6565    
-    ## Year2004:StatusDeveloping  -2.8189     5.2120  -0.541              0.5887    
-    ## Year2005:StatusDeveloping  -3.6114     5.2120  -0.693              0.4884    
-    ## Year2006:StatusDeveloping  -3.9799     5.2120  -0.764              0.4452    
-    ## Year2007:StatusDeveloping  -5.2831     5.2120  -1.014              0.3108    
-    ## Year2008:StatusDeveloping  -7.4769     5.2120  -1.435              0.1515    
-    ## Year2009:StatusDeveloping  -4.4419     5.2120  -0.852              0.3942    
-    ## Year2010:StatusDeveloping  -6.3321     5.2120  -1.215              0.2245    
-    ## Year2011:StatusDeveloping  -5.3838     5.2120  -1.033              0.3017    
-    ## Year2012:StatusDeveloping   0.4260     5.2120   0.082              0.9349    
-    ## Year2013:StatusDeveloping   4.4275     5.1979   0.852              0.3944    
-    ## Year2014:StatusDeveloping   0.2629     5.2120   0.050              0.9598    
-    ## Year2015:StatusDeveloping  -2.3866     5.2120  -0.458              0.6471    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 18.94 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.8087, Adjusted R-squared:  0.8066 
-    ## F-statistic: 383.9 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response under.five.deaths :
-    ## 
-    ## Call:
-    ## lm(formula = under.five.deaths ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ##  -64.66  -46.82  -34.00   -1.36 2435.34 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value Pr(>|t|)  
-    ## Year2000                     2.156     28.292   0.076   0.9393  
-    ## Year2001                     2.094     28.292   0.074   0.9410  
-    ## Year2002                     2.062     28.292   0.073   0.9419  
-    ## Year2003                     2.000     28.292   0.071   0.9436  
-    ## Year2004                     1.937     28.292   0.068   0.9454  
-    ## Year2005                     1.937     28.292   0.068   0.9454  
-    ## Year2006                     1.906     28.292   0.067   0.9463  
-    ## Year2007                     1.844     28.292   0.065   0.9480  
-    ## Year2008                     1.781     28.292   0.063   0.9498  
-    ## Year2009                     1.781     28.292   0.063   0.9498  
-    ## Year2010                     1.687     28.292   0.060   0.9524  
-    ## Year2011                     1.656     28.292   0.059   0.9533  
-    ## Year2012                     1.594     28.292   0.056   0.9551  
-    ## Year2013                     1.562     28.292   0.055   0.9560  
-    ## Year2014                     1.500     28.292   0.053   0.9577  
-    ## Year2015                     1.469     28.292   0.052   0.9586  
-    ## StatusDeveloping            62.499     31.146   2.007   0.0449 *
-    ## Year2001:StatusDeveloping   -1.971     44.047  -0.045   0.9643  
-    ## Year2002:StatusDeveloping   -4.039     44.047  -0.092   0.9269  
-    ## Year2003:StatusDeveloping   -6.042     44.047  -0.137   0.8909  
-    ## Year2004:StatusDeveloping   -7.775     44.047  -0.177   0.8599  
-    ## Year2005:StatusDeveloping   -9.940     44.047  -0.226   0.8215  
-    ## Year2006:StatusDeveloping  -11.154     44.047  -0.253   0.8001  
-    ## Year2007:StatusDeveloping  -12.946     44.047  -0.294   0.7688  
-    ## Year2008:StatusDeveloping  -14.579     44.047  -0.331   0.7407  
-    ## Year2009:StatusDeveloping  -16.459     44.047  -0.374   0.7087  
-    ## Year2010:StatusDeveloping  -17.829     44.047  -0.405   0.6857  
-    ## Year2011:StatusDeveloping  -19.765     44.047  -0.449   0.6537  
-    ## Year2012:StatusDeveloping  -21.332     44.047  -0.484   0.6282  
-    ## Year2013:StatusDeveloping  -25.509     43.927  -0.581   0.5615  
-    ## Year2014:StatusDeveloping  -24.456     44.047  -0.555   0.5788  
-    ## Year2015:StatusDeveloping  -25.968     44.047  -0.590   0.5555  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 160 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.07877,    Adjusted R-squared:  0.06863 
-    ## F-statistic: 7.765 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Polio :
-    ## 
-    ## Call:
-    ## lm(formula = Polio ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -83.937  -4.400   5.656  14.854  25.610 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value            Pr(>|t|)    
-    ## Year2000                   89.0625     4.0170  22.171 <0.0000000000000002 ***
-    ## Year2001                   93.8750     4.0170  23.369 <0.0000000000000002 ***
-    ## Year2002                   91.9375     4.0170  22.887 <0.0000000000000002 ***
-    ## Year2003                   94.9688     4.0170  23.642 <0.0000000000000002 ***
-    ## Year2004                   92.3125     4.0170  22.980 <0.0000000000000002 ***
-    ## Year2005                   92.3750     4.0170  22.996 <0.0000000000000002 ***
-    ## Year2006                   94.9063     4.0170  23.626 <0.0000000000000002 ***
-    ## Year2007                   94.4688     4.0170  23.517 <0.0000000000000002 ***
-    ## Year2008                   94.5313     4.0170  23.533 <0.0000000000000002 ***
-    ## Year2009                   94.6250     4.0170  23.556 <0.0000000000000002 ***
-    ## Year2010                   92.1563     4.0170  22.942 <0.0000000000000002 ***
-    ## Year2011                   95.2813     4.0170  23.719 <0.0000000000000002 ***
-    ## Year2012                   95.6563     4.0170  23.813 <0.0000000000000002 ***
-    ## Year2013                   95.6250     4.0170  23.805 <0.0000000000000002 ***
-    ## Year2014                   92.9375     4.0170  23.136 <0.0000000000000002 ***
-    ## Year2015                   95.0625     4.0170  23.665 <0.0000000000000002 ***
-    ## StatusDeveloping          -15.6720     4.4222  -3.544              0.0004 ***
-    ## Year2001:StatusDeveloping  -3.8137     6.2540  -0.610              0.5420    
-    ## Year2002:StatusDeveloping   0.6580     6.2540   0.105              0.9162    
-    ## Year2003:StatusDeveloping  -2.2077     6.2540  -0.353              0.7241    
-    ## Year2004:StatusDeveloping   0.7651     6.2540   0.122              0.9026    
-    ## Year2005:StatusDeveloping   1.7000     6.2540   0.272              0.7858    
-    ## Year2006:StatusDeveloping   2.9811     6.2540   0.477              0.6336    
-    ## Year2007:StatusDeveloping   3.8424     6.2540   0.614              0.5390    
-    ## Year2008:StatusDeveloping   4.6872     6.2540   0.749              0.4536    
-    ## Year2009:StatusDeveloping   4.2888     6.2540   0.686              0.4929    
-    ## Year2010:StatusDeveloping   5.5457     6.2540   0.887              0.3753    
-    ## Year2011:StatusDeveloping   2.5365     6.2540   0.406              0.6851    
-    ## Year2012:StatusDeveloping   1.4727     6.2540   0.235              0.8138    
-    ## Year2013:StatusDeveloping   2.5067     6.2370   0.402              0.6878    
-    ## Year2014:StatusDeveloping   5.7213     6.2540   0.915              0.3604    
-    ## Year2015:StatusDeveloping   1.3049     6.2540   0.209              0.8347    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 22.72 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.9305, Adjusted R-squared:  0.9297 
-    ## F-statistic:  1215 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Total.expenditure :
-    ## 
-    ## Call:
-    ## lm(formula = Total.expenditure ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -7.3012 -1.3706 -0.0675  1.2261 11.2888 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value             Pr(>|t|)    
-    ## Year2000                   7.02156    0.40611  17.290 < 0.0000000000000002 ***
-    ## Year2001                   6.82063    0.40611  16.795 < 0.0000000000000002 ***
-    ## Year2002                   7.11375    0.40611  17.517 < 0.0000000000000002 ***
-    ## Year2003                   7.14313    0.40611  17.589 < 0.0000000000000002 ***
-    ## Year2004                   7.47719    0.40611  18.412 < 0.0000000000000002 ***
-    ## Year2005                   7.50406    0.40611  18.478 < 0.0000000000000002 ***
-    ## Year2006                   7.41688    0.40611  18.263 < 0.0000000000000002 ***
-    ## Year2007                   7.35438    0.40611  18.110 < 0.0000000000000002 ***
-    ## Year2008                   7.13406    0.40611  17.567 < 0.0000000000000002 ***
-    ## Year2009                   8.35156    0.40611  20.565 < 0.0000000000000002 ***
-    ## Year2010                   8.29188    0.40611  20.418 < 0.0000000000000002 ***
-    ## Year2011                   7.13906    0.40611  17.579 < 0.0000000000000002 ***
-    ## Year2012                   7.98750    0.40611  19.669 < 0.0000000000000002 ***
-    ## Year2013                   8.55125    0.40611  21.057 < 0.0000000000000002 ***
-    ## Year2014                   8.00375    0.40611  19.709 < 0.0000000000000002 ***
-    ## Year2015                   7.48553    0.40611  18.432 < 0.0000000000000002 ***
-    ## StatusDeveloping          -1.74364    0.44707  -3.900            0.0000983 ***
-    ## Year2001:StatusDeveloping  0.25992    0.63225   0.411                0.681    
-    ## Year2002:StatusDeveloping  0.01119    0.63225   0.018                0.986    
-    ## Year2003:StatusDeveloping  0.15081    0.63225   0.239                0.811    
-    ## Year2004:StatusDeveloping -0.21708    0.63225  -0.343                0.731    
-    ## Year2005:StatusDeveloping -0.17621    0.63225  -0.279                0.780    
-    ## Year2006:StatusDeveloping -0.33485    0.63225  -0.530                0.596    
-    ## Year2007:StatusDeveloping -0.34010    0.63225  -0.538                0.591    
-    ## Year2008:StatusDeveloping  0.03839    0.63225   0.061                0.952    
-    ## Year2009:StatusDeveloping -0.47713    0.63225  -0.755                0.451    
-    ## Year2010:StatusDeveloping -0.85439    0.63225  -1.351                0.177    
-    ## Year2011:StatusDeveloping  0.33153    0.63225   0.524                0.600    
-    ## Year2012:StatusDeveloping -0.36222    0.63225  -0.573                0.567    
-    ## Year2013:StatusDeveloping -0.85639    0.63053  -1.358                0.175    
-    ## Year2014:StatusDeveloping -0.44302    0.63225  -0.701                0.484    
-    ## Year2015:StatusDeveloping  0.22407    0.63225   0.354                0.723    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 2.297 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.8736, Adjusted R-squared:  0.8722 
-    ## F-statistic: 627.9 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Diphtheria :
-    ## 
-    ## Call:
-    ## lm(formula = Diphtheria ~ Year + Status + Year * Status - 1, 
-    ##     data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -84.000  -3.243   5.793  14.185  27.530 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value             Pr(>|t|)    
-    ## Year2000                   83.6875     4.0457  20.686 < 0.0000000000000002 ***
-    ## Year2001                   92.0000     4.0457  22.740 < 0.0000000000000002 ***
-    ## Year2002                   92.2500     4.0457  22.802 < 0.0000000000000002 ***
-    ## Year2003                   92.8125     4.0457  22.941 < 0.0000000000000002 ***
-    ## Year2004                   95.1250     4.0457  23.513 < 0.0000000000000002 ***
-    ## Year2005                   92.5313     4.0457  22.871 < 0.0000000000000002 ***
-    ## Year2006                   95.1250     4.0457  23.513 < 0.0000000000000002 ***
-    ## Year2007                   94.6563     4.0457  23.397 < 0.0000000000000002 ***
-    ## Year2008                   94.7813     4.0457  23.428 < 0.0000000000000002 ***
-    ## Year2009                   94.8125     4.0457  23.435 < 0.0000000000000002 ***
-    ## Year2010                   92.4063     4.0457  22.841 < 0.0000000000000002 ***
-    ## Year2011                   95.5938     4.0457  23.628 < 0.0000000000000002 ***
-    ## Year2012                   95.7813     4.0457  23.675 < 0.0000000000000002 ***
-    ## Year2013                   95.8125     4.0457  23.683 < 0.0000000000000002 ***
-    ## Year2014                   93.0000     4.0457  22.987 < 0.0000000000000002 ***
-    ## Year2015                   95.2500     4.0457  23.543 < 0.0000000000000002 ***
-    ## StatusDeveloping          -12.2174     4.4538  -2.743              0.00612 ** 
-    ## Year2001:StatusDeveloping  -6.3790     6.2986  -1.013              0.31126    
-    ## Year2002:StatusDeveloping  -4.0461     6.2986  -0.642              0.52068    
-    ## Year2003:StatusDeveloping  -4.7216     6.2986  -0.750              0.45354    
-    ## Year2004:StatusDeveloping  -6.4160     6.2986  -1.019              0.30846    
-    ## Year2005:StatusDeveloping  -1.0928     6.2986  -0.174              0.86227    
-    ## Year2006:StatusDeveloping  -3.4276     6.2986  -0.544              0.58636    
-    ## Year2007:StatusDeveloping  -0.3496     6.2986  -0.056              0.95574    
-    ## Year2008:StatusDeveloping   0.1479     6.2986   0.023              0.98127    
-    ## Year2009:StatusDeveloping   0.3551     6.2986   0.056              0.95505    
-    ## Year2010:StatusDeveloping   0.4766     6.2986   0.076              0.93969    
-    ## Year2011:StatusDeveloping   1.9084     6.2986   0.303              0.76192    
-    ## Year2012:StatusDeveloping   0.2507     6.2986   0.040              0.96826    
-    ## Year2013:StatusDeveloping   0.7030     6.2815   0.112              0.91090    
-    ## Year2014:StatusDeveloping   1.4094     6.2986   0.224              0.82296    
-    ## Year2015:StatusDeveloping  -0.6485     6.2986  -0.103              0.91800    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 22.89 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.9293, Adjusted R-squared:  0.9285 
-    ## F-statistic:  1194 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response HIV.AIDS :
-    ## 
-    ## Call:
-    ## lm(formula = HIV.AIDS ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##    Min     1Q Median     3Q    Max 
-    ## -2.998 -2.294 -0.773  0.000 47.534 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value Pr(>|t|)   
-    ## Year2000                   0.10000    0.88093   0.114  0.90963   
-    ## Year2001                   0.10000    0.88093   0.114  0.90963   
-    ## Year2002                   0.10000    0.88093   0.114  0.90963   
-    ## Year2003                   0.10000    0.88093   0.114  0.90963   
-    ## Year2004                   0.10000    0.88093   0.114  0.90963   
-    ## Year2005                   0.10000    0.88093   0.114  0.90963   
-    ## Year2006                   0.10000    0.88093   0.114  0.90963   
-    ## Year2007                   0.10000    0.88093   0.114  0.90963   
-    ## Year2008                   0.10000    0.88093   0.114  0.90963   
-    ## Year2009                   0.10000    0.88093   0.114  0.90963   
-    ## Year2010                   0.10000    0.88093   0.114  0.90963   
-    ## Year2011                   0.10000    0.88093   0.114  0.90963   
-    ## Year2012                   0.10000    0.88093   0.114  0.90963   
-    ## Year2013                   0.10000    0.88093   0.114  0.90963   
-    ## Year2014                   0.10000    0.88093   0.114  0.90963   
-    ## Year2015                   0.10000    0.88093   0.114  0.90963   
-    ## StatusDeveloping           2.94503    0.96979   3.037  0.00241 **
-    ## Year2001:StatusDeveloping  0.05298    1.37149   0.039  0.96919   
-    ## Year2002:StatusDeveloping  0.05298    1.37149   0.039  0.96919   
-    ## Year2003:StatusDeveloping  0.02053    1.37149   0.015  0.98806   
-    ## Year2004:StatusDeveloping -0.06225    1.37149  -0.045  0.96380   
-    ## Year2005:StatusDeveloping -0.22318    1.37149  -0.163  0.87074   
-    ## Year2006:StatusDeveloping -0.43709    1.37149  -0.319  0.74998   
-    ## Year2007:StatusDeveloping -0.65099    1.37149  -0.475  0.63506   
-    ## Year2008:StatusDeveloping -0.88808    1.37149  -0.648  0.51734   
-    ## Year2009:StatusDeveloping -1.20132    1.37149  -0.876  0.38114   
-    ## Year2010:StatusDeveloping -1.52252    1.37149  -1.110  0.26704   
-    ## Year2011:StatusDeveloping -1.74172    1.37149  -1.270  0.20420   
-    ## Year2012:StatusDeveloping -1.94305    1.37149  -1.417  0.15667   
-    ## Year2013:StatusDeveloping -2.17236    1.36776  -1.588  0.11234   
-    ## Year2014:StatusDeveloping -2.23974    1.37149  -1.633  0.10256   
-    ## Year2015:StatusDeveloping -2.26556    1.37149  -1.652  0.09866 . 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 4.983 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.1474, Adjusted R-squared:  0.138 
-    ## F-statistic:  15.7 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response GDP :
-    ## 
-    ## Call:
-    ## lm(formula = GDP ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##    Min     1Q Median     3Q    Max 
-    ## -29829  -3643  -2181     99  96216 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value             Pr(>|t|)    
-    ## Year2000                   13411.0     2080.2   6.447     0.00000000013313 ***
-    ## Year2001                   14129.4     2080.2   6.792     0.00000000001333 ***
-    ## Year2002                   12105.7     2080.2   5.819     0.00000000654706 ***
-    ## Year2003                   10990.3     2080.2   5.283     0.00000013626825 ***
-    ## Year2004                   19705.6     2080.2   9.473 < 0.0000000000000002 ***
-    ## Year2005                   19468.1     2080.2   9.359 < 0.0000000000000002 ***
-    ## Year2006                   22585.6     2080.2  10.857 < 0.0000000000000002 ***
-    ## Year2007                   24866.5     2080.2  11.954 < 0.0000000000000002 ***
-    ## Year2008                   29970.9     2080.2  14.408 < 0.0000000000000002 ***
-    ## Year2009                   17486.7     2080.2   8.406 < 0.0000000000000002 ***
-    ## Year2010                   20670.1     2080.2   9.937 < 0.0000000000000002 ***
-    ## Year2011                   27414.7     2080.2  13.179 < 0.0000000000000002 ***
-    ## Year2012                   22242.6     2080.2  10.693 < 0.0000000000000002 ***
-    ## Year2013                   17536.2     2080.2   8.430 < 0.0000000000000002 ***
-    ## Year2014                   23240.4     2080.2  11.172 < 0.0000000000000002 ***
-    ## Year2015                   14477.7     2080.2   6.960     0.00000000000419 ***
-    ## StatusDeveloping          -11301.7     2290.0  -4.935     0.00000084585963 ***
-    ## Year2001:StatusDeveloping   -694.7     3238.6  -0.215             0.830155    
-    ## Year2002:StatusDeveloping   1495.8     3238.6   0.462             0.644200    
-    ## Year2003:StatusDeveloping   3027.8     3238.6   0.935             0.349905    
-    ## Year2004:StatusDeveloping  -5151.5     3238.6  -1.591             0.111798    
-    ## Year2005:StatusDeveloping  -4663.3     3238.6  -1.440             0.149999    
-    ## Year2006:StatusDeveloping  -8340.9     3238.6  -2.575             0.010059 *  
-    ## Year2007:StatusDeveloping  -9875.7     3238.6  -3.049             0.002314 ** 
-    ## Year2008:StatusDeveloping -13926.5     3238.6  -4.300     0.00001762860100 ***
-    ## Year2009:StatusDeveloping  -2457.4     3238.6  -0.759             0.448049    
-    ## Year2010:StatusDeveloping  -5898.2     3238.6  -1.821             0.068676 .  
-    ## Year2011:StatusDeveloping -11777.1     3238.6  -3.636             0.000281 ***
-    ## Year2012:StatusDeveloping  -4920.2     3238.6  -1.519             0.128811    
-    ## Year2013:StatusDeveloping  -1458.6     3229.8  -0.452             0.651588    
-    ## Year2014:StatusDeveloping  -6438.9     3238.6  -1.988             0.046887 *  
-    ## Year2015:StatusDeveloping   1233.2     3238.6   0.381             0.703388    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 11770 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.3776, Adjusted R-squared:  0.3708 
-    ## F-statistic:  55.1 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Population :
-    ## 
-    ## Call:
-    ## lm(formula = Population ~ Year + Status + Year * Status - 1, 
-    ##     data = life.data)
-    ## 
-    ## Residuals:
-    ##        Min         1Q     Median         3Q        Max 
-    ##  -21348551  -10808944   -6971493   -1554173 1272510702 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value Pr(>|t|)
-    ## Year2000                   4939271    9544823   0.517    0.605
-    ## Year2001                   5195572    9544823   0.544    0.586
-    ## Year2002                   7403182    9544823   0.776    0.438
-    ## Year2003                   7740886    9544823   0.811    0.417
-    ## Year2004                   8199717    9544823   0.859    0.390
-    ## Year2005                  10989501    9544823   1.151    0.250
-    ## Year2006                   9534334    9544823   0.999    0.318
-    ## Year2007                   6216779    9544823   0.651    0.515
-    ## Year2008                   6982930    9544823   0.732    0.464
-    ## Year2009                   5016626    9544823   0.526    0.599
-    ## Year2010                   6865330    9544823   0.719    0.472
-    ## Year2011                   6946115    9544823   0.728    0.467
-    ## Year2012                   6920408    9544823   0.725    0.468
-    ## Year2013                   4674218    9544823   0.490    0.624
-    ## Year2014                   3797404    9544823   0.398    0.691
-    ## Year2015                  10397807    9544823   1.089    0.276
-    ## StatusDeveloping           5358868   10507634   0.510    0.610
-    ## Year2001:StatusDeveloping   315440   14860039   0.021    0.983
-    ## Year2002:StatusDeveloping -5671282   14860039  -0.382    0.703
-    ## Year2003:StatusDeveloping -2701831   14860039  -0.182    0.856
-    ## Year2004:StatusDeveloping  3046106   14860039   0.205    0.838
-    ## Year2005:StatusDeveloping  1028016   14860039   0.069    0.945
-    ## Year2006:StatusDeveloping   -13192   14860039  -0.001    0.999
-    ## Year2007:StatusDeveloping  7114870   14860039   0.479    0.632
-    ## Year2008:StatusDeveloping -2421565   14860039  -0.163    0.871
-    ## Year2009:StatusDeveloping  -358820   14860039  -0.024    0.981
-    ## Year2010:StatusDeveloping   -49718   14860039  -0.003    0.997
-    ## Year2011:StatusDeveloping  -627692   14860039  -0.042    0.966
-    ## Year2012:StatusDeveloping   418487   14860039   0.028    0.978
-    ## Year2013:StatusDeveloping  2672445   14819635   0.180    0.857
-    ## Year2014:StatusDeveloping 12192319   14860039   0.820    0.412
-    ## Year2015:StatusDeveloping -5218133   14860039  -0.351    0.725
-    ## 
-    ## Residual standard error: 53990000 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.05226,    Adjusted R-squared:  0.04182 
-    ## F-statistic: 5.007 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response thinness..1.19.years :
-    ## 
-    ## Call:
-    ## lm(formula = thinness..1.19.years ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.9025 -3.1515 -0.4028  1.7227 21.7511 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value     Pr(>|t|)    
-    ## Year2000                   1.46250    0.72659   2.013       0.0442 *  
-    ## Year2001                   1.43437    0.72659   1.974       0.0485 *  
-    ## Year2002                   1.41875    0.72659   1.953       0.0510 .  
-    ## Year2003                   1.38125    0.72659   1.901       0.0574 .  
-    ## Year2004                   1.36250    0.72659   1.875       0.0609 .  
-    ## Year2005                   1.33750    0.72659   1.841       0.0658 .  
-    ## Year2006                   1.32187    0.72659   1.819       0.0690 .  
-    ## Year2007                   1.30312    0.72659   1.793       0.0730 .  
-    ## Year2008                   1.28750    0.72659   1.772       0.0765 .  
-    ## Year2009                   1.27812    0.72659   1.759       0.0787 .  
-    ## Year2010                   1.27187    0.72659   1.750       0.0801 .  
-    ## Year2011                   1.25625    0.72659   1.729       0.0839 .  
-    ## Year2012                   1.25000    0.72659   1.720       0.0855 .  
-    ## Year2013                   1.25000    0.72659   1.720       0.0855 .  
-    ## Year2014                   1.25625    0.72659   1.729       0.0839 .  
-    ## Year2015                   1.25937    0.72659   1.733       0.0832 .  
-    ## StatusDeveloping           4.50822    0.79989   5.636 0.0000000191 ***
-    ## Year2001:StatusDeveloping -0.19373    1.13121  -0.171       0.8640    
-    ## Year2002:StatusDeveloping  0.07554    1.13121   0.067       0.9468    
-    ## Year2003:StatusDeveloping -0.16908    1.13121  -0.149       0.8812    
-    ## Year2004:StatusDeveloping -0.13179    1.13121  -0.117       0.9073    
-    ## Year2005:StatusDeveloping  0.09149    1.13121   0.081       0.9355    
-    ## Year2006:StatusDeveloping  0.13202    1.13121   0.117       0.9071    
-    ## Year2007:StatusDeveloping  0.05805    1.13121   0.051       0.9591    
-    ## Year2008:StatusDeveloping -0.07599    1.13121  -0.067       0.9464    
-    ## Year2009:StatusDeveloping -0.20900    1.13121  -0.185       0.8534    
-    ## Year2010:StatusDeveloping -0.35441    1.13121  -0.313       0.7541    
-    ## Year2011:StatusDeveloping -0.41296    1.13121  -0.365       0.7151    
-    ## Year2012:StatusDeveloping -0.41969    1.13121  -0.371       0.7107    
-    ## Year2013:StatusDeveloping -0.62048    1.12814  -0.550       0.5824    
-    ## Year2014:StatusDeveloping -0.48142    1.13121  -0.426       0.6704    
-    ## Year2015:StatusDeveloping -0.49065    1.13121  -0.434       0.6645    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 4.11 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.6134, Adjusted R-squared:  0.6091 
-    ## F-statistic: 144.1 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response thinness.5.9.years :
-    ## 
-    ## Call:
-    ## lm(formula = thinness.5.9.years ~ Year + Status + Year * Status - 
-    ##     1, data = life.data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.9966 -3.1132 -0.4162  1.7451 22.6246 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value    Pr(>|t|)    
-    ## Year2000                   1.44063    0.74173   1.942      0.0522 .  
-    ## Year2001                   1.41250    0.74173   1.904      0.0570 .  
-    ## Year2002                   1.39375    0.74173   1.879      0.0603 .  
-    ## Year2003                   1.36875    0.74173   1.845      0.0651 .  
-    ## Year2004                   1.34375    0.74173   1.812      0.0701 .  
-    ## Year2005                   1.33125    0.74173   1.795      0.0728 .  
-    ## Year2006                   1.30937    0.74173   1.765      0.0776 .  
-    ## Year2007                   1.29062    0.74173   1.740      0.0820 .  
-    ## Year2008                   1.27187    0.74173   1.715      0.0865 .  
-    ## Year2009                   1.26250    0.74173   1.702      0.0888 .  
-    ## Year2010                   1.24375    0.74173   1.677      0.0937 .  
-    ## Year2011                   1.23125    0.74173   1.660      0.0970 .  
-    ## Year2012                   1.21875    0.74173   1.643      0.1005    
-    ## Year2013                   1.21562    0.74173   1.639      0.1013    
-    ## Year2014                   1.21250    0.74173   1.635      0.1022    
-    ## Year2015                   1.20000    0.74173   1.618      0.1058    
-    ## StatusDeveloping           4.65601    0.81655   5.702 0.000000013 ***
-    ## Year2001:StatusDeveloping -0.19307    1.15478  -0.167      0.8672    
-    ## Year2002:StatusDeveloping -0.09485    1.15478  -0.082      0.9345    
-    ## Year2003:StatusDeveloping -0.17779    1.15478  -0.154      0.8776    
-    ## Year2004:StatusDeveloping -0.14087    1.15478  -0.122      0.9029    
-    ## Year2005:StatusDeveloping  0.06935    1.15478   0.060      0.9521    
-    ## Year2006:StatusDeveloping  0.05443    1.15478   0.047      0.9624    
-    ## Year2007:StatusDeveloping -0.14007    1.15478  -0.121      0.9035    
-    ## Year2008:StatusDeveloping -0.15906    1.15478  -0.138      0.8905    
-    ## Year2009:StatusDeveloping -0.41525    1.15478  -0.360      0.7192    
-    ## Year2010:StatusDeveloping -0.48657    1.15478  -0.421      0.6735    
-    ## Year2011:StatusDeveloping -0.55685    1.15478  -0.482      0.6297    
-    ## Year2012:StatusDeveloping -0.50955    1.15478  -0.441      0.6591    
-    ## Year2013:StatusDeveloping -0.77930    1.15164  -0.677      0.4987    
-    ## Year2014:StatusDeveloping -0.40499    1.15478  -0.351      0.7258    
-    ## Year2015:StatusDeveloping -0.51464    1.15478  -0.446      0.6559    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 4.196 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.6074, Adjusted R-squared:  0.603 
-    ## F-statistic: 140.5 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Income.composition.of.resources :
-    ## 
-    ## Call:
-    ## lm(formula = Income.composition.of.resources ~ Year + Status + 
-    ##     Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -0.61116 -0.09017  0.02960  0.11969  0.41061 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value             Pr(>|t|)    
-    ## Year2000                   0.81110    0.03104  26.128 < 0.0000000000000002 ***
-    ## Year2001                   0.81635    0.03104  26.297 < 0.0000000000000002 ***
-    ## Year2002                   0.82336    0.03104  26.522 < 0.0000000000000002 ***
-    ## Year2003                   0.82636    0.03104  26.619 < 0.0000000000000002 ***
-    ## Year2004                   0.83162    0.03104  26.789 < 0.0000000000000002 ***
-    ## Year2005                   0.83734    0.03104  26.973 < 0.0000000000000002 ***
-    ## Year2006                   0.84405    0.03104  27.189 < 0.0000000000000002 ***
-    ## Year2007                   0.85098    0.03104  27.412 < 0.0000000000000002 ***
-    ## Year2008                   0.85627    0.03104  27.583 < 0.0000000000000002 ***
-    ## Year2009                   0.85984    0.03104  27.698 < 0.0000000000000002 ***
-    ## Year2010                   0.86056    0.03104  27.721 < 0.0000000000000002 ***
-    ## Year2011                   0.86519    0.03104  27.870 < 0.0000000000000002 ***
-    ## Year2012                   0.86788    0.03104  27.957 < 0.0000000000000002 ***
-    ## Year2013                   0.87110    0.03104  28.060 < 0.0000000000000002 ***
-    ## Year2014                   0.87600    0.03104  28.218 < 0.0000000000000002 ***
-    ## Year2015                   0.87872    0.03104  28.306 < 0.0000000000000002 ***
-    ## StatusDeveloping          -0.35771    0.03418 -10.467 < 0.0000000000000002 ***
-    ## Year2001:StatusDeveloping  0.05334    0.04833   1.104              0.26985    
-    ## Year2002:StatusDeveloping  0.05152    0.04833   1.066              0.28650    
-    ## Year2003:StatusDeveloping  0.05288    0.04833   1.094              0.27402    
-    ## Year2004:StatusDeveloping  0.06037    0.04833   1.249              0.21174    
-    ## Year2005:StatusDeveloping  0.06735    0.04833   1.393              0.16359    
-    ## Year2006:StatusDeveloping  0.10149    0.04833   2.100              0.03582 *  
-    ## Year2007:StatusDeveloping  0.10110    0.04833   2.092              0.03653 *  
-    ## Year2008:StatusDeveloping  0.10274    0.04833   2.126              0.03362 *  
-    ## Year2009:StatusDeveloping  0.10504    0.04833   2.173              0.02983 *  
-    ## Year2010:StatusDeveloping  0.10832    0.04833   2.241              0.02509 *  
-    ## Year2011:StatusDeveloping  0.12532    0.04833   2.593              0.00956 ** 
-    ## Year2012:StatusDeveloping  0.12838    0.04833   2.656              0.00794 ** 
-    ## Year2013:StatusDeveloping  0.13126    0.04820   2.723              0.00650 ** 
-    ## Year2014:StatusDeveloping  0.12904    0.04833   2.670              0.00763 ** 
-    ## Year2015:StatusDeveloping  0.12876    0.04833   2.664              0.00776 ** 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.1756 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.9304, Adjusted R-squared:  0.9296 
-    ## F-statistic:  1213 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-    ## 
-    ## 
-    ## Response Schooling :
-    ## 
-    ## Call:
-    ## lm(formula = Schooling ~ Year + Status + Year * Status - 1, data = life.data)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -11.9811  -1.6084   0.3136   1.7381   7.6938 
-    ## 
-    ## Coefficients:
-    ##                           Estimate Std. Error t value            Pr(>|t|)    
-    ## Year2000                   14.8898     0.4886  30.473 <0.0000000000000002 ***
-    ## Year2001                   15.0179     0.4886  30.735 <0.0000000000000002 ***
-    ## Year2002                   15.2616     0.4886  31.233 <0.0000000000000002 ***
-    ## Year2003                   15.3581     0.4886  31.431 <0.0000000000000002 ***
-    ## Year2004                   15.5675     0.4886  31.860 <0.0000000000000002 ***
-    ## Year2005                   15.5178     0.4886  31.758 <0.0000000000000002 ***
-    ## Year2006                   15.6761     0.4886  32.082 <0.0000000000000002 ***
-    ## Year2007                   15.7595     0.4886  32.253 <0.0000000000000002 ***
-    ## Year2008                   15.8689     0.4886  32.476 <0.0000000000000002 ***
-    ## Year2009                   15.9345     0.4886  32.611 <0.0000000000000002 ***
-    ## Year2010                   16.0533     0.4886  32.854 <0.0000000000000002 ***
-    ## Year2011                   16.1595     0.4886  33.071 <0.0000000000000002 ***
-    ## Year2012                   16.2220     0.4886  33.199 <0.0000000000000002 ***
-    ## Year2013                   16.2470     0.4886  33.250 <0.0000000000000002 ***
-    ## Year2014                   16.4158     0.4886  33.596 <0.0000000000000002 ***
-    ## Year2015                   16.4439     0.4886  33.653 <0.0000000000000002 ***
-    ## StatusDeveloping           -5.2633     0.5379  -9.785 <0.0000000000000002 ***
-    ## Year2001:StatusDeveloping   0.3605     0.7607   0.474               0.636    
-    ## Year2002:StatusDeveloping   0.3080     0.7607   0.405               0.686    
-    ## Year2003:StatusDeveloping   0.3854     0.7607   0.507               0.612    
-    ## Year2004:StatusDeveloping   0.4302     0.7607   0.566               0.572    
-    ## Year2005:StatusDeveloping   0.6336     0.7607   0.833               0.405    
-    ## Year2006:StatusDeveloping   0.7333     0.7607   0.964               0.335    
-    ## Year2007:StatusDeveloping   0.7848     0.7607   1.032               0.302    
-    ## Year2008:StatusDeveloping   0.8127     0.7607   1.068               0.285    
-    ## Year2009:StatusDeveloping   0.8875     0.7607   1.167               0.243    
-    ## Year2010:StatusDeveloping   0.8985     0.7607   1.181               0.238    
-    ## Year2011:StatusDeveloping   0.9506     0.7607   1.250               0.212    
-    ## Year2012:StatusDeveloping   1.0277     0.7607   1.351               0.177    
-    ## Year2013:StatusDeveloping   0.9974     0.7587   1.315               0.189    
-    ## Year2014:StatusDeveloping   0.9754     0.7607   1.282               0.200    
-    ## Year2015:StatusDeveloping   0.9744     0.7607   1.281               0.200    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 2.764 on 2906 degrees of freedom
-    ## Multiple R-squared:  0.9513, Adjusted R-squared:  0.9508 
-    ## F-statistic:  1775 on 32 and 2906 DF,  p-value: < 0.00000000000000022
-
-The data-set aims to answer the following key questions:
-
-## Q2. Factors that Affacting Life Expectancy
-
-**Question: Does various predicting factors which has been chosen
-initially really affect the Life expectancy? What are the predicting
-variables actually affecting the life expectancy?**
+**What are the predicting variables actually affecting the life
+expectancy?**
 
 In this question, *life expectancy* will be the dependent variables and
 the other variables are independent variables.
 
 ### Multicollinearity Test
 
-First, I will test multicollinearity among numerical independent
-variables. Multicollinearity is an extreme problem when there is high
-correlation among two or more independent numerical variables. The
-consequences are that (1) standard errors will be inflated, and which
-affects the accuracy of the Beta coefficient estimates, (2) Lower down
-the t statistics, and (3) therefore increase the P-value. It is usually
-understood as redundancy in the data when two variables are highly
-correlated.
+First, I will examine multicollinearity problems among numerical
+independent variables. Multicollinearity is an extreme problem when
+there is high correlation among two or more independent numerical
+variables. The consequences are that (1) standard errors in the
+regression model would be inflated, and affects the accuracy of the beta
+coefficient estimates, (2) lower down the t statistics, and (3)
+therefore increase the P-value. It is usually understood as redundancy
+of variables in the dataset when two variables are highly correlated.
 
-Two thresholds will be used to tackle multicollinearity
+Two thresholds I will be using to detect multicollinearity issue:
 
--   Correlation \> 0.7 (Anderson, Sweeney & Williams 2006)
+-   Correlation \> 0.7 (Anderson, Sweeney & Williams 2006)  
 -   VIF \> 5 (James et al. 2014)
 
-When correlation higher than 7 or VIF (Variance inflation factor) \> 5,
-then there would be a serious multicollinearity problem. Though there
-are these maximum thresholds but the aim is try to keep them as low as
-possible.
+When correlation is higher than 7 or VIF (Variance inflation factor) \>
+5, then there would be a serious multicollinearity problem. Although
+there are these maximum thresholds for us to refer to but the general
+aim is to try to keep these thresholds as low as possible.
 
 From the correlation graph below, highly correlated independent
 variables (both negatively and positively) are identified:
 
 -   **Under.five.deaths** and **infant.deaths**, at a perfect
-    correlation of 1. Under.five.deaths will be selected during multiple
-    linear regression because it has slightly better relationship with
-    life expectancy.
+    correlation of 1. **Under.five.deaths** will be selected when
+    building multiple linear regression model because it has slightly
+    better correlation with life expectancy.
 
--   **GDP** and **percentage expenditure**, at a correlation of 0.9. GDP
-    will be selected with the same reason as Under.five.death.
+-   **GDP** and **percentage expenditure** have a correlation of 0.9.
+    **GDP** will be selected with the same reason as Under.five.death.
 
--   Both **thinness** variables will are highly correlated (0.94). I
-    will keep **thinness prevalence between 5 to 9 years old** as it
-    might be more important to look at because children are more
-    vulnerable compared to 10 to 19 years old teenagers.
+-   Both **thinness** variables are highly correlated (0.94) and both
+    are correlated to life expectancy at the same degree. I will keep
+    **thinness prevalence between 5 to 9 years old** as it might be more
+    important to look at because children are more vulnerable compared
+    to 10 to 19 years old teenagers.
 
 -   **Schooling** and **income.composition.of.resource** are highly
     correlated, I will choose schooling for the same reason as the
@@ -3491,13 +2496,13 @@ num.var_cor <- cor(num.var)
 corrplot(num.var_cor, method = "number", type = "upper")
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](life_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
 
-Building my muliple linear regression model without following numerical
-variables:
+Therefore, I will build my multiple linear regression model without
+following numerical variables:
 
 ``` r
-Removed_Variables <- c("under.five.deaths", "thinness..1.19.years", "percentage.expenditure", "Income.composition.of.resources")
+Removed_Variables <- c("under.five.deaths", "thinness.btw.10.19years", "percentage.expenditure", "Income.composition.of.resources")
 Removed_Variables <- data.frame(Removed_Variables)
 Removed_Variables %>% kbl() %>% kable_styling(bootstrap_options = c("bordered", "striped", "hover"), full_width = F)
 ```
@@ -3518,7 +2523,7 @@ under.five.deaths
 </tr>
 <tr>
 <td style="text-align:left;">
-thinness..1.19.years
+thinness.btw.10.19years
 </td>
 </tr>
 <tr>
@@ -3534,15 +2539,20 @@ Income.composition.of.resources
 </tbody>
 </table>
 
-### Multiple Linear Regression Model
+### MLR Model
 
 Building the model:
 
 ``` r
-res.mlr <- lm(Life.expectancy ~ .- Country - Year - Status - under.five.deaths - thinness..1.19.years - percentage.expenditure - Income.composition.of.resources, data = life.data)
+res.mlr <- lm(Life.expectancy ~ .- Country - Year - under.five.deaths - thinness.btw.10.19years - percentage.expenditure - Income.composition.of.resources, data = life.data)
 ```
 
+Before interpreting the model, I will run a series of diagnostic plots
+to make sure the reliability of the statistical outcomes in the model.
+
 ### VIF check
+
+Applying variance inflation factor (VIF) to check multicollinearity.
 
 ``` r
 vifout <- car::vif(res.mlr)
@@ -3563,10 +2573,18 @@ VIF
 <tbody>
 <tr>
 <td style="text-align:left;">
+Status
+</td>
+<td style="text-align:right;">
+1.899528
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Adult.Mortality
 </td>
 <td style="text-align:right;">
-1.744879
+1.759069
 </td>
 </tr>
 <tr>
@@ -3574,7 +2592,7 @@ Adult.Mortality
 infant.deaths
 </td>
 <td style="text-align:right;">
-2.201333
+2.204212
 </td>
 </tr>
 <tr>
@@ -3582,7 +2600,7 @@ infant.deaths
 Alcohol
 </td>
 <td style="text-align:right;">
-1.646445
+1.953773
 </td>
 </tr>
 <tr>
@@ -3590,7 +2608,7 @@ Alcohol
 Hepatitis.B
 </td>
 <td style="text-align:right;">
-2.025734
+2.027274
 </td>
 </tr>
 <tr>
@@ -3598,7 +2616,7 @@ Hepatitis.B
 Measles
 </td>
 <td style="text-align:right;">
-1.363268
+1.363928
 </td>
 </tr>
 <tr>
@@ -3606,7 +2624,7 @@ Measles
 BMI
 </td>
 <td style="text-align:right;">
-1.752483
+1.756366
 </td>
 </tr>
 <tr>
@@ -3614,7 +2632,7 @@ BMI
 Polio
 </td>
 <td style="text-align:right;">
-1.991455
+1.991569
 </td>
 </tr>
 <tr>
@@ -3622,7 +2640,7 @@ Polio
 Total.expenditure
 </td>
 <td style="text-align:right;">
-1.162602
+1.185514
 </td>
 </tr>
 <tr>
@@ -3630,7 +2648,7 @@ Total.expenditure
 Diphtheria
 </td>
 <td style="text-align:right;">
-2.524406
+2.525734
 </td>
 </tr>
 <tr>
@@ -3638,7 +2656,7 @@ Diphtheria
 HIV.AIDS
 </td>
 <td style="text-align:right;">
-1.416486
+1.417868
 </td>
 </tr>
 <tr>
@@ -3646,7 +2664,7 @@ HIV.AIDS
 GDP
 </td>
 <td style="text-align:right;">
-1.262195
+1.356121
 </td>
 </tr>
 <tr>
@@ -3654,15 +2672,15 @@ GDP
 Population
 </td>
 <td style="text-align:right;">
-1.467247
+1.467981
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-thinness.5.9.years
+thinness.btw.5.9years
 </td>
 <td style="text-align:right;">
-2.021587
+2.025135
 </td>
 </tr>
 <tr>
@@ -3670,17 +2688,37 @@ thinness.5.9.years
 Schooling
 </td>
 <td style="text-align:right;">
-2.397483
+2.433919
 </td>
 </tr>
 </tbody>
 </table>
 
-The multicollinearity problem has been solved.
+VIF of all variables are closed to 1 and 2, which is excellent, and the
+multicollinearity problem can be said has been removed from the model
+with the aid of correlation analysis.
 
-### Assumption diagnostics
+### Assumptions diagnostic
 
-The purpose
+Assumptions of multiple linear regression have to be met otherwise the
+output statistics from the linear regression model would be inaccurate.
+This section will check out the various diagnostic plots for linear
+regression analysis and make transformation to the dataset if necessary.
+
+To meet the linear regression model assumptions, there are a series of
+“surgeries” we can do inclusively or exclusively, for examples, removal
+of outliers and influential points, features section (exclude or
+including variables), transforming the response or predictors, weighting
+the measurement to improve fit, or switching to a different type of
+model.
+
+``` r
+par(mfrow = c(2, 3))
+
+plot(res.mlr, which = 1:5)  
+```
+
+![](life_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
 
 -   In “**Residuals vs Fitter**” graph, the data points of residuals
     follow roughly a straight line at approximate 0. Therefore, I assume
@@ -3692,30 +2730,1592 @@ The purpose
     distributed.
 
 -   In **Scale-Location**, there is a gradually decreasing variance
-    indicating a
+    indicating that it may be an indication of heteroscedasticity.
+
+-   In the **Residuals vs Leverage** plot, this plot help to find
+    influential data point that an inclusion or exclusion of it can
+    alter the results of the multiple linear regression because these
+    data points are associated with large residuals. Visually from the
+    plot, there are no data points located outside of the Cook’s
+    distance dash line located at the upper right and bottom right areas
+    and which indicate no influential points. However, I would try to
+    use mathematics method to find high influential values.
+
+    -   Apart from searching for influential values, outliers to the
+        model can be detected but they may not influence the model
+        output. An outlier here is a point that has an extreme outcome
+        variable value. Observations with standardized residuals higher
+        than 3 in absolute values are possible outliers (James et
+        al. 2014), and there are *28* of them (see below and the
+        “.std.resid” column).
 
 ``` r
-par(mfrow = c(2, 2))
-plot(res.mlr)
+model.diag.metrics <- augment(res.mlr) %>% dplyr::select(.fitted, .resid, .hat, .cooksd, .std.resid)
+model.diag.metrics %>% filter(.std.resid <= -3 |
+                              .std.resid >= 3)
 ```
 
-![](life_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+<div data-pagedtable="false">
 
-## 3. Investigate the Effectiveness of Health Expenditure
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[".fitted"],"name":[1],"type":["dbl"],"align":["right"]},{"label":[".resid"],"name":[2],"type":["dbl"],"align":["right"]},{"label":[".hat"],"name":[3],"type":["dbl"],"align":["right"]},{"label":[".cooksd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":[".std.resid"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"59.50363","2":"-13.80363","3":"0.005986491","4":"0.004302873","5":"-3.381031"},{"1":"57.58831","2":"-12.28831","3":"0.009230709","4":"0.005292472","5":"-3.014797"},{"1":"58.74472","2":"15.85528","3":"0.015464175","4":"0.014948425","5":"3.902205"},{"1":"56.46936","2":"17.93064","3":"0.013618969","4":"0.016773754","5":"4.408850"},{"1":"56.99407","2":"17.20593","3":"0.014171757","4":"0.016090210","5":"4.231844"},{"1":"58.26555","2":"15.73445","3":"0.014263284","4":"0.013545188","5":"3.870109"},{"1":"58.33738","2":"15.46262","3":"0.014483516","4":"0.013289122","5":"3.803672"},{"1":"58.12256","2":"15.47744","3":"0.014116775","4":"0.012967809","5":"3.806609"},{"1":"58.32929","2":"16.27071","3":"0.012250890","4":"0.012389996","5":"3.997929"},{"1":"67.04915","2":"-14.24915","3":"0.001937917","4":"0.001472252","5":"-3.483071"},{"1":"54.34012","2":"-18.04012","3":"0.010741858","4":"0.013314448","5":"-4.429316"},{"1":"64.93418","2":"-12.63418","3":"0.007808775","4":"0.004719219","5":"-3.097428"},{"1":"64.72020","2":"-14.72020","3":"0.004134083","4":"0.003366581","5":"-3.602179"},{"1":"57.47184","2":"16.02816","3":"0.011921551","4":"0.011692329","5":"3.937675"},{"1":"57.24180","2":"16.15820","3":"0.011441661","4":"0.011393426","5":"3.968659"},{"1":"57.19590","2":"16.10410","3":"0.011338419","4":"0.011212801","5":"3.955165"},{"1":"57.05414","2":"15.94586","3":"0.010942589","4":"0.010601247","5":"3.915518"},{"1":"68.52088","2":"-14.52088","3":"0.004879685","4":"0.003872673","5":"-3.554735"},{"1":"63.51611","2":"-18.21611","3":"0.004547012","4":"0.005675184","5":"-4.458588"},{"1":"64.19961","2":"-20.89961","3":"0.006296331","4":"0.010380878","5":"-5.119903"},{"1":"55.41965","2":"-13.11965","3":"0.006946440","4":"0.004519032","5":"-3.215051"},{"1":"63.93310","2":"-22.43310","3":"0.005981545","4":"0.011354995","5":"-5.494700"},{"1":"53.07235","2":"-14.07235","3":"0.011285007","4":"0.008520728","5":"-3.456074"},{"1":"33.13501","2":"13.26499","3":"0.033804105","4":"0.023748557","5":"3.295539"},{"1":"34.07662","2":"13.02338","3":"0.032343966","4":"0.021836485","5":"3.233071"},{"1":"35.96729","2":"12.43271","3":"0.029227833","4":"0.017868074","5":"3.081479"},{"1":"59.64470","2":"-13.24470","3":"0.008181235","4":"0.005437793","5":"-3.247716"},{"1":"58.56055","2":"-13.06055","3":"0.009299937","4":"0.006024241","5":"-3.204367"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+
+</div>
+
+-   Compared to outliers, I will instead look at cook distance metric to
+    decide whether a data point should be removed. Applying a rule of
+    thumb established by P. Bruce and Bruce 2017, an observation is
+    considered having a high influence to the model if its Cook’s
+    distance is higher than 4/(n - p - 1), where n is the number of
+    observations (2938 rows of data in our case) and p is the number of
+    predictor variables (15 predictors in our case).
+
+$$
+
+4/(n - p - 1) = 4/(2938 - 15 -1) = 0.001368925
+
+$$ \* From following computation, there are 212 data points from the
+dataset (7.215%) are associated with large residuals and removal of them
+may help improve the model.
+
+``` r
+influential.obs <- model.diag.metrics %>% 
+  mutate(row.id = 1:nrow(model.diag.metrics)) %>% 
+  relocate(row.id, .before = .fitted) %>% 
+  dplyr::select(row.id, .cooksd) %>% 
+  filter(.cooksd >= 0.001368925)
+
+nrow(influential.obs)
+```
+
+    ## [1] 212
+
+``` r
+212/2938 * 100
+```
+
+    ## [1] 7.215793
+
+However, I will only remove 147 data points who has the largest Cooks
+distance (.cooksd) so that I will only remove a maximum of 5% of data
+from the dataset instead of 7.215% to avoid the chance of influencing
+the model output statistically.
+
+``` r
+5/100*2938
+```
+
+    ## [1] 146.9
+
+Creating an influential.obs table with 147 of the targeted data points.
+
+``` r
+influential.obs2 <- model.diag.metrics %>% 
+  mutate(row.id = 1:nrow(model.diag.metrics)) %>% 
+  relocate(row.id, .before = .fitted) %>% 
+  dplyr::select(row.id, .cooksd) %>% 
+  filter(.cooksd >= 0.001368925) %>% 
+  arrange(-.cooksd) %>% 
+  slice_head(n = 147)
+```
+
+### MLR Model 2
+
+Anti-join the life.data dataset from the influential.obs table and
+create a new table that has 2791 rows of data (147 large residual
+influential points have been removed).
+
+``` r
+life.data.withoutInflenObs <- life.data %>% 
+  mutate(row.id = 1:nrow(life.data)) %>% 
+  relocate(row.id, .before = Country) %>% 
+  anti_join(influential.obs2, by = "row.id") %>% 
+  dplyr::select(-row.id)
+```
+
+Making the second multiple linear regression model:
+
+``` r
+res.mlr2 <- lm(Life.expectancy ~ .- Country - Year - under.five.deaths - thinness.btw.10.19years - percentage.expenditure - Income.composition.of.resources, data = life.data.withoutInflenObs)
+```
+
+``` r
+par(mfrow = c(2, 3))
+plot(res.mlr2, which = 1:5)
+```
+
+![](life_files/figure-gfm/unnamed-chunk-45-1.png)<!-- -->
+
+Now the linear relationship, normality, and homogeneity of variance have
+improved and met the assumptions of linear regression. The residual data
+points on “Scale-Location” plot has become more random and equally
+spread and the red line in the middle of the plot has become more
+horizontal. There are no high influential points outside of the cook’s
+distance on the “Residuals vs Leverage” plot.
+
+### Model Interpretation
+
+The multiple linear regression show that:
+
+-   According to **Adjusted R-squared**, The model can explain 85.5% of
+    variability of life expectancy, which is a very high level.
+
+-   The F-statistic is 1032 and an overall P-value of less than 0.001,
+    which indicates that at least 1 variable is statistically related to
+    the life expectancy.
+
+-   Variables that has a P-value (“Pr(\>\|t\|)”) less than 0.05 (as
+    indicated with “\*“) are statistically affecting life expectancy.
+
+``` r
+summary(res.mlr2)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = Life.expectancy ~ . - Country - Year - under.five.deaths - 
+    ##     thinness.btw.10.19years - percentage.expenditure - Income.composition.of.resources, 
+    ##     data = life.data.withoutInflenObs)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -14.6806  -2.0555  -0.0036   2.3415  10.7489 
+    ## 
+    ## Coefficients:
+    ##                              Estimate      Std. Error t value
+    ## (Intercept)           54.919369270341  0.583007125306  94.200
+    ## StatusDeveloping      -1.121308238815  0.233360456687  -4.805
+    ## Adult.Mortality       -0.022175148698  0.000755442023 -29.354
+    ## infant.deaths         -0.002750544488  0.001175362634  -2.340
+    ## Alcohol               -0.006452559773  0.022907580577  -0.282
+    ## Hepatitis.B            0.001995202829  0.003758080783   0.531
+    ## Measles               -0.000011317405  0.000010211361  -1.108
+    ## BMI                    0.026811680928  0.004365056982   6.142
+    ## Polio                  0.022277499307  0.004128104339   5.397
+    ## Total.expenditure      0.080790531836  0.029960675032   2.697
+    ## Diphtheria             0.029684344213  0.004545072390   6.531
+    ## HIV.AIDS              -0.513859724501  0.018484110975 -27.800
+    ## GDP                    0.000044436767  0.000005653359   7.860
+    ## Population             0.000000003338  0.000000002411   1.385
+    ## thinness.btw.5.9years -0.037148287881  0.020796369536  -1.786
+    ## Schooling              1.153671879687  0.033897730511  34.034
+    ##                                   Pr(>|t|)    
+    ## (Intercept)           < 0.0000000000000002 ***
+    ## StatusDeveloping       0.00000162945604687 ***
+    ## Adult.Mortality       < 0.0000000000000002 ***
+    ## infant.deaths                      0.01935 *  
+    ## Alcohol                            0.77821    
+    ## Hepatitis.B                        0.59552    
+    ## Measles                            0.26782    
+    ## BMI                    0.00000000092950331 ***
+    ## Polio                  0.00000007367039532 ***
+    ## Total.expenditure                  0.00705 ** 
+    ## Diphtheria             0.00000000007736926 ***
+    ## HIV.AIDS              < 0.0000000000000002 ***
+    ## GDP                    0.00000000000000544 ***
+    ## Population                         0.16626    
+    ## thinness.btw.5.9years              0.07416 .  
+    ## Schooling             < 0.0000000000000002 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 3.429 on 2775 degrees of freedom
+    ## Multiple R-squared:  0.8545, Adjusted R-squared:  0.8538 
+    ## F-statistic:  1087 on 15 and 2775 DF,  p-value: < 0.00000000000000022
+
+-   Following are variables that statistically affecting the life
+    expectancy in a **positive** way, with a P-value of less than 0.05.
+
+``` r
+output.table <- summary(res.mlr2)$coefficients %>% 
+  data.frame() %>% 
+  dplyr::select(Estimate, Pr...t..) %>% 
+  rename("P.value" = Pr...t..) %>% 
+  filter(P.value < 0.05) %>% 
+  arrange(P.value) %>% 
+  mutate(P.value = round(P.value, 6))
+  
+output.table[-1, ] %>% 
+  filter(Estimate > 0) %>% 
+  arrange(-Estimate) %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("hover", "bordered"), full_width = F)
+```
+
+<table class="table table-hover table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+P.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Schooling
+</td>
+<td style="text-align:right;">
+1.1536719
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total.expenditure
+</td>
+<td style="text-align:right;">
+0.0807905
+</td>
+<td style="text-align:right;">
+0.007048
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Diphtheria
+</td>
+<td style="text-align:right;">
+0.0296843
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BMI
+</td>
+<td style="text-align:right;">
+0.0268117
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Polio
+</td>
+<td style="text-align:right;">
+0.0222775
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GDP
+</td>
+<td style="text-align:right;">
+0.0000444
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+</tbody>
+</table>
+
+-   Following are variables that statistically affecting the life
+    expectancy in a **negative** way, with a P-value of less than 0.05.
+
+``` r
+output.table[-1, ] %>% 
+  filter(Estimate < 0) %>% 
+  arrange(Estimate) %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("hover", "bordered"), full_width = F)
+```
+
+<table class="table table-hover table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+P.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+StatusDeveloping
+</td>
+<td style="text-align:right;">
+-1.1213082
+</td>
+<td style="text-align:right;">
+0.000002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HIV.AIDS
+</td>
+<td style="text-align:right;">
+-0.5138597
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adult.Mortality
+</td>
+<td style="text-align:right;">
+-0.0221751
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+infant.deaths
+</td>
+<td style="text-align:right;">
+-0.0027505
+</td>
+<td style="text-align:right;">
+0.019346
+</td>
+</tr>
+</tbody>
+</table>
+
+## Q2. Investigate the Effectiveness of Health Expenditure
 
 **Question: Should a country having a lower life expectancy value(\<65)
 increase its healthcare expenditure in order to improve its average
 lifespan?**
 
-## 4. How does Infant and Adult mortality rates affect life expectancy?
+Yes for two reasons.
 
-## 5. Does Life Expectancy has positive or negative correlation with eating habits, lifestyle, exercise, smoking, drinking alcohol etc. What is the impact of schooling on the lifespan of humans?
+*Reason 1*: Based on the multiple linear regression in previous section,
+it indicated that total expenditure by government on healthcare is
+statistically related to life expectancy in a positive way, at a
+significant P-value of lower than 0.01. It indicates that 1% increase in
+the healthcare expenditure by government, the life expectancy will
+increase by 0.0807905 (29.5 days) on average, while keep all other
+predicting variables constant.
 
-## 6. Does Life Expectancy have positive or negative relationship with drinking alcohol?
+``` r
+0.0807905*365
+```
 
-## 7. Do densely populated countries tend to have lower life expectancy?
+    ## [1] 29.48853
 
-## 8. What is the impact of Immunization coverage on life Expectancy?
+*Reason 2*: Governments in countries with higher life expectancy value
+(\>65) spent more on healthcare statistically than countries with lower
+life expectancy (\<65). (Welch‘s Two Sample t-test: t = -8.6583, df =
+1821.2, p-value \< 0.001). In short, government of longer lifespan
+countries spend more on healthcare.
+
+Visualisation:
+
+``` r
+# data frame
+df2 <- life.data %>% 
+  dplyr::select(Life.expectancy, Total.expenditure) %>% 
+  mutate(my.group = ifelse(Life.expectancy >= 65, "LifeExp>65", "LifeExp<65")) %>% 
+  group_by(my.group) %>% 
+  mutate(count = n(),
+         label = paste0(my.group, "\n(n=", count, ")"))
+
+# plot
+  ggplot(df2, aes(x = label, y = Total.expenditure, colour = my.group)) +
+  geom_jitter(alpha = 0.5) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.1, colour = "black") +
+  stat_summary(fun = "mean", geom = "point", shape = 4, size = 5, color = "black") + 
+  theme_classic()
+```
+
+![](life_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
+
+Both of the distributions look normal (normal distribution) based on the
+distance between mean and median in the box plots as well as the overall
+shape of their boxplot. Technically, the boxes of both of the plot are
+symmetrical with mean and median located at the center.
+
+### Welch’s T-test
+
+Performing **Welch’s T test** and the P-value of less than 0.05
+concludes the difference between the both groups is statistically
+significant. Welch’s T test is selected because the sample size
+different is quite large, and this test do not have the assumption of
+variance homogeneity between groups and therefore different sample size
+is allowed.
+
+``` r
+t.test(df2$Total.expenditure~df2$my.group)
+```
+
+    ## 
+    ##  Welch Two Sample t-test
+    ## 
+    ## data:  df2$Total.expenditure by df2$my.group
+    ## t = -8.6583, df = 1821.2, p-value < 0.00000000000000022
+    ## alternative hypothesis: true difference in means between group LifeExp<65 and group LifeExp>65 is not equal to 0
+    ## 95 percent confidence interval:
+    ##  -0.9709779 -0.6123292
+    ## sample estimates:
+    ## mean in group LifeExp<65 mean in group LifeExp>65 
+    ##                 5.391601                 6.183254
+
+## Q3. Infant and Adult Mortality versus Life Expectancy
+
+**Question: How does Infant and Adult mortality rates affect life
+expectancy?**
+
+Both infant and adult mortality have statistical negative impact on life
+expectancy. Based on the output of multiple linear regression in
+previous section:
+
+-   Any increment in one unit of adult mortality, life expectancy will
+    be reduced by 0.0222 (P-value \< 0.001)
+
+-   Any increment in one unit of infant deaths, life expectancy will be
+    reduced by 0.0028 (P-value \< 0.01)
+
+``` r
+# df
+df3 <- life.data %>% 
+  dplyr::select(Status, Life.expectancy, Adult.Mortality, infant.deaths) %>% 
+  pivot_longer(c(3:4), names_to = "myvar", values_to = "myval") %>% 
+  mutate(myvar = as.factor(myvar))
+
+# plot
+ggplot(df3, aes(y = Life.expectancy, x = myval, color = myvar)) +
+  geom_point(alpha = 0.5) +
+  facet_wrap(~myvar, scales = "free_x") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "Life Expectancy") 
+```
+
+![](life_files/figure-gfm/unnamed-chunk-52-1.png)<!-- -->
+
+## Q4. Correlation of schooling, BMI, and alcohol with Life Expectancy
+
+**Question: Does Life Expectancy has positive or negative correlation
+with schooling, BMI, drinking alcohol etc.**
+
+Setting up dataframe for this section.
+
+``` r
+df4 <- life.data %>% dplyr::select(Status, Life.expectancy, Alcohol, BMI, Schooling)
+```
+
+### Correlation
+
+Correlation is a measure of association between variables **without
+making any assumption whether life expectancy is dependent on alcohol,
+BMI, and schooling**.
+
+Result shows that:
+
+-   Life expectancy has a week positive correlation with alcohol, r =
+    0.42  
+-   Life expectancy has a moderate positive correlation with BMI, r =
+    0.57  
+-   Life expectancy has a good positive correlation with schooling, r =
+    0.76
+
+``` r
+cor.data <- cor(df4[2:5])
+corrplot(cor.data, method = "number", type = "lower")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-54-1.png)<!-- -->
+
+### PCA
+
+A PCA and various scatter plots are graphed to act as visual aid.
+
+**Main points**:
+
+-   PCA supports the correlation that “life expectancy” is more related
+    to “BMI” and “Schooling”, and less related to “Alcohol”
+    consumption”. If a variable is negatively correlated to life
+    expectancy, it will be located at the opposite side of the origin.
+    The PCA also explains excellently well the variation in the dataset
+    at a combination of both dimension at 82.6%.
+
+-   PCA also help revealing that developed countries have higher degree
+    in alcohol consumption, schooling, BMI, and life expectancy than
+    many developing countries.
+
+-   Three scatter plots at the bottom with an overall correlation line
+    plotted (Not Based On Country Status) also supports the findings of
+    correlations in previous correlation plot.
+
+``` r
+res.pca <- PCA(df4, quali.sup = 1, graph = F)
+
+f1 <- fviz_pca_biplot(res.pca, palette = "Set2", repel = T, habillage = "Status",
+                addEllipses = T, geom.ind = "point", 
+                pointsize = 1.5, pointshape = 21, col.var = "blue")
+f2 <- fviz_screeplot(res.pca, addlabels = T, ylim = c(0, 70))
+f3 <- fviz_contrib(res.pca, choice = "var")
+f4 <- ggplot(df4, aes(y = Life.expectancy, x = Alcohol)) + geom_point(aes(color = Status), alpha = 0.5) + 
+  geom_smooth(se = F, method = "lm") + theme_classic() + labs(title = "Alcohol")
+f5 <- ggplot(df4, aes(y = Life.expectancy, x = BMI)) + geom_point(aes(color = Status), alpha = 0.5) + 
+  geom_smooth(se = F, method = "lm") + theme_classic() + labs(title = "BMI")
+f6 <- ggplot(df4, aes(y = Life.expectancy, x = Schooling)) + geom_point(aes(color = Status), alpha = 0.5) + 
+  geom_smooth(se = F, method = "lm") + theme_classic() + labs(title = "Schooling")
+
+
+right <- plot_grid(f2, f3, ncol = 1)
+top <- plot_grid(f1, right, rel_widths = c(2.5, 1))
+bottom <- plot_grid(f6, f5, f4, nrow = 1)
+
+plot_grid(top, bottom, ncol = 1)
+```
+
+![](life_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
+
+### Regression
+
+If attempt to describe the dependence of life expectancy on alcohol, BMI
+and schooling, a multiple linear regression model can be created. Output
+shows that the BMI and Schooling are statistically related to life
+expectancy. However, the model has higher residual standard error rate
+and explaining less variation in the life expectancy (lower adjusted
+R-squared of 60%).
+
+``` r
+model1 <- lm(Life.expectancy ~., data = df4[, 2:5])
+summary(model1)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = Life.expectancy ~ ., data = df4[, 2:5])
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -27.2529  -2.9112   0.3987   3.6102  30.8555 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value            Pr(>|t|)    
+    ## (Intercept) 43.348082   0.430338 100.730 <0.0000000000000002 ***
+    ## Alcohol     -0.041983   0.033396  -1.257               0.209    
+    ## BMI          0.104586   0.006627  15.781 <0.0000000000000002 ***
+    ## Schooling    1.839998   0.045305  40.613 <0.0000000000000002 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 5.991 on 2934 degrees of freedom
+    ## Multiple R-squared:  0.6038, Adjusted R-squared:  0.6033 
+    ## F-statistic:  1490 on 3 and 2934 DF,  p-value: < 0.00000000000000022
+
+Compared to the output of following multiple linear regression model
+that built previously, this model has a lower level of residual standard
+error and adjusted R-squared. These indicates that it is a better model.
+
+``` r
+summary(res.mlr2)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = Life.expectancy ~ . - Country - Year - under.five.deaths - 
+    ##     thinness.btw.10.19years - percentage.expenditure - Income.composition.of.resources, 
+    ##     data = life.data.withoutInflenObs)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -14.6806  -2.0555  -0.0036   2.3415  10.7489 
+    ## 
+    ## Coefficients:
+    ##                              Estimate      Std. Error t value
+    ## (Intercept)           54.919369270341  0.583007125306  94.200
+    ## StatusDeveloping      -1.121308238815  0.233360456687  -4.805
+    ## Adult.Mortality       -0.022175148698  0.000755442023 -29.354
+    ## infant.deaths         -0.002750544488  0.001175362634  -2.340
+    ## Alcohol               -0.006452559773  0.022907580577  -0.282
+    ## Hepatitis.B            0.001995202829  0.003758080783   0.531
+    ## Measles               -0.000011317405  0.000010211361  -1.108
+    ## BMI                    0.026811680928  0.004365056982   6.142
+    ## Polio                  0.022277499307  0.004128104339   5.397
+    ## Total.expenditure      0.080790531836  0.029960675032   2.697
+    ## Diphtheria             0.029684344213  0.004545072390   6.531
+    ## HIV.AIDS              -0.513859724501  0.018484110975 -27.800
+    ## GDP                    0.000044436767  0.000005653359   7.860
+    ## Population             0.000000003338  0.000000002411   1.385
+    ## thinness.btw.5.9years -0.037148287881  0.020796369536  -1.786
+    ## Schooling              1.153671879687  0.033897730511  34.034
+    ##                                   Pr(>|t|)    
+    ## (Intercept)           < 0.0000000000000002 ***
+    ## StatusDeveloping       0.00000162945604687 ***
+    ## Adult.Mortality       < 0.0000000000000002 ***
+    ## infant.deaths                      0.01935 *  
+    ## Alcohol                            0.77821    
+    ## Hepatitis.B                        0.59552    
+    ## Measles                            0.26782    
+    ## BMI                    0.00000000092950331 ***
+    ## Polio                  0.00000007367039532 ***
+    ## Total.expenditure                  0.00705 ** 
+    ## Diphtheria             0.00000000007736926 ***
+    ## HIV.AIDS              < 0.0000000000000002 ***
+    ## GDP                    0.00000000000000544 ***
+    ## Population                         0.16626    
+    ## thinness.btw.5.9years              0.07416 .  
+    ## Schooling             < 0.0000000000000002 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 3.429 on 2775 degrees of freedom
+    ## Multiple R-squared:  0.8545, Adjusted R-squared:  0.8538 
+    ## F-statistic:  1087 on 15 and 2775 DF,  p-value: < 0.00000000000000022
+
+**Insights**:
+
+Alcohol is insignificantly related to life expectancy at a P-value of
+0.778, whereas BMI and schooling are significantly related to life
+expectancy at a P-value of lower than 0.01. Both BMI and schooling
+relates to life expectancy positively. One unit increase in BMI, the
+life expectancy is expected to increase 0.027 year on average, whereas
+one unit increase in schooling, life expectancy is expected to increase
+1.15 year on average (Adjusted R-squared: 0.8538, F(15, 2775) = 1087, P
+\< 0.01).
+
+## Q5. Population versus lower life expectancy?
+
+**Question: Do densely populated countries tend to have lower life
+expectancy?**
+
+Both parametric and non-parametric correlation methods (“pearson” and
+“spearman”) suggest that the correlation between population and life
+expectancy is negative and the correlation is actually extremely small.
+
+Setting the dataset:
+
+``` r
+df5 <- life.data %>% dplyr::select(Status, Life.expectancy, Population) %>% 
+  mutate(Population.log = log(Population),
+         Life.expectancy.log = log(Life.expectancy))
+```
+
+Pearson correlation:
+
+``` r
+cor(y = df5$Life.expectancy, x = df5$Population, method = "pearson")
+```
+
+    ## [1] -0.0299053
+
+More conservative non-parametric method: Spearman correlation:
+
+``` r
+cor(y = df5$Life.expectancy, x = df5$Population, method = "spearman")
+```
+
+    ## [1] -0.05657282
+
+A scatter plot has the same result, the relationship between population
+and life expectancy is quite difficult to see, and the situation is
+similar for both developing and developed countries. The R-squared
+values (explained variation) of two regression equations are very low.
+
+``` r
+ggscatter(df5, x = "Population.log", y = "Life.expectancy", color = "Status", add = "reg.line") +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~"), color = Status)) +
+  labs(x = "log(Population)",
+       title = "Life Expectancy versus Log-Population, Grouped by Country Status") +
+  theme(plot.title = element_text(face = "bold", size = 15, hjust = 0.5))
+```
+
+    ## `geom_smooth()` using formula 'y ~ x'
+
+![](life_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+
+From the plot, we can see that lower life expectancy is generally
+associated with developing countries, and life expectancy is generally
+higher in developed countries. Life expectancy is generally dictated by
+many variables, as specified in the multiple linear regression model I
+have built previously. Many factors are related and are required to
+understand the variability in the life expectancy.
+
+## Q6. Does developed countries have higher life expectancy?
+
+Getting the data frame:
+
+``` r
+df6 <- df5 %>% dplyr::select(Status, Life.expectancy) %>% 
+  group_by(Status) %>% 
+  mutate(count = n(),
+         Country.Status = paste0(Status, " (n=", count, ")")) 
+```
+
+### Shapiro-Wilk test
+
+The formal normality test is called Shapiro-Wilk test with a null
+hypothesis that the distribution is normal. The shapiro-wilk test
+rejects the null hypothesis of group and saying their data are not
+normally distribution.
+
+``` r
+by(data = df6$Life.expectancy, INDICES = df6$Country.Status, shapiro.test)
+```
+
+    ## df6$Country.Status: Developed (n=512)
+    ## 
+    ##  Shapiro-Wilk normality test
+    ## 
+    ## data:  dd[x, ]
+    ## W = 0.9844, p-value = 0.00002671
+    ## 
+    ## ------------------------------------------------------------ 
+    ## df6$Country.Status: Developing (n=2426)
+    ## 
+    ##  Shapiro-Wilk normality test
+    ## 
+    ## data:  dd[x, ]
+    ## W = 0.94965, p-value < 0.00000000000000022
+
+However, I will reject the result of Shapiro-Wilk test because the
+sample size are too large for this test to handle. In general,
+
+-   if the sample size is too small, Shapiro-Wilk test will tend to
+    conclude that the data is normally distributed (become harder to
+    reject null hypothesis), and
+
+-   if the sample size is too large, Shapiro-Wilk test will tend to
+    conclude that a set of data is not normally distributed (become
+    easier to reject null hypothesis).
+
+Therefore, visual aids for normality assessments are required:
+
+``` r
+g1 <- ggplot(df6, aes(x = Life.expectancy, color = Status)) +
+  geom_histogram(alpha = 0) +
+  theme_bw() +
+  facet_wrap(~Country.Status, scales = "free_x") +
+  theme(legend.position = "none")
+
+
+g2 <- ggplot(df6, aes(x = Life.expectancy, y = "", color = Status)) +
+  geom_boxplot() +
+  theme_bw() +
+  facet_wrap(~Country.Status, scales = "free_x") +
+  theme(legend.position = "none") +
+  stat_summary(fun = "mean", geom = "point", shape = 4, size = 5, color = "black") 
+  
+
+plot_grid(g1, g2, ncol = 1)
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](life_files/figure-gfm/unnamed-chunk-64-1.png)<!-- -->
+
+To meet the requirement of normality assumption of t-test, the data
+doesn’t have to be perfectly normal but it has to be at least roughly
+fits a bell curve shape.
+
+-   From the histogram, I can see bell curve in two different degrees,  
+-   However, the boxplot of developed countries suggest normality (the
+    box is symmetrical with the mean and median in the center) but the
+    data distribution of developing countries is not normal.
+
+### Wilcoxon Signed Rank Test
+
+A non-parametric, median-based comparison test is run and concludes that
+the difference between life expectancy in developed and developing
+countries is statistically significance (Wilcoxon rank sum test: W =
+1136054, p-value \< 0.001).
+
+``` r
+wilcox.test(df6$Life.expectancy~df6$Country.Status, paired = F)
+```
+
+    ## 
+    ##  Wilcoxon rank sum test with continuity correction
+    ## 
+    ## data:  df6$Life.expectancy by df6$Country.Status
+    ## W = 1136054, p-value < 0.00000000000000022
+    ## alternative hypothesis: true location shift is not equal to 0
+
+## Q7. What is the impact of Immunization coverage on life Expectancy?
+
+Immunization coverage has positive correlation with life expectancy, as
+indicated by the immunisation of Hepatitis B, Polio, and Diphtheria at
+following correlation values. The correlations are moderate.
+
+``` r
+# set up data frame
+df7 <- life.data %>% 
+  dplyr::select(Life.expectancy, Hepatitis.B, Polio, Diphtheria)
+
+corrplot(cor(df7), method = "number", type = "upper")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
+
+Visually:
+
+``` r
+df7.2 <- df7 %>% 
+  pivot_longer(c(2:4), names_to = "myvar", values_to = "myvalues") %>% 
+  mutate(myvar = as.factor(myvar))
+
+ggplot(df7.2, aes(y = Life.expectancy, x = myvalues, colour = myvar)) + 
+  geom_point(alpha = 0.5) + 
+  facet_wrap(~myvar) + geom_smooth(se = F, method = "lm") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-67-1.png)<!-- -->
+
+Statistics from the multiple linear regression model built previously
+suggests that:
+
+-   Diphtheria has a statistical positive relationship with life
+    expectancy, at a P-value of less than 0.05. An increase in one % of
+    Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage
+    among 1-year-olds, life expectancy will increase by 0.03 year on
+    average.
+
+-   Polio has also a statistical positive relationship with life
+    expectancy, at a P-value of less than 0.05. An increase in one % of
+    Polio immunisation among 1-year-olds, life expectancy will increase
+    by 0.02 year on average.
+
+-   Hepatitis B immunisation do not have a statistical relationship with
+    life expectancy, which means that having an increment in Hepatitis B
+    immunisation can lead to zero increment in life expectancy.
+
+## Q8 Longiditudinal Multilevel Modeling with Years
+
+**Question: How life expectancy has changed over the years in developed
+and developing countries? Please also find the impacts of “Status”,
+“Total.expenditure”, “Measles”, “HIV.AIDS”, “Schooling”, “Diphtheria”,
+“Hepatitis.B”, and “Polio”.**
+
+The section is specially designed for if there is an interest in finding
+out the effect of years in relation to life expectancy.
+
+The associated predictors are:
+
+``` r
+variables <- c("Status", "Total.expenditure", "Measles", "HIV.AIDS", "Schooling", "Diphtheria", "Hepatitis.B", "Polio")
+
+variables %>% kbl(col.names = "Associated Predictors") %>% kable_styling(full_width = F, bootstrap_options = c("stripped", "bordered", "hover"))
+```
+
+<table class="table table-bordered table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Associated Predictors
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Status
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total.expenditure
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Measles
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HIV.AIDS
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Schooling
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Diphtheria
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hepatitis.B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Polio
+</td>
+</tr>
+</tbody>
+</table>
+
+### Time-transformation
+
+There are following levels within the variable “year”.
+
+``` r
+levels(life.data$Year)
+```
+
+    ##  [1] "2000" "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009"
+    ## [11] "2010" "2011" "2012" "2013" "2014" "2015"
+
+Transforming the “year” to numerical values starting with 0 for 2000, 1
+for 2001, 2 for 2002 and all the way until 15 to 2015.
+
+``` r
+life.data2 <- life.data %>% 
+  mutate(Year = fct_recode(Year,
+                            "0" = "2000", 
+                            "1" = "2001", 
+                            "2" = "2002", 
+                            "3" = "2003", 
+                            "4" = "2004", 
+                            "5" = "2005", 
+                            "6" = "2006", 
+                            "7" = "2007", 
+                            "8" = "2008", 
+                            "9" = "2009", 
+                            "10" = "2010", 
+                            "11" = "2011", 
+                            "12" = "2012", 
+                            "13" = "2013", 
+                            "14" = "2014", 
+                            "15" = "2015")) %>%  
+  mutate(Year = as.numeric(as.character(Year)))
+```
+
+**Set up data frame to be used for this section**
+
+``` r
+df8 <- life.data2 %>% 
+  dplyr::select(Country, Year, Status, Life.expectancy, Total.expenditure, Measles, HIV.AIDS, Schooling, Diphtheria, Hepatitis.B, Polio)
+
+glimpse(df8)
+```
+
+    ## Rows: 2,938
+    ## Columns: 11
+    ## $ Country           <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, …
+    ## $ Year              <dbl> 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0…
+    ## $ Status            <fct> Developing, Developing, Developing, Developing, Deve…
+    ## $ Life.expectancy   <dbl> 65.0, 59.9, 59.9, 59.5, 59.2, 58.8, 58.6, 58.1, 57.5…
+    ## $ Total.expenditure <dbl> 8.16, 8.18, 8.13, 8.52, 7.87, 9.20, 9.42, 8.33, 6.73…
+    ## $ Measles           <int> 1154, 492, 430, 2787, 3013, 1989, 2861, 1599, 1141, …
+    ## $ HIV.AIDS          <dbl> 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.…
+    ## $ Schooling         <dbl> 10.1, 10.0, 9.9, 9.8, 9.5, 9.2, 8.9, 8.7, 8.4, 8.1, …
+    ## $ Diphtheria        <dbl> 65, 62, 64, 67, 68, 66, 63, 64, 63, 58, 58, 5, 41, 3…
+    ## $ Hepatitis.B       <dbl> 65, 62, 64, 67, 68, 66, 63, 64, 63, 64, 66, 67, 65, …
+    ## $ Polio             <dbl> 6, 58, 62, 67, 68, 66, 63, 64, 63, 58, 58, 5, 41, 36…
+
+### Multicollinearity Check
+
+One of the assumption of linear mixed models is predictors are free from
+multicollinearity issues. I will be using correlation matrix for this
+assessment with correlation higher than 0.7 as a threshold that should
+not be exceeded (Anderson, Sweeney & Williams 2006).
+
+``` r
+df_cor <- df8 %>%
+  dplyr::select_if(is.numeric) %>% 
+  dplyr::select(-Life.expectancy) %>% 
+  cor()
+
+corrplot(df_cor, method = "number", type = "lower")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-72-1.png)<!-- -->
+
+Removing “Diphtheria” from the dataset because its correlations with
+“Hepatitis.B” and “Polio” are 0.68 and 0.67, these values are very
+closed to 0.7 and therefore there might be a risk of multicollinearity.
+
+``` r
+df8 <- df8 %>% dplyr::select(-Diphtheria)
+```
+
+### Visualisation
+
+The purposes of visualisation here are to see confirm visually that,
+
+-   is there inherent difference between countries at time 0 (Year-2000)
+    in both developed and developing status (different intercept) ?
+
+-   is the effect of year on life expectancy different between countries
+    (different slope)?
+
+**Graph 1**:
+
+``` r
+ggplot(df8, aes(x = Year, y = Life.expectancy, color = Country)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~Status) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs()
+```
+
+![](life_files/figure-gfm/unnamed-chunk-74-1.png)<!-- --> **Graph 2
+(Alternative)**:
+
+``` r
+ggplot(df8, aes(x = Year, y = Life.expectancy)) +
+  geom_point() + 
+  geom_line() +  
+  facet_wrap(~Country, scale = "free_x") +
+  theme_classic() +
+  labs(title = "Life Expectancy of Countries from 2000 to 2015")
+```
+
+![](life_files/figure-gfm/unnamed-chunk-75-1.png)<!-- -->
+
+**Insights from graph 1 and graph 2**
+
+-   Life expectancy grows *linearly* with time
+
+-   Different intercept and slope for each country status (Developed vs
+    Developing)
+
+-   Differences between developed and developing countries can be strong
+
+-   Within each country status, high individual variations between
+    countries. For example, some developing countries have higher values
+    for their life expectancy.
+
+### Unconditional Mean Model
+
+**Model 1**
+
+Following model 1 is built with only 2 variables - life expectancy as
+the responding variable (y) and countries as the random effect.
+
+``` r
+model1 <- lme(Life.expectancy ~ 1, random =~ 1|Country, data = df8, method = "ML")
+
+summary(model1)
+```
+
+    ## Linear mixed-effects model fit by maximum likelihood
+    ##   Data: df8 
+    ##        AIC      BIC    logLik
+    ##   15116.05 15134.01 -7555.026
+    ## 
+    ## Random effects:
+    ##  Formula: ~1 | Country
+    ##         (Intercept) Residual
+    ## StdDev:    8.982004  2.68177
+    ## 
+    ## Fixed effects:  Life.expectancy ~ 1 
+    ##                Value Std.Error   DF  t-value p-value
+    ## (Intercept) 69.36273 0.6497407 2745 106.7545       0
+    ## 
+    ## Standardized Within-Group Residuals:
+    ##         Min          Q1         Med          Q3         Max 
+    ## -8.80812089 -0.51499336 -0.03812818  0.41851811  6.11831705 
+    ## 
+    ## Number of Observations: 2938
+    ## Number of Groups: 193
+
+Output of model 1 concludes that the intercept (69.36) is significantly
+differs from zero, which is the grand mean of life expectancy of all
+years.
+
+There are 193 countries in the dataset. By putting countries as a random
+effect, model 1 assumes all countries have different intercept.
+
+The 95% confidence interval of the intercept is between 68.088 and
+70,636, it is a range indicating where the true intercept may be
+located. The interval does not overlap with zero and therefore it is a
+significant interval.
+
+``` r
+intervals(model1)
+```
+
+    ## Approximate 95% confidence intervals
+    ## 
+    ##  Fixed effects:
+    ##                lower     est.    upper
+    ## (Intercept) 68.08892 69.36273 70.63654
+    ## 
+    ##  Random Effects:
+    ##   Level: Country 
+    ##                   lower     est.    upper
+    ## sd((Intercept)) 8.12366 8.982004 9.931041
+    ## 
+    ##  Within-group standard error:
+    ##    lower     est.    upper 
+    ## 2.611774 2.681770 2.753641
+
+### Unconditional Growth Model
+
+**Model 2 - Year as fixed**
+
+Model 2 starts having year as the predictor (fixed effect). This model
+considers that all countries have the same slope profile (although
+intercepts are different), which is highly unlikely but a statistical
+output can help to convince when compare model 2 to model 3.
+
+``` r
+model2 <- lme(Life.expectancy ~ Year, random =~ 1|Country, data = df8, method = "ML")
+summary(model2)
+```
+
+    ## Linear mixed-effects model fit by maximum likelihood
+    ##   Data: df8 
+    ##        AIC      BIC    logLik
+    ##   13765.89 13789.83 -6878.946
+    ## 
+    ## Random effects:
+    ##  Formula: ~1 | Country
+    ##         (Intercept) Residual
+    ## StdDev:    8.970939 2.096772
+    ## 
+    ## Fixed effects:  Life.expectancy ~ Year 
+    ##                Value Std.Error   DF   t-value p-value
+    ## (Intercept) 66.63670 0.6511666 2744 102.33435       0
+    ## Year         0.35127 0.0084078 2744  41.77932       0
+    ##  Correlation: 
+    ##      (Intr)
+    ## Year -0.1  
+    ## 
+    ## Standardized Within-Group Residuals:
+    ##         Min          Q1         Med          Q3         Max 
+    ## -11.6745765  -0.4492794  -0.1256430   0.2813860   6.5882440 
+    ## 
+    ## Number of Observations: 2938
+    ## Number of Groups: 193
+
+In the output of model 2, the p-value of Year as a fixed effect is
+significant and indicates that “Year” has a significant relationship
+with life expectancy. In term of the beta coefficient estimate, 0.35
+year of life expectancy is expected to increase in average for each unit
+increase of “Year”.
+
+Based on simple ANOVA comparison, model 2 is a better model 1. Both
+models are statistically different (P-value \< 0.001) and the
+improvement of AIC, BIC, logLik is significant.
+
+``` r
+anova(model1, model2)
+```
+
+<div data-pagedtable="false">
+
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["call"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Model"],"name":[2],"type":["int"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[7],"type":["fct"],"align":["left"]},{"label":["L.Ratio"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["p-value"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"lme.formula(fixed = Life.expectancy ~ 1, data = df8, random = ~1 |     Country, method = \"ML\")","2":"1","3":"3","4":"15116.05","5":"15134.01","6":"-7555.026","7":"","8":"NA","9":"NA","_rn_":"model1"},{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~1 |     Country, method = \"ML\")","2":"2","3":"4","4":"13765.89","5":"13789.83","6":"-6878.946","7":"1 vs 2","8":"1352.159","9":"0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005229801","_rn_":"model2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+
+</div>
+
+**Model 3 - Year as fixed and random**
+
+Model 3 considers “Year” as a fixed effect (significant) but also a
+random effect because each country is likely to have different slope of
+life expectancy across years between 2000 and 2015.
+
+Again, this section considers that the slope is different for different
+countries, and the intercept is different because of inherent difference
+among countries.
+
+``` r
+model3 <- lme(Life.expectancy ~ Year, random =~ Year|Country, 
+              data = df8,
+              method = "ML")
+
+summary(model3)
+```
+
+    ## Linear mixed-effects model fit by maximum likelihood
+    ##   Data: df8 
+    ##        AIC      BIC    logLik
+    ##   12774.88 12810.79 -6381.438
+    ## 
+    ## Random effects:
+    ##  Formula: ~Year | Country
+    ##  Structure: General positive-definite, Log-Cholesky parametrization
+    ##             StdDev     Corr  
+    ## (Intercept) 10.2606698 (Intr)
+    ## Year         0.2752756 -0.678
+    ## Residual     1.6338512       
+    ## 
+    ## Fixed effects:  Life.expectancy ~ Year 
+    ##                Value Std.Error   DF  t-value p-value
+    ## (Intercept) 66.64570 0.7438319 2744 89.59780       0
+    ## Year         0.35062 0.0213107 2744 16.45292       0
+    ##  Correlation: 
+    ##      (Intr)
+    ## Year -0.663
+    ## 
+    ## Standardized Within-Group Residuals:
+    ##          Min           Q1          Med           Q3          Max 
+    ## -14.69500370  -0.36806884  -0.04919564   0.11894894   4.98117142 
+    ## 
+    ## Number of Observations: 2938
+    ## Number of Groups: 193
+
+**Important Insights**
+
+-   In random effect chunk of the output, there is a negative
+    correlation (Corr = -0.69) which indicates that there is a negative
+    correlation between intercept and slope. When a country intercept is
+    *increased* by one unit, the slope of life expectancy across years
+    of the country would decrease by *0.69* standard deviation.
+
+-   Many developing countries have lower intercepts (lower life
+    expectancy at year 2000) than developed countries, and therefore
+    their slope of life expectancy improvement across the years would be
+    experiencing a higher degree of gradient than develop countries.
+
+Model 3 is better and statistically different from model 2 (p-value of
+less than 0.001) in terms of the improvements of AIC, BIC, and logLik.
+Model 3 is a better fit of the data than model 2.
+
+``` r
+anova(model3, model2)
+```
+
+<div data-pagedtable="false">
+
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["call"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Model"],"name":[2],"type":["int"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[7],"type":["fct"],"align":["left"]},{"label":["L.Ratio"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["p-value"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~Year |     Country, method = \"ML\")","2":"1","3":"6","4":"12774.88","5":"12810.79","6":"-6381.438","7":"","8":"NA","9":"NA","_rn_":"model3"},{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~1 |     Country, method = \"ML\")","2":"2","3":"4","4":"13765.89","5":"13789.83","6":"-6878.946","7":"1 vs 2","8":"995.0166","9":"0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000860758","_rn_":"model2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+
+</div>
+
+### Conditional Growth Model
+
+**Model 4 - Year as fixed and random**
+
+Model 4 is an improvement from model 3. This model will start adding in
+predictors as main effects (fixed effects) and interaction terms.
+
+``` r
+model4 <- lme(Life.expectancy ~ Status*Year + Status*Total.expenditure +
+                Measles + HIV.AIDS + 
+                Status*Schooling + Hepatitis.B + Polio, 
+              random =~ Year|Country,
+              data = df8, 
+              method = "ML")
+```
+
+Model 4 is better statistically than model 3 (p-value \< 0.0001) with
+following statistics.
+
+``` r
+anova(model3, model4)
+```
+
+<div data-pagedtable="false">
+
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["call"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Model"],"name":[2],"type":["int"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[7],"type":["fct"],"align":["left"]},{"label":["L.Ratio"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["p-value"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~Year |     Country, method = \"ML\")","2":"1","3":"6","4":"12774.88","5":"12810.79","6":"-6381.438","7":"","8":"NA","9":"NA","_rn_":"model3"},{"1":"lme.formula(fixed = Life.expectancy ~ Status * Year + Status *     Total.expenditure + Measles + HIV.AIDS + Status * Schooling +     Hepatitis.B + Polio, data = df8, random = ~Year | Country,     method = \"ML\")","2":"2","3":"16","4":"12559.95","5":"12655.72","6":"-6263.975","7":"1 vs 2","8":"234.9257","9":"0.000000000000000000000000000000000000000000007958605","_rn_":"model4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+
+</div>
+
+``` r
+summary(model4)
+```
+
+    ## Linear mixed-effects model fit by maximum likelihood
+    ##   Data: df8 
+    ##        AIC      BIC    logLik
+    ##   12559.95 12655.72 -6263.975
+    ## 
+    ## Random effects:
+    ##  Formula: ~Year | Country
+    ##  Structure: General positive-definite, Log-Cholesky parametrization
+    ##             StdDev    Corr  
+    ## (Intercept) 7.3489689 (Intr)
+    ## Year        0.2133883 -0.55 
+    ## Residual    1.6121132       
+    ## 
+    ## Fixed effects:  Life.expectancy ~ Status * Year + Status * Total.expenditure +      Measles + HIV.AIDS + Status * Schooling + Hepatitis.B + Polio 
+    ##                                       Value Std.Error   DF    t-value p-value
+    ## (Intercept)                        71.90917 2.8732768 2735  25.026885  0.0000
+    ## StatusDeveloping                   -8.61653 2.9615502  191  -2.909466  0.0041
+    ## Year                                0.25211 0.0442544 2735   5.696813  0.0000
+    ## Total.expenditure                  -0.05806 0.0396145 2735  -1.465540  0.1429
+    ## Measles                             0.00000 0.0000042 2735  -1.135735  0.2562
+    ## HIV.AIDS                           -0.32987 0.0252655 2735 -13.056304  0.0000
+    ## Schooling                           0.34129 0.1695601 2735   2.012810  0.0442
+    ## Hepatitis.B                         0.00227 0.0018281 2735   1.243771  0.2137
+    ## Polio                               0.00310 0.0019533 2735   1.587519  0.1125
+    ## StatusDeveloping:Year               0.01101 0.0488691 2735   0.225203  0.8218
+    ## StatusDeveloping:Total.expenditure  0.02686 0.0469881 2735   0.571631  0.5676
+    ## StatusDeveloping:Schooling         -0.11911 0.1749960 2735  -0.680649  0.4962
+    ##  Correlation: 
+    ##                                    (Intr) SttsDv Year   Ttl.xp Measls HIV.AI
+    ## StatusDeveloping                   -0.966                                   
+    ## Year                                0.114 -0.110                            
+    ## Total.expenditure                  -0.050  0.049 -0.046                     
+    ## Measles                             0.000 -0.011  0.005  0.002              
+    ## HIV.AIDS                            0.000 -0.025  0.000  0.000  0.020       
+    ## Schooling                          -0.882  0.856 -0.379 -0.052 -0.002  0.000
+    ## Hepatitis.B                        -0.053  0.024 -0.018 -0.003 -0.017  0.012
+    ## Polio                              -0.039  0.003 -0.002  0.001  0.011 -0.021
+    ## StatusDeveloping:Year              -0.100  0.077 -0.905  0.041  0.015  0.100
+    ## StatusDeveloping:Total.expenditure  0.044 -0.071  0.039 -0.843  0.021  0.011
+    ## StatusDeveloping:Schooling          0.855 -0.865  0.367  0.051  0.005 -0.008
+    ##                                    Schlng Hptt.B Polio  SttD:Y StD:T.
+    ## StatusDeveloping                                                     
+    ## Year                                                                 
+    ## Total.expenditure                                                    
+    ## Measles                                                              
+    ## HIV.AIDS                                                             
+    ## Schooling                                                            
+    ## Hepatitis.B                         0.021                            
+    ## Polio                              -0.009 -0.292                     
+    ## StatusDeveloping:Year               0.342 -0.022 -0.007              
+    ## StatusDeveloping:Total.expenditure  0.044 -0.017 -0.017 -0.048       
+    ## StatusDeveloping:Schooling         -0.969 -0.016  0.007 -0.368 -0.036
+    ## 
+    ## Standardized Within-Group Residuals:
+    ##          Min           Q1          Med           Q3          Max 
+    ## -14.87299259  -0.38258009  -0.05594946   0.12625152   4.94117545 
+    ## 
+    ## Number of Observations: 2938
+    ## Number of Groups: 193
+
+**Insights**
+
+-   Model 4 assumes different slope and intercepts (starting life
+    expectancy in year-2000) for each country
+
+-   Developing country status has a significant negative relationship
+    with life expectancy (p-value \< 0.01).
+
+-   Year has significant effect on life expectancy (p-value \< 0.001).
+    Output shows that life expectancy of human increases each year by
+    0.25 year on average.
+
+-   HIV/AIDS deaths is significantly and negatively related to life
+    expectancy at a p-value of \< 0.001.
+
+-   Schooling is significantly related to life expectancy in a positve
+    way at a p-value of 0.0442.
+
+-   There is no interaction effect of developing status with year, total
+    expenditure, and schooling.
+
+Following are the 95% confidence level of bata coefficient estimate
+(“Value”) from above output. Reading guide: A fixed term is considered
+insignificant if its confidence interval overlaps with zero.
+
+``` r
+intervals(model4)
+```
+
+    ## Approximate 95% confidence intervals
+    ## 
+    ##  Fixed effects:
+    ##                                              lower            est.
+    ## (Intercept)                         66.28667374318 71.909168567447
+    ## StatusDeveloping                   -14.44613441884 -8.616531004408
+    ## Year                                 0.16551112985  0.252109241517
+    ## Total.expenditure                   -0.13557528161 -0.058056666231
+    ## Measles                             -0.00001292782 -0.000004747713
+    ## HIV.AIDS                            -0.37931420978 -0.329874086014
+    ## Schooling                            0.00949314847  0.341292358855
+    ## Hepatitis.B                         -0.00130352345  0.002273726142
+    ## Polio                               -0.00072135071  0.003100853115
+    ## StatusDeveloping:Year               -0.08462267657  0.011005485276
+    ## StatusDeveloping:Total.expenditure  -0.06508751995  0.026859856479
+    ## StatusDeveloping:Schooling          -0.46154694529 -0.119110770934
+    ##                                              upper
+    ## (Intercept)                        77.531663391709
+    ## StatusDeveloping                   -2.786927589981
+    ## Year                                0.338707353180
+    ## Total.expenditure                   0.019461949152
+    ## Measles                             0.000003432395
+    ## HIV.AIDS                           -0.280433962253
+    ## Schooling                           0.673091569243
+    ## Hepatitis.B                         0.005850975734
+    ## Polio                               0.006923056938
+    ## StatusDeveloping:Year               0.106633647124
+    ## StatusDeveloping:Total.expenditure  0.118807232904
+    ## StatusDeveloping:Schooling          0.223325403423
+    ## 
+    ##  Random Effects:
+    ##   Level: Country 
+    ##                            lower       est.      upper
+    ## sd((Intercept))        6.6056111  7.3489689  8.1759800
+    ## sd(Year)               0.1891571  0.2133883  0.2407235
+    ## cor((Intercept),Year) -0.6532606 -0.5504987 -0.4278220
+    ## 
+    ##  Within-group standard error:
+    ##    lower     est.    upper 
+    ## 1.568451 1.612113 1.656991
+
+**ICC**
+
+Following show the intraclass Coefficient Coefficient. ICC is an
+indication of how much variation in the life expectancy is captured by
+the random effect (Countries), by looking at the adjusted ICC.
+
+*ICC of model 3*
+
+``` r
+performance::icc(model3)
+```
+
+    ## # Intraclass Correlation Coefficient
+    ## 
+    ##     Adjusted ICC: 0.969
+    ##   Unadjusted ICC: 0.940
+
+*ICC of model 4*
+
+``` r
+performance::icc(model4)
+```
+
+    ## # Intraclass Correlation Coefficient
+    ## 
+    ##     Adjusted ICC: 0.945
+    ##   Unadjusted ICC: 0.605
+
+There is 98% of clustering taking place when model has no predictors
+(model 3). After addition of predictors in the full model (model 4), ICC
+is now at 94.5%. Both of ICC values are still considered at a very high
+level, which indicates that there are still a high amount of unexplained
+clustering taking place. Therefore, the researcher who are interested in
+this research question should consider including more variables to
+capture the unexplained information.
+
+# Conclusion
+
+**Question 1: What are the predicting variables actually affecting the
+life expectancy?**
+
+Based on multiple linear regression analysis, the positively statistical
+correlated variables (p \< 0.05) are schooling (Coeff. Est: 1.15), total
+expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP
+(Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est:
+0.03) and Polio (Coeff. Est: 0.02). The negatively statistical
+correlated variables (p \< 0.05) are developing country status (Coeff.
+Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality
+rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002)
+(Adjusted R^2: 0.85, F(15, 2775) = 1087, p \< 0.001).
+
+**Question 2: Should a country having a lower life expectancy value
+(\<65) increase its healthcare expenditure in order to improve its
+average lifespan?**
+
+Yes. 1% increase in the healthcare expenditure by government, the life
+expectancy will increase by 0.081 (29.5 days) on average, while keep all
+other predicting variables constant (p \< 0.05). Governments in
+countries with higher life expectancy value (\>65) spent more on
+healthcare statistically than countries with lower life expectancy
+(\<65) (Welch‘s Two Sample t-test: t = -8.6583, df = 1821.2, p \<
+0.001).
+
+**Question 3: How does Infant and Adult mortality rates affect life
+expectancy?**
+
+Output from multiple linear regression shows that any increment in one
+unit of adult mortality, life expectancy will be reduced by 0.0222 (p \<
+0.001), whereas any increment in one unit of infant deaths, life
+expectancy will be reduced by 0.0028 (p \< 0.01).
+
+**Question 4: Does Life Expectancy has positive or negative correlation
+with schooling, BMI, drinking alcohol etc.**
+
+Life expectancy has a week positive correlation with alcohol (r = 0.42),
+moderate positive correlation with BMI (r = 0.57), and a good positive
+correlation with schooling (r = 0.76). Principle component analysis
+(PCA) supports the correlation outcomes that “life expectancy” is more
+related to BMI and schooling, and less related to alcohol consumption.
+
+Alcohol is insignificantly related to life expectancy at a p-value of
+0.778, whereas BMI and schooling are significantly related to life
+expectancy at a p-value of lower than 0.01. Both BMI and schooling
+relates to life expectancy positively. One unit increase in BMI, the
+life expectancy is expected to increase 0.027 year on average, whereas
+one unit increase in schooling, life expectancy is expected to increase
+1.15 year on average (Adjusted R-squared: 0.8538, F(15, 2775) = 1087, p
+\< 0.01).
+
+**Question 5: Do densely populated countries tend to have lower life
+expectancy?**
+
+Non-parametric (spearman) and parametric (Pearson) correlation
+measurement methods suggest the correlation between population and life
+expectancy is negative but the correlation is extremely small.
+
+**Question 6. Does developed countries have higher life expectancy?**
+
+Yes. A non-parametric, median-based comparison test was run and
+concluded that the difference between developed and developing countries
+in life expectancy is statistically significant (Wilcoxon rank sum test:
+W = 1136054, p-value \< 0.001).
+
+**Question 7. What is the impact of Immunization coverage on life
+Expectancy?**
+
+-   Diphtheria has a statistical positive relationship with life
+    expectancy, at a p-value of less than 0.05. An increase in one % of
+    Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage
+    among 1-year-olds, life expectancy will increase by 0.03 year on
+    average.
+
+-   Polio has also a statistical positive relationship with life
+    expectancy, at a p-value of less than 0.05. An increase in one % of
+    Polio immunisation among 1-year-olds, life expectancy will increase
+    by 0.02 year on average.
+
+-   Hepatitis B immunisation do not have a statistical relationship with
+    life expectancy, which means that having an increment in Hepatitis B
+    immunisation can lead to zero increment in life expectancy.
+
+**Question 8: How life expectancy has changed over the years in
+developed and developing countries? Please also find the impacts of
+“Status”, “Total.expenditure”, “Measles”, “HIV.AIDS”, “Schooling”,
+“Diphtheria”, “Hepatitis.B”, and “Polio”.**
+
+A full model that considered the trends of life expectancy between 2000
+to 2015 have inherent differences among countries with the effect of
+year was the best model based on p-value comparison, AIC, BIC, logLik
+and ICC statistics. Significantly correlated variables are only (p \<
+0.05) developing country status (Coeff. Est: -8.6), year (Coeff. Est:
+0.25), HIV/AIDS death rate (Coeff. Est: -0.33), and schooling (Coeff.
+Est: 0.34). There is no interaction effect between development status
+and year (p = 0.823).
+
+The full model detected that if a country has lower initial life
+expectancy in year-2000, it would have a higher slope in life expectancy
+across the year between 2000 and 2015 (intercept-slope corr = -0.55). It
+implies improvement of life expectancy in developing countries since
+2000 to 2015. The full model also concludes that life expectancy of
+human increases each year by 0.25 year on average, with a confidence
+level between 0.16 year and 0.34 year (p \< 0.001).
+
+*Thank you for reading*
 
 # ACKNOWLEDGEMENTS
 
@@ -3729,8 +4329,18 @@ Anderson D.R., Sweeney D.J, Williams T.A., 2006, *Essentials of
 Statistics for Business & Economics*, South-Western, Division of Thomson
 Learning, United States of America
 
+Bruce, Peter, and Andrew Bruce. 2017. Practical Statistics for Data
+Scientists. O’Reilly Media.
+
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
+2014. An Introduction to Statistical Learning: With Applications in R .
+Springer Publishing Company, Incorporated.
+
 Kassambara.A 2018, *Machine Learning Essentials: Practical Guide in R*,
 eBook.
+
+Kassambara.A n.d., *COMPARING MULTIPLE MEANS IN R*, viewed 1 July 2022,
+<https://www.datanovia.com/en/lessons/ancova-in-r/#two-way-ancova>
 
 Kumarrajarshi 2018, “Life Expectancy (WHO)”, viewed 23 June 2022,
 <https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who>

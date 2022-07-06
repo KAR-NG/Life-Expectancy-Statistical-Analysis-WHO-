@@ -1,6 +1,6 @@
 ---
 title: "Life Expectancy Statistical Analysis (WHO)"
-author: "Kar"
+author: "Kar Ng"
 date: '2022-07'
 output: 
   github_document: 
@@ -18,23 +18,29 @@ always_allow_html: yes
 
 ***
 
+![](https://raw.githubusercontent.com/KAR-NG/life/main/pic2_thumbnails.png)
+
 ***
 
 # ABSTRACT
 
-This project analyses the factors related to life expectancy based on a public dataset from WHO. The data was collected between 2000 to 2015. Studied factors include development status of a country, GDP, population, schooling years, alcohol consumption, BMI, government expenditure on health, per-capital expenditure on health, various immunisation coverages, thinness disease, measles cases, HIV/AIDs deaths, and mortality rate of adult, children, and infants.
+This project analyses the factors related to life expectancy based on a public dataset from WHO. The data was collected between 2000 and 2015. Studied factors include development status of a country, GDP, population, schooling years, alcohol consumption, BMI, government expenditure on health, per-capital expenditure on health, various immunisation coverage, thinness disease, measles cases, HIV/AIDS deaths, and mortality rate of adult, children, and infants.
 
-During data processing, data were thoroughly checked (horizontally and vertically), cleaned, and transformed. Missing values were imputed using Bagged-trees algorithm. During exploratory data analysis (EDA), box and whisker plot, histogram, and multiple factor analysis (MFA) were applied to explore and mine the overall trends within the data. MFA is an unsupervised machine learning technique. 
+During data processing, data were thoroughly checked (horizontally and vertically), cleaned, and transformed. Missing values were imputed using Bagged-trees algorithm. During exploratory data analysis (EDA), box and whisker plot, histogram, and multiple factor analysis (MFA) were applied to explore and mine the overall trends within the data. MFA is an unsupervised machine learning technique. 8 questions were designed and answered statistically in this project. Depending on the nature of each question, multiple analysis techniques were applied such as multiple linear regression, correlation matrix, VIF, assumption diagnostic plots, Welch’s t-test, principal component analysis (PCA), Shapiro-wilk test, Wilcoxon signed-rank test, and longitudinal multilevel mixed-effect modelling. 
 
-8 questions were designed and answered statistically in this project. Depending on the nature of each question, multiple analysis techniques were applied. Techniques used include multiple linear regression, correlation matrix, VIF, assumption diagnostic plots, Welch’s t-test, principal component analysis (PCA), Shapiro-wilk test, Wilcoxon signed-rank test, and longitudinal multilevel modelling. Multiple regression model that passed the assumption tests shown that the positively correlated significant variables (P < 0.05) in relation to life expectancy are schooling (Coeff. Est: 1.15), total expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP (Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est: 0.03) and Polio (Coeff. Est: 0.02), whereas, the negatively correlated significant variables (P < 0.05) are developing country status (Coeff. Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002) (Adjusted R^2: 0.85, F(15, 2775) = 1087, P-value < 0.001). 
+Multiple linear regression model that passed the assumption tests shown that the positively correlated significant variables (p < 0.05) in relation to life expectancy are schooling (Coeff. Est: 1.15), total expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP (Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est: 0.03) and Polio (Coeff. Est: 0.02), whereas, the negatively correlated significant variables (p < 0.05) are developing country status (Coeff. Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002) (adjusted R-squared: 0.85, F(15, 2775) = 1087, p < 0.001). A partial analysis from the full model of longitudinal multilevel modeling supports similar outcomes and it detected that if a country has lower initial life expectancy in year-2000, it would have a higher rate in life expectancy improvement across the year between 2000 and 2015 (intercept-slope corr = -0.55). It implies improvement of life expectancy in developing countries that associated with lower life expectancy since 2000 to 2015. The full model also concludes that life expectancy of human increases each year by 0.25 year on average, with a confidence level between 0.16 year and 0.34 year (p < 0.001). 
 
 **Highlights**
+
+![](https://raw.githubusercontent.com/KAR-NG/life/main/pic1_graphs.png)
 
 
 
 
 
 # R PACKAGES
+
+Following R packages are loaded for this project.
 
 ```{r, message=FALSE, warning=FALSE}
 # Environment setting (to remove scientific notation)
@@ -66,7 +72,7 @@ library(performance)
 
 # DATA PREPARATION
 
-Dataset used in this project is a publicly available on *Kaggle* website. *Kaggle* is a well-known platform for data analysts and data scientists for sharing data, codes, resources, and ideas. The dataset is accessible via this [Link](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who). 
+Dataset used in this project is publicly available on *Kaggle* website. *Kaggle* is a well-known platform for data analysts and data scientists for sharing data, codes, resources, and ideas. The dataset is accessible via this [Link](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who). 
 
 ## Data Import
 
@@ -103,7 +109,7 @@ Variable <- c("Country",
               "HIV/AIDS",
               "GDP",
               "Population",
-              "thinness 1-19 years",
+              "thinness 10-19 years",
               "thinness 5-9 years",
               "Income composition of resources",
               "Schooling")
@@ -144,7 +150,7 @@ data.frame(No., Variable, Description) %>%
 
 ### Data type and structure
 
-There are 2938 rows of data and 22 columns of variables. 
+There are 2938 rows of observations and 22 columns of variables. 
 
 ```{r}
 glimpse(life)
@@ -160,9 +166,9 @@ skim_without_charts(life)
 
 ```
 
-From the variables "n_missing" and "complete_rate", they detected a lot of missing data in many variables. Mean and standard deviation are also provided.
+From the variables "n_missing" and "complete_rate", they detected a lot of missing data in many variables. Mean and standard deviation are also being computed.
 
-A good thing is that there is no variable having more than 40% missing data because I will follow a 60% rule that if a column has less than 0.6 completion rate (having 0.4 or 40% missing data), I will consider dropping the variable.
+A good thing is that there is no variable having more than 40% missing data because I will follow a 60% rule that if a column (variable) has less than 0.6 completion rate (having 0.4 or 40% missing data), I will consider dropping the variable.
 
 The number of missing data in each column can also be examined using following code:
 
@@ -190,9 +196,9 @@ life %>%
 
 ```
 
-It is a common procedure that if a row (observation) contains too many missing values, it should be removed otherwise filling up its missing values by estimation would be too unrealistic and synthetic. Generally, one should remove a row if it contains 60% of missing values. One can also choose not to remove a row with many missing values if some of its data is useful to analyse a particular important business question.  
+If a row (observation) contains too many missing values, it should be removed otherwise filling up its missing values by estimation would be too unrealistic and synthetic. Generally, one should remove a row if it contains 60% of missing values. One can also choose not to remove a row with many missing values if some of its data is useful to analyse a particular important business question.  
 
-From the table above, there are 1289 rows out of the 2938 rows contain missing value. It will be less practical to remove all of these rows just to be able to ensure there is no missing data in the dataset. Furthermore, the maximum proportion of missing value is 40.9%.  
+From the table above, there are 1289 rows out of the 2938 rows contain missing value. It will be less practical to remove all of these rows just to be able to ensure there is no missing data in the dataset. Furthermore, the maximum proportion of missing value is 40.9% which is less than 60%.   
 
 In this project, I will adopt an imputation method using machine learning algorithm to fill up these missing values. The algorithm will make use of the entire dataset and predict what might the best possible estimates for these missing cells. 
 
@@ -214,7 +220,7 @@ life <- life %>%
 
 ## Rename Levels
 
-Replaces spaces in some of the country names by underscore. For example "Antigua and Barbuda" to "Antigua_and_Barbuda". This is to avoid complication during imputation using machine learning technique. 
+Replacing spaces in some of the country names by underscore. For example "Antigua and Barbuda" to "Antigua_and_Barbuda". This is to avoid complication during imputation using the machine learning technique. 
 
 ```{r}
 life <- life %>% 
@@ -244,7 +250,7 @@ life2 <- life
 
 ## Bag imputation
 
-This section applies imputation model to fill up missing values in the dataset. There are many types of imputation methods including using mean, median, and mode (most occurring values, generally applied to categorical data). One of the methods is applying machine learning algorithms for imputation. They will make use of the entire dataset to predict possible estimates for these missing values. It is generally considered a better estimation technique if missing values are not too much because it takes into account all information in the dataset when filling up missing values. 
+This section applies imputation model to fill up missing values in the dataset. There are many types of imputation methods including using mean, median, and mode (most occurring values, generally applied to categorical data). One of the methods is applying machine learning algorithms for imputation. They will make use of the entire dataset to predict possible estimates for these missing values. It is generally considered a better estimation technique if missing values are not too much. This machine learning imputation technique I am applying will take into account all information in the dataset when filling up missing values. 
 
 However, one should note that it is still an estimation technique and is not 100% accurate representation of the truth, checking and transformation might be required, depends on the nature of the variable. It is disputable that whether this technique is the best technique, it depends on a case-by-case basis and the goals of each analysis. Since the goal of this project is to demonstrate my skills instead of doing real, detail analysis for WHO, I will use the machine learning technique to fill up these missing value.
 
@@ -254,8 +260,8 @@ Following codes complete the imputation of missing values using bagged-tree algo
 
 ```{r}
 
-#dummy_function <- dummyVars(~., data = life2)
-#life_dummy <- dummy_function %>% predict(life2)
+# dummy_function <- dummyVars(~., data = life2)
+# life_dummy <- dummy_function %>% predict(life2)
 ```
 
 *Impute using bagged tree models*
@@ -290,7 +296,7 @@ Replace the columns that has missing values in the original dataset "life2".
   
 ```
 
-The above imputation has been completed and the new imputed dataset has been saved. Following section imports the new dataset back to R with some manipulation to make sure it is perfect prior to analysis. 
+The above imputation has actually been completed and the new imputed dataset has been saved to my computer. Following section imports the imputed dataset back to R with some manipulation to make sure it is perfect prior to analysis. 
 
 ```{r}
 # write.csv(life2, "life2.csv")
@@ -313,12 +319,18 @@ str(life.data)
 
 ```
 
+Checking the missing data.
+
+```{r}
+colSums(is.na(life.data))
+```
+
 
 # EDA 
 
 ## Histogram for Distribution
 
-Most of the variables have skewed distribution, except that life expectancy, schooling, total expenditure, and income composition of resources look like having a normal distribution. BMI has a clear bimodal distribution.
+Most of the variables have skewed distribution, except that life expectancy, schooling, total expenditure, and income composition of resources have a distribution near normal. BMI has a clear bimodal distribution.
 
 ```{r, fig.width=14, fig.height=10, message=FALSE, warning=FALSE}
 # set up df
@@ -362,7 +374,7 @@ life.data.num %>%
         axis.ticks.y = element_blank())
 
 ```
-Following shows the amount of outliers in each variable, in percentage. 
+Checking out the proportion of outliers in each variable (%): 
 
 ```{r, fig.width=9, fig.height=9}
 
@@ -406,7 +418,7 @@ data.frame(variable.name, outlier.percentage) %>%
 ```
 
 
-There are different types of outliers and are broadly categorised into (1) *false outliers* that caused by data input error or typo (which I assume won't be happening in this dataset) and (2) *true outliers* that the outlier data points are naturally just too different from other data points. 
+There are different types of outliers and are broadly categorised into (1) *false outliers* that caused by data input error or typo (which I assume would not happen to this dataset) and (2) *true outliers* that the outlier data points are naturally just too different from other data points. 
 
 There are many ways to deal with outliers, one can simply rectify it if it is caused by human error, however if it is not, there are two main methods to use: 
 
@@ -416,16 +428,16 @@ There are many ways to deal with outliers, one can simply rectify it if it is ca
 
 However, trimming and winsorisation are only feasible if we have less than 5% outliers otherwise the hypothesis testing outcome would be affected statistically and may not revealing desirable trends. 
 
-I will not manage the outliers now, instead I will use other outlier definitions when building a multiple linear regression model in later section. For examples leverage, influence, and cooks distance values. They define outliers via assessing their influence on the regression model. 
+I will not manage the outliers now, instead I will use other outlier definitions (leverage, influential value, and cooks distance values) when building a multiple linear regression model in later section. Outliers will be defined based on their impact on the regression model. 
 
 
 ## MFA
 
-Multiple Factor Analysis (MFA) will be used in this section to find the relationships among these variables all at once. It is a type of unsupervised machine learning techniques to reduce the dimensions of the datasets into a few principal components for trend mining purposes. 
+Multiple Factor Analysis (MFA) is used in this section to find the relationships among all variables at once. It is a type of unsupervised machine learning technique. It reduces the dimensions of the datasets into a few principal components for trend mining purposes. 
 
-One of the "specific effect" of MFA is that all variables (both categorical and numerical) can be grouped together and have their trends and inter-relationships monitored all at once.  
+One of the "special feature" of MFA is that all variables (both categorical and numerical) can be grouped into sub-group based on their nature and having their trends and inter-relationships monitored all at once.  
 
-Defining the themes of grouping for MFA and I found that the variables in the dataset can be grouped into following 6 subcategories.  
+The variables in the dataset can be grouped into following 6 subcategories.  
 
 ***
 
@@ -443,7 +455,7 @@ Defining the themes of grouping for MFA and I found that the variables in the da
 
 ***
 
-The "status" group will be identified as *supplementary group* in the analysis which means that the group will not be participating in the MFA but will be used to understand the data as supplementary information. All other groups will be treated as *active group* and they will take part in MFA computation. 
+The "status" group will be identified as *supplementary group* in the analysis which means that the variables in the "status" group will not be participating in the MFA computation but will be used to understand the output as supplementary information. All other groups will be treated as *active group* and they will take part in MFA computation. 
 
 ```{r}
 # Data set rearrangement
@@ -464,7 +476,7 @@ res.mfa <- MFA(life.data.mfa,
 ```
 
 
-Total variation in the dataset has been extracted and are expressed in 10 principal components (Dimensions). The first two dimensions explain the most variation (34.6% and 13.5%), and the amount of variation explains in subsequent dimensions hit a drastic reduction after the second dimension, based on the Knee Method of Scree plot, I will use the first two dimensions for the factor map. 
+Total variation in the dataset has been extracted and are expressed in 10 principal components (Dimensions). The first two dimensions explain the most variation (34.6% and 13.5%), and the amount of variation explains in subsequent dimensions hit a drastic reduction after the second dimension, based on the "Knee Method" of scree plot, I will use the first two dimensions for factor map. 
 
 ```{r}
 fviz_screeplot(res.mfa, addlabels = T, ylim = c(0, 40))
@@ -493,7 +505,7 @@ plot_grid(f1, f234, ncol = 1)
 
 * In three of the following plots, the red line is "expected average value", group that higher than this line are important groups in explaining the variability in the dataset. Variables important to Dim-1 belong to economic, longevity and health group. Variables important to Dim-2 belong to "longevity" and "economic". 
 
-* Variables from both "longevity" and "economic" are most important to both axes.
+* Variables from both "longevity" and "economic" groups are most important to both axes.
 
 
 Now, let's look at the most exciting Factor map of MFA:
@@ -514,17 +526,17 @@ fviz_mfa_var(res.mfa,
 
 2. Negatively related variables are positioned on opposite sides of the plot origin.  
 
-3. Arrows of each variables indicate the quality of the variable on the factor map, variables with long arrows are well represented on the factor map (more important to look at). The metric that related to the representation of variables is technically known as "Cosine-squared".  
+3. Arrows of each variable indicate the quality of the variable on the factor map, variables with long arrows are well represented on the factor map (more important to look). The metric that related to the representation of variables is technically known as "Cosine-squared".  
 
 **Insights**:
 
-* The variables associated with the "*economic*" group and "*healthcare*" group are positively associated with each other, except the variable "population". It indicates the better the economic of a country, the better healthcare system a country can establish, and therefore, people of that country can have a longer lifespan, as indicated by the positively related "Life expectancy" variable.  
+* The variables associated with the "*economic*" group and "*healthcare*" group are positively associated with each other, except the variable "population". It indicates the better the economic of a country, the better healthcare system a country can establish. Therefore, people in countries with better economic and healthcare have longer lifespan, as indicated by the positively related "Life expectancy" variable.  
 
 * High "Body mass index - BMI" and "Alcohol consumption" would be the main issues of health when economic increases.  
 
 * The "*economic*" group and "*healthcare*" group are less associated and negatively associated with variables in the "**disease**" group. When economics and healthcare variables have reduction in values, the variables in the *disease* group increase their magnitudes. 
 
-* HIV_AIDS is most likely the reason causing adult mortality.  
+* HIV/AIDS is most likely the reason causing adult mortality.  
 
 * Measles is strongly associated with "death under 5 years old" and "infant deaths". Measles is a typical infectious viral disease that causing fever and skin red rash in early childhood. Both the variables "death under 5 years old" and "infant deaths" have a near-perfect positive correlation.
 
@@ -582,7 +594,7 @@ Since there are so many data points crowded together, We can only draw some gene
 
 *  On **disease** group point of view, developing countries (many are located at the left side of the vertical line in the graph) has high value for **disease** group ("Measles", "HIV.AIDS", "thinness..1.19.years", and "thinness.5.9.years"). 
 
-* "Thinness..1.19.years" and "thinness.5.9.years" contributed the most to dimension 1 and many developing countries have high value in these disease variables. This partial analysis is not very effective at capturing trends clearly in this dataset, let's move on to the next section. 
+* "Thinness..1.19.years" and "thinness.5.9.years" contributed the most to dimension 1 and many developing countries have high value in these disease variables. This partial analysis is not very effective at capturing trends clearly in this dataset because of large sample size, let's move on to the next section. 
 
 # SUMMARY STATISTICS
 
@@ -590,9 +602,11 @@ Since there are so many data points crowded together, We can only draw some gene
 
 Key points:
 
-* There are 193 countries contributed to this survey. 
-* Data in this dataset are recorded between 2000 and 2015
-* All data are recorded for developed and developing countries. 
+* There are 193 countries contributed to this survey.     
+
+* Data in this dataset are recorded between 2000 and 2015.   
+
+* All data are recorded for developed and developing countries.   
 
 ```{r}
 length(unique(life.data$Country))
@@ -610,9 +624,9 @@ Sample size needs to be big enough or statistically enough to represent the prof
 
 * When a sample size reach 23 to 25, the t-distribution will become quite close to z-distribution (population distribution)
 
-* Therefore, in a rule of thumb, a minimum of 30 is suggested the best sample size 
+* Therefore, in a rule of thumb, a minimum of 30 is commonly suggested the best sample size 
 
-The best sample size depends on situation and application really. The more is better but depends on the costs allowed. There is math to help achieving a desired sample size (means plus/minus the margin of error), but this usually suggests a large sample size and the feasibility depends on approved resources. In short, the bigger the sample size, we will hope it would start represent the population statistics, with smaller margin of error, and the confidence interval at a confidence level of interest (95% generally). 
+The best sample size depends on situation and application really. The more is better but depends on the costs allowed. There is math to help achieving a desired sample size (using means plus/minus the margin of error), but this usually suggests a large sample size and the feasibility depends on approved resources. In short, the bigger the sample size, we will hope it would start represent the population statistics, with smaller margin of error, and the confidence interval at a confidence level of interest (95% generally). 
 
 1) Following are the sample sizes for the "developed" and "developing" category. These sample sizes are suggesting a feasibility of using statistical test to find significant difference between the two groups.
 
@@ -637,7 +651,7 @@ life.data %>% dplyr::select( Year) %>% group_by(Year) %>% summarise(count = n())
 
 3) The sample size of each country might be too small for statistical comparison. 
 
-There are 10 countries with only 1 sample collected and all remaining 183 countries have only 16 samples collected. There would be a lot of sampling bias if the factor variable "Country" is involved in statistical comparison, the data might be too small to represent each country to be convincing. 
+There are 10 countries with only 1 sample collected and all remaining 183 countries have only 16 samples collected. There would be a lot of sampling bias if the factor variable "Country" is involved in statistical comparison, the data might be too small to represent each country.
 
 ```{r}
 life.data %>% dplyr::select(Country) %>% 
@@ -674,13 +688,13 @@ summary(mytable)
 
 ```
 
-A box plot will help visually compares the central tendency statistics of developed and developing countries. Following shows the box plots of each numerical variables in the dataset, categorized by country status and overlapped with data points.   
+A box plot will help visually compares the central tendency statistics of developed and developing countries. Following shows the box plots of each numerical variables in the dataset, categorized by country status, and overlapped with respective data points.   
 
 Note:
 
-* The central line of box plot is the **median**, and should be used when the distribution is skewed by outliers.  
-* I added the "cross shape" point in each box plot to indicate where the **mean** is.  
-* Data points that located outside of the boxplot tails (top and bottom) are known as **outliers**.    
+* The central line of box plot is the **median**, and should be used when the distribution is skewed by outliers.    
+* I added the "cross shape" point in each box plot to indicate where the **mean** is.    
+* Data points that located outside of the boxplot tails (top and bottom) are known as **outliers**.     
 
 ```{r, fig.width=12, fig.height=12}
 
@@ -706,17 +720,17 @@ life.data %>%
 
 *Insights*
 
-I will use the 5 grouping themes in MFA to help interpretation. Following are general trends detected from the boxplot: 
+I will use the 5 grouping themes in MFA to help interpretation. Following are general trends detected from the box plot: 
 
-* Regarding **longevity**, developed countries has higher life expectancy, lower adult mortality, infant.deaths, and under.five.deaths.
+* Regarding **longevity**, developed countries has higher life expectancy, lower adult mortality, infant deaths, and deaths among children under 5 years old.
 
-* Regarding **health**, alcohol consumption and BMI are the main concern issues of most developed countries. However, both of the issues also happen in many developing countries. 
+* Regarding **health**, alcohol consumption and BMI are the main concerns of most developed countries. However, both of the issues also happen in many developing countries. 
 
-* Regarding **healthcare**, using median, developed countries has higher "percentage.expenditure", which is the expenditure on health as a percentage of Gross Domestic Product per capita(%), and higher "Total expenditure", which is the general government expenditure on health as a percentage of total government expenditure (%). Both developing countries and developed countries have similar immunisation coverage of "Hepatitis.B", "Polio", and "Diphtheria". However, there are many data points showing some developing countries need improvement in immunisation of these diseases.
+* Regarding **healthcare**, based on median point, developed countries have higher "percentage.expenditure", which is the expenditure on health as a percentage of Gross Domestic Product per capita(%), and higher "Total expenditure", which is the general government expenditure on health as a percentage of total government expenditure (%). Both developing countries and developed countries have similar immunisation coverage of "Hepatitis.B", "Polio", and "Diphtheria". However, there are many data points showing some developing countries need improvement in immunisation of these diseases.
 
-* Regarding **disease**, Measles, HIV.AIDS, thinness..1.19.years, and thinness.5.9.years are more severe in developing countries.
+* Regarding **disease**, Measles cases, HIV/AIDS deaths, thinness between 5 and 9 years old, and thinness between 10 and 19 years old are more severe in developing countries.
 
-* Regarding **economic**, GDP is generally a lot higher in developed countries, whereas population is generally higher in developing countries. People in developed countries have higher years of schooling. Developed countries also have higher "Income.composition.of.resources" which is the Human Development Index in terms of income composition of resources. 
+* Regarding **economic**, GDP is generally substantially higher in developed countries, whereas population is generally higher in developing countries. People in developed countries have higher years of schooling. Developed countries also have higher "Income.composition.of.resources" which is the Human Development Index in terms of income composition of resources. 
 
 
 # STATISTICAL ANALYSIS 
@@ -731,20 +745,20 @@ In this question, *life expectancy* will be the dependent variables and the othe
 
 ### Multicollinearity Test 
 
-First, I will test multicollinearity among numerical independent variables. Multicollinearity is an extreme problem when there is high correlation among two or more independent numerical variables. The consequences are that (1) standard errors will be inflated, and which affects the accuracy of the Beta coefficient estimates, (2) Lower down the t statistics, and (3) therefore increase the P-value. It is usually understood as redundancy of variables in the dataset when two variables are highly correlated. 
+First, I will examine multicollinearity problems among numerical independent variables. Multicollinearity is an extreme problem when there is high correlation among two or more independent numerical variables. The consequences are that (1) standard errors in the regression model would be inflated, and affects the accuracy of the beta coefficient estimates, (2) lower down the t statistics, and (3) therefore increase the P-value. It is usually understood as redundancy of variables in the dataset when two variables are highly correlated. 
 
-Two thresholds will be used to tackle multicollinearity
+Two thresholds I will be using to detect multicollinearity issue:
 
-* Correlation > 0.7 (Anderson, Sweeney & Williams 2006)  
-* VIF > 5 (James et al. 2014)  
+* Correlation > 0.7 (Anderson, Sweeney & Williams 2006)    
+* VIF > 5 (James et al. 2014)    
 
-When correlation is higher than 7 or VIF (Variance inflation factor) > 5, then there would be a serious multicollinearity problem. Though there are these maximum thresholds for us to refer to but the general aim is to try to keep these thresholds as low as possible.  
+When correlation is higher than 7 or VIF (Variance inflation factor) > 5, then there would be a serious multicollinearity problem. Although there are these maximum thresholds for us to refer to but the general aim is to try to keep these thresholds as low as possible.  
 
 From the correlation graph below, highly correlated independent variables (both negatively and positively) are identified:
 
-* **Under.five.deaths** and **infant.deaths**, at a perfect correlation of 1. **Under.five.deaths** will be selected during multiple linear regression because it has slightly better correlation with life expectancy.
+* **Under.five.deaths** and **infant.deaths**, at a perfect correlation of 1. **Under.five.deaths** will be selected when building multiple linear regression model because it has slightly better correlation with life expectancy.
 
-* **GDP** and **percentage expenditure**, at a correlation of 0.9. **GDP** will be selected with the same reason as Under.five.death.  
+* **GDP** and **percentage expenditure** have a correlation of 0.9. **GDP** will be selected with the same reason as Under.five.death.  
 
 * Both **thinness** variables are highly correlated (0.94) and both are correlated to life expectancy at the same degree. I will keep **thinness prevalence between 5 to 9 years old** as it might be more important to look at because children are more vulnerable compared to 10 to 19 years old teenagers.   
 
@@ -779,7 +793,7 @@ res.mlr <- lm(Life.expectancy ~ .- Country - Year - under.five.deaths - thinness
 
 ```
 
-Before interpreting the model, I will run a series of diagnostic plots to make sure the reliability of the statistical outcomes in the mode. 
+Before interpreting the model, I will run a series of diagnostic plots to make sure the reliability of the statistical outcomes in the model. 
 
 ### VIF check
 
@@ -797,7 +811,7 @@ VIF of all variables are closed to 1 and 2, which is excellent, and the multicol
 
 ### Assumptions diagnostic
 
-Assumptions of multiple linear regression have to be met otherwise the output statistics from the model would not be accurate. This section will check out the various diagnostic plots for linear regression analysis and make transformation to the dataset if necessary. 
+Assumptions of multiple linear regression have to be met otherwise the output statistics from the linear regression model would be inaccurate. This section will check out the various diagnostic plots for linear regression analysis and make transformation to the dataset if necessary. 
 
 To meet the linear regression model assumptions, there are a series of "surgeries" we can do inclusively or exclusively, for examples, removal of outliers and influential points, features section (exclude or including variables), transforming the response or predictors, weighting the measurement to improve fit, or switching to a different type of model. 
 
@@ -808,6 +822,7 @@ par(mfrow = c(2, 3))
 plot(res.mlr, which = 1:5)  
 
 ```
+
 * In "**Residuals vs Fitter**" graph, the data points of residuals follow roughly a straight line at approximate 0. Therefore, I assume that the relationship between the independent variables and life expectancy is linear. 
 
 * The **Q-Q plot**, most of the data in the middle follows a straight line. It indicates that the residuals are roughly normally distributed. 
@@ -832,7 +847,7 @@ $$
 4/(n - p - 1) = 4/(2938 - 15 -1) = 0.001368925
 
 $$
-  * From following computation, there are 212 data points from the dataset (7.215%) are associated with large residuals and removal of them may help improve a model. 
+  * From following computation, there are 212 data points from the dataset (7.215%) are associated with large residuals and removal of them may help improve the model. 
 
 ```{r}
 
@@ -897,22 +912,24 @@ par(mfrow = c(2, 3))
 plot(res.mlr2, which = 1:5)
 
 ```
-Now the linear relationship, normality, and homogeneity of variance have improved and met the assumptions of linear regression. The residual data points on "Scale-Location" plot has become more randomly and equally spread and the line has become horizontal. There are no high influential points outside of the cook's distance on the "Residuals vs Leverage" plot.
+
+Now the linear relationship, normality, and homogeneity of variance have improved and met the assumptions of linear regression. The residual data points on "Scale-Location" plot has become more random and equally spread and the red line in the middle of the plot has become more horizontal. There are no high influential points outside of the cook's distance on the "Residuals vs Leverage" plot.
 
 ### Model Interpretation
 
 The multiple linear regression show that:
 
-* According to **Adjusted R-squared**, The model can explain 85.5% of variability of life expectancy, which is a very good level.  
+* According to **Adjusted R-squared**, The model can explain 85.5% of variability of life expectancy, which is a very high level.  
+
 * The F-statistic is 1032 and an overall P-value of less than 0.001, which indicates that at least 1 variable is statistically related to the life expectancy.  
 
-* Variables that has a P-value ("Pr(>|t|)") less than 0.05 (as indicated with "*") are statistically affecting life.expectancy. 
+* Variables that has a P-value ("Pr(>|t|)") less than 0.05 (as indicated with "*") are statistically affecting life expectancy. 
 
 ```{r}
 summary(res.mlr2)
 
 ```
-* Following are variables that statistically affecting the life expectancy in a **positive** way, with a P-value of 0.05. 
+* Following are variables that statistically affecting the life expectancy in a **positive** way, with a P-value of less than 0.05. 
 
 ```{r}
 
@@ -933,7 +950,7 @@ output.table[-1, ] %>%
 ```
 
 
-* Following are variables that statistically affecting the life expectancy in a **negative** way, with a P-value of 0.05. 
+* Following are variables that statistically affecting the life expectancy in a **negative** way, with a P-value of less than 0.05. 
 
 ```{r}
 
@@ -982,7 +999,7 @@ df2 <- life.data %>%
 
 ```
 
-Both of the distributions look normal (normal distribution) based on the distance between mean and median in the box plots as well as the overall shape of their boxplot. Technically, the boxes of both of the plot are symmetrical with mean and median in the center. 
+Both of the distributions look normal (normal distribution) based on the distance between mean and median in the box plots as well as the overall shape of their boxplot. Technically, the boxes of both of the plot are symmetrical with mean and median located at the center. 
 
 ### Welch's T-test
 
@@ -998,20 +1015,23 @@ t.test(df2$Total.expenditure~df2$my.group)
 
 **Question: How does Infant and Adult mortality rates affect life expectancy?**
 
-Both infant and adult mortality have statistical negative impact on life expectancy. Based on the output of multiple linear regression in previous section that takes all other variables into consideration:
+Both infant and adult mortality have statistical negative impact on life expectancy. Based on the output of multiple linear regression in previous section:
 
 * Any increment in one unit of adult mortality, life expectancy will be reduced by 0.0222 (P-value < 0.001)
 
 * Any increment in one unit of infant deaths, life expectancy will be reduced by 0.0028 (P-value < 0.01)
 
 
-```{r, fig.width=9}
+```{r, fig.width=12, fig.height=10}
+
+# df
 df3 <- life.data %>% 
   dplyr::select(Status, Life.expectancy, Adult.Mortality, infant.deaths) %>% 
   pivot_longer(c(3:4), names_to = "myvar", values_to = "myval") %>% 
   mutate(myvar = as.factor(myvar))
 
-ggplot(df3, aes(y = Life.expectancy, x = myval, colour = Status)) +
+# plot
+ggplot(df3, aes(y = Life.expectancy, x = myval, color = myvar)) +
   geom_point(alpha = 0.5) +
   facet_wrap(~myvar, scales = "free_x") +
   theme_classic() +
@@ -1024,8 +1044,11 @@ ggplot(df3, aes(y = Life.expectancy, x = myval, colour = Status)) +
 
 **Question: Does Life Expectancy has positive or negative correlation with schooling, BMI, drinking alcohol etc.**
 
+Setting up dataframe for this section.
+
 ```{r}
 df4 <- life.data %>% dplyr::select(Status, Life.expectancy, Alcohol, BMI, Schooling)
+
 ```
 
 ### Correlation
@@ -1034,9 +1057,9 @@ Correlation is a measure of association between variables **without making any a
 
 Result shows that:
 
-* Life expectancy has a week positive correlation with alcohol, r = 0.42    
-* Life expectancy has a moderate positive correlation with BMI, r = 0.57    
-* Life expectancy has a good positive correlation with schooling, r = 0.76    
+* Life expectancy has a week positive correlation with alcohol, r = 0.42     
+* Life expectancy has a moderate positive correlation with BMI, r = 0.57     
+* Life expectancy has a good positive correlation with schooling, r = 0.76     
 
 ```{r}
 cor.data <- cor(df4[2:5])
@@ -1084,7 +1107,7 @@ plot_grid(top, bottom, ncol = 1)
 
 ### Regression 
 
-If attempt to describe the dependence of life expectancy on alcohol, BMI and schooling, a multiple linear regression model can be created. Output shows that the BMI and Schooling are statistically related to life expectancy, however the model has higher residual standard error rate and explaining less variation in the dataset as indicated by lower Adjusted R-squared of 60%. 
+If attempt to describe the dependence of life expectancy on alcohol, BMI and schooling, a multiple linear regression model can be created. Output shows that the BMI and Schooling are statistically related to life expectancy. However, the model has higher residual standard error rate and explaining less variation in the life expectancy (lower adjusted R-squared of 60%). 
 
 ```{r}
 model1 <- lm(Life.expectancy ~., data = df4[, 2:5])
@@ -1092,7 +1115,7 @@ summary(model1)
 
 ```
 
-Compared to the output of following multiple linear regression model that built before, which has a lower level of residual standard error and Adjusted R-squared. These indicates that it is a better model.
+Compared to the output of following multiple linear regression model that built previously, this model has a lower level of residual standard error and adjusted R-squared. These indicates that it is a better model.
 
 ```{r}
 summary(res.mlr2)
@@ -1101,14 +1124,14 @@ summary(res.mlr2)
 
 **Insights**:
 
-Alcohol is insignificantly related to life expectancy at a P-value of 0.778, whereas BMI and schooling are significantly related to life expectancy at a P-value of lower than 0.01. Both BMI and schooling relates to life expectancy positively. One unit increase in BMI, the life expectancy is expected to increase 0.027 year on average, whereas one unit increase in schooling, life expectancy is expected to increase 1.15 year on average (Adjusted R^2: 0.8538, F(15, 2775) = 1087, P < 0.01). 
+Alcohol is insignificantly related to life expectancy at a P-value of 0.778, whereas BMI and schooling are significantly related to life expectancy at a P-value of lower than 0.01. Both BMI and schooling relates to life expectancy positively. One unit increase in BMI, the life expectancy is expected to increase 0.027 year on average, whereas one unit increase in schooling, life expectancy is expected to increase 1.15 year on average (Adjusted R-squared: 0.8538, F(15, 2775) = 1087, P < 0.01). 
 
 
 ## Q5. Population versus lower life expectancy?
 
 **Question: Do densely populated countries tend to have lower life expectancy?**
 
-Both parametric and non-parametric correlation methods that using "pearson" and "spearman" method in computing the correlation. Both methods suggest the correlation between population and life expectancy is negative but the correlation is extremely small. 
+Both parametric and non-parametric correlation methods ("pearson" and "spearman") suggest that the correlation between population and life expectancy is negative and the correlation is actually extremely small. 
 
 Setting the dataset: 
 
@@ -1129,7 +1152,7 @@ More conservative non-parametric method: Spearman correlation:
 ```{r}
 cor(y = df5$Life.expectancy, x = df5$Population, method = "spearman")
 ```
-A scatter plot has the same result, the linear relationship between population and life expectancy is quite difficult to see, and the situation is the same for both developing and developed countries. The R-squared (explained variation) of two regression equations is so more that even achieve less than 1% of the variation in life expectancy.  
+A scatter plot has the same result, the relationship between population and life expectancy is quite difficult to see, and the situation is similar for both developing and developed countries. The R-squared values (explained variation) of two regression equations are very low.   
 
 ```{r, fig.height=6, fig.width=10, message=TRUE, warning=FALSE}
 
@@ -1141,7 +1164,7 @@ ggscatter(df5, x = "Population.log", y = "Life.expectancy", color = "Status", ad
 
 ```
 
-Life expectancy is generally dictated by many variables, as specified in the multiple linear regression model I have built previously. Many factors are related to Life expectancy. From the plot, we can see that lower life expectancy is generally associated with developing countries, or life expectancy is generally associated with other attributes of developing countries.
+From the plot, we can see that lower life expectancy is generally associated with developing countries, and life expectancy is generally higher in developed countries. Life expectancy is generally dictated by many variables, as specified in the multiple linear regression model I have built previously. Many factors are related and are required to understand the variability in the life expectancy. 
 
 ## Q6. Does developed countries have higher life expectancy?
 
@@ -1223,20 +1246,21 @@ corrplot(cor(df7), method = "number", type = "upper")
 
 Visually: 
 
-```{r, fig.width=12}
+```{r, fig.height=8, fig.width=12, message=FALSE, warning=FALSE}
 df7.2 <- df7 %>% 
   pivot_longer(c(2:4), names_to = "myvar", values_to = "myvalues") %>% 
   mutate(myvar = as.factor(myvar))
 
-ggplot(df7.2, aes(y = Life.expectancy, x = myvalues)) + 
+ggplot(df7.2, aes(y = Life.expectancy, x = myvalues, colour = myvar)) + 
   geom_point(alpha = 0.5) + 
   facet_wrap(~myvar) + geom_smooth(se = F, method = "lm") +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "none")
   
 
 ```
 
-Statistics from the multiple linear regression built previously suggests that:
+Statistics from the multiple linear regression model built previously suggests that:
 
 * Diphtheria has a statistical positive relationship with life expectancy, at a P-value of less than 0.05. An increase in one % of Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds, life expectancy will increase by 0.03 year on average.
 
@@ -1250,7 +1274,7 @@ Statistics from the multiple linear regression built previously suggests that:
 
 **Question: How life expectancy has changed over the years in developed and developing countries? Please also find the impacts of "Status", "Total.expenditure", "Measles", "HIV.AIDS", "Schooling", "Diphtheria", "Hepatitis.B", and "Polio".**
 
-The section is specially designed for if there is an interest in finding out the effect of years in relation to life expectancy and other predictors. 
+The section is specially designed for if there is an interest in finding out the effect of years in relation to life expectancy. 
 
 The associated predictors are:
 
@@ -1295,7 +1319,7 @@ life.data2 <- life.data %>%
 ```
 
 
-**Set up data frame to be used for this section **
+**Set up data frame to be used for this section**
 
 ```{r}
 df8 <- life.data2 %>% 
@@ -1319,7 +1343,8 @@ df_cor <- df8 %>%
 corrplot(df_cor, method = "number", type = "lower")
 
 ```
-Removing "Diphtheria" from the dataset because its correlations with "Hepatitis.B" and "Polio" are 0.68 and 0.67, these values are very closed to 0.7 and there might be a risk of multicollinearity. 
+
+Removing "Diphtheria" from the dataset because its correlations with "Hepatitis.B" and "Polio" are 0.68 and 0.67, these values are very closed to 0.7 and therefore there might be a risk of multicollinearity. 
 
 ```{r}
 df8 <- df8 %>% dplyr::select(-Diphtheria)
@@ -1360,7 +1385,7 @@ ggplot(df8, aes(x = Year, y = Life.expectancy)) +
 
 ```
 
-**Insights**
+**Insights from graph 1 and graph 2**
 
 * Life expectancy grows *linearly* with time  
 
@@ -1376,7 +1401,7 @@ ggplot(df8, aes(x = Year, y = Life.expectancy)) +
 
 **Model 1**
 
-Following model 1 is built with only 2 variables - life expectancy as the responding variable (y), and countries as the random effect.
+Following model 1 is built with only 2 variables - life expectancy as the responding variable (y) and countries as the random effect.
 
 ```{r}
 
@@ -1390,7 +1415,7 @@ Output of model 1 concludes that the intercept (69.36) is significantly differs 
 
 There are 193 countries in the dataset. By putting countries as a random effect, model 1 assumes all countries have different intercept. 
 
-The 95% confidence interval of the intercept is between 68.088 and 70,636, it is a range indicating where the true intercept may be located.  
+The 95% confidence interval of the intercept is between 68.088 and 70,636, it is a range indicating where the true intercept may be located. The interval does not overlap with zero and therefore it is a significant interval.   
 
 ```{r}
 intervals(model1)
@@ -1421,7 +1446,7 @@ anova(model1, model2)
 
 **Model 3 - Year as fixed and random**
 
-Model 3 considers "Year" as also a fixed effect (significant) but also a random effect because each country is likely to have different slope of life expectancy across years between 2000 and 2015. 
+Model 3 considers "Year" as a fixed effect (significant) but also a random effect because each country is likely to have different slope of life expectancy across years between 2000 and 2015. 
 
 Again, this section considers that the slope is different for different countries, and the intercept is different because of inherent difference among countries. 
 
@@ -1438,7 +1463,7 @@ summary(model3)
 
 * In random effect chunk of the output, there is a negative correlation (Corr = -0.69) which indicates that there is a negative correlation between intercept and slope. When a country intercept is *increased* by one unit, the slope of life expectancy across years of the country would decrease by *0.69* standard deviation. 
 
-* From prior knowledge, many developing countries have lower intercepts than develop countries, and therefore their slope of life expectancy improvement across years would be having higher gradient than develop countries.
+* Many developing countries have lower intercepts (lower life expectancy at year 2000) than developed countries, and therefore their slope of life expectancy improvement across the years would be experiencing a higher degree of gradient than develop countries.
 
 Model 3 is better and statistically different from model 2 (p-value of less than 0.001) in terms of the improvements of AIC, BIC, and logLik. Model 3 is a better fit of the data than model 2.
 
@@ -1480,13 +1505,13 @@ summary(model4)
 
 * Model 4 assumes different slope and intercepts (starting life expectancy in year-2000) for each country 
 
-* Developing country status has significant relationship with life expectancy (P-value < 0.01).
+* Developing country status has a significant negative relationship with life expectancy (p-value < 0.01).
 
-* Year has significant effect on life expectancy (P-value < 0.001). Output shows that life expectancy of human increases each year by 0.25 year on average. 
+* Year has significant effect on life expectancy (p-value < 0.001). Output shows that life expectancy of human increases each year by 0.25 year on average. 
 
-* HIV/AIDS Deaths is significantly and negatively related to life expectancy at a P-value of < 0.001.
+* HIV/AIDS deaths is significantly and negatively related to life expectancy at a p-value of < 0.001.
 
-* Schooling is significantly related to life expectancy at a P-value of 0.0442.
+* Schooling is significantly related to life expectancy in a positve way at a p-value of 0.0442.
 
 * There is no interaction effect of developing status with year, total expenditure, and schooling. 
 
@@ -1504,53 +1529,65 @@ Following show the intraclass Coefficient Coefficient. ICC is an indication of h
 *ICC of model 3*
 
 ```{r, warning=FALSE}
-performance::icc(mod3)
+performance::icc(model3)
 ```
 
 *ICC of model 4*
 
 ```{r}
-performance::icc(mod4)
+performance::icc(model4)
 
 ```
 
 
-There is 98% of clustering taking place when model has no predictors (model 3). After addition of predictors in the full model (model 4), ICC is now at 94.5%. Both of ICC values are still considered very high, which indicates that there are still a high amount of unexplained clustering taking place. Therefore, the clients who are interested in this research question should consider including more variables to capture the unexplained information. 
+There is 98% of clustering taking place when model has no predictors (model 3). After addition of predictors in the full model (model 4), ICC is now at 94.5%. Both of ICC values are still considered at a very high level, which indicates that there are still a high amount of unexplained clustering taking place. Therefore, the researcher who are interested in this research question should consider including more variables to capture the unexplained information. 
 
 
 # Conclusion
 
 **Question 1: What are the predicting variables actually affecting the life expectancy?**
-Based on multiple linear regression analysis, the positively statistical correlated variables (P < 0.05) are schooling (Coeff. Est: 1.15), total expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP (Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est: 0.03) and Polio (Coeff. Est: 0.02). The negatively statistical correlated variables (P < 0.05) are developing country status (Coeff. Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002) (Adjusted R^2: 0.85, F(15, 2775) = 1087, P-value < 0.001). 
+
+Based on multiple linear regression analysis, the positively statistical correlated variables (p < 0.05) are schooling (Coeff. Est: 1.15), total expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP (Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est: 0.03) and Polio (Coeff. Est: 0.02). The negatively statistical correlated variables (p < 0.05) are developing country status (Coeff. Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002) (Adjusted R^2: 0.85, F(15, 2775) = 1087, p < 0.001). 
 
 **Question 2: Should a country having a lower life expectancy value (<65) increase its healthcare expenditure in order to improve its average lifespan?**
-Yes. 1% increase in the healthcare expenditure by government, the life expectancy will increase by 0.0807905 (29.5 days) on average, while keep all other predicting variables constant (P < 0.05). Governments in countries with higher life expectancy value (>65) spent more on healthcare statistically than countries with lower life expectancy (<65). (Welch‘s Two Sample t-test: t = -8.6583, df = 1821.2, p-value < 0.001).
+
+Yes. 1% increase in the healthcare expenditure by government, the life expectancy will increase by 0.081 (29.5 days) on average, while keep all other predicting variables constant (p < 0.05). Governments in countries with higher life expectancy value (>65) spent more on healthcare statistically than countries with lower life expectancy (<65) (Welch‘s Two Sample t-test: t = -8.6583, df = 1821.2, p < 0.001).
 
 **Question 3: How does Infant and Adult mortality rates affect life expectancy?**
-Output from multiple linear regression shows that any increment in one unit of adult mortality, life expectancy will be reduced by 0.0222 (P-value < 0.001), whereas any increment in one unit of infant deaths, life expectancy will be reduced by 0.0028 (P-value < 0.01).
+
+Output from multiple linear regression shows that any increment in one unit of adult mortality, life expectancy will be reduced by 0.0222 (p < 0.001), whereas any increment in one unit of infant deaths, life expectancy will be reduced by 0.0028 (p < 0.01).
 
 **Question 4: Does Life Expectancy has positive or negative correlation with schooling, BMI, drinking alcohol etc.**
-Life expectancy has a week positive correlation with alcohol (r = 0.42), moderate positive correlation with BMI (r = 0.57), and a good positive correlation with schooling (r = 0.76). Principle component analysis (PCA) supports the correlation that "life expectancy" is more related to BMI and schooling, and less related to alcohol consumption. Alcohol is insignificantly related to life expectancy at a P-value of 0.778, whereas BMI and schooling are significantly related to life expectancy at a P-value of lower than 0.01. Both BMI and schooling relates to life expectancy positively. One unit increase in BMI, the life expectancy is expected to increase 0.027 year on average, whereas one unit increase in schooling, life expectancy is expected to increase 1.15 year on average (Adjusted R^2: 0.8538, F(15, 2775) = 1087, P < 0.01).
+
+Life expectancy has a week positive correlation with alcohol (r = 0.42), moderate positive correlation with BMI (r = 0.57), and a good positive correlation with schooling (r = 0.76). Principle component analysis (PCA) supports the correlation outcomes that "life expectancy" is more related to BMI and schooling, and less related to alcohol consumption. 
+
+Alcohol is insignificantly related to life expectancy at a p-value of 0.778, whereas BMI and schooling are significantly related to life expectancy at a p-value of lower than 0.01. Both BMI and schooling relates to life expectancy positively. One unit increase in BMI, the life expectancy is expected to increase 0.027 year on average, whereas one unit increase in schooling, life expectancy is expected to increase 1.15 year on average (Adjusted R-squared: 0.8538, F(15, 2775) = 1087, p < 0.01).
 
 **Question 5: Do densely populated countries tend to have lower life expectancy?**
-Non-parametric method (spearman correlation) and parametric method (Pearson) suggest the correlation between population and life expectancy is negative but the correlation is extremely small. 
+
+Non-parametric (spearman) and parametric (Pearson) correlation measurement methods suggest the correlation between population and life expectancy is negative but the correlation is extremely small. 
 
 
 **Question 6. Does developed countries have higher life expectancy?**
+
 Yes. A non-parametric, median-based comparison test was run and concluded that the difference between developed and developing countries in life expectancy is statistically significant (Wilcoxon rank sum test: W = 1136054, p-value < 0.001).
 
 **Question 7. What is the impact of Immunization coverage on life Expectancy?**
-* Diphtheria has a statistical positive relationship with life expectancy, at a P-value of less than 0.05. An increase in one % of Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds, life expectancy will increase by 0.03 year on average.
-* Polio has also a statistical positive relationship with life expectancy, at a P-value of less than 0.05. An increase in one % of Polio immunisation among 1-year-olds, life expectancy will increase by 0.02 year on average.
+
+* Diphtheria has a statistical positive relationship with life expectancy, at a p-value of less than 0.05. An increase in one % of Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds, life expectancy will increase by 0.03 year on average.
+
+* Polio has also a statistical positive relationship with life expectancy, at a p-value of less than 0.05. An increase in one % of Polio immunisation among 1-year-olds, life expectancy will increase by 0.02 year on average.
+
 * Hepatitis B immunisation do not have a statistical relationship with life expectancy, which means that having an increment in Hepatitis B immunisation can lead to zero increment in life expectancy.
 
 **Question 8: How life expectancy has changed over the years in developed and developing countries? Please also find the impacts of "Status", "Total.expenditure", "Measles", "HIV.AIDS", "Schooling", "Diphtheria", "Hepatitis.B", and "Polio".**
-A full model that considered the trends of life expectancy between 2000 to 2015 have inherent differences among countries with the effect of year was the best model based on p-value comparison, AIC, BIC, logLik and ICC statistics. Significantly correlated variables are only (P < 0.05) developing country status (Coeff. Est: -8.6), year (Coeff. Est: 0.25), HIV/AIDS death rate (Coeff. Est: -0.33), and schooling (Coeff. Est: 0.34). There is no interaction effect between development status and year (P = 0.823). 
+
+A full model that considered the trends of life expectancy between 2000 to 2015 have inherent differences among countries with the effect of year was the best model based on p-value comparison, AIC, BIC, logLik and ICC statistics. Significantly correlated variables are only (p < 0.05) developing country status (Coeff. Est: -8.6), year (Coeff. Est: 0.25), HIV/AIDS death rate (Coeff. Est: -0.33), and schooling (Coeff. Est: 0.34). There is no interaction effect between development status and year (p = 0.823). 
+
+The full model detected that if a country has lower initial life expectancy in year-2000, it would have a higher slope in life expectancy across the year between 2000 and 2015 (intercept-slope corr = -0.55). It implies improvement of life expectancy in developing countries since 2000 to 2015. The full model also concludes that life expectancy of human increases each year by 0.25 year on average, with a confidence level between 0.16 year and 0.34 year (p < 0.001). 
 
 
-
-
-**Thank you for reading**
+*Thank you for reading*
 
 # ACKNOWLEDGEMENTS
 
