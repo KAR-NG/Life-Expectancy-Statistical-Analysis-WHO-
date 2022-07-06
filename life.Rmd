@@ -181,7 +181,7 @@ colSums(is.na(life))
 Here performs horizontal missing value check. 
 
 ```{r}
-life %>% 
+df_horiz_na <- life %>% 
   mutate(row.id = c(1:nrow(life))) %>% 
   relocate(row.id, .before = Country) %>% 
   gather(key = "variables", value = "values", -row.id) %>% 
@@ -192,6 +192,9 @@ life %>%
   mutate(total.column = 22,
          propor.NA.per.row = paste0(round(count/total.column*100,1), "%")) 
 
+df_horiz_na %>% 
+   kbl() %>% 
+  kable_material_dark()
 
 ```
 
