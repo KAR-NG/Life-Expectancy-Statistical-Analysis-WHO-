@@ -191,7 +191,7 @@ df_horiz_na <- life %>%
   arrange(-count) %>% 
   mutate(total.column = 22,
          propor.NA.per.row = paste0(round(count/total.column*100,1), "%"),
-         label = paste0(propor.NA.per.row, " (", count, "/22)"),
+         label = paste0(propor.NA.per.row, "\n (", count, "/22)"),
          label = as.factor(label)) 
 
 df_horiz_na %>%
@@ -200,7 +200,8 @@ df_horiz_na %>%
   ggplot(aes(x = fct_reorder(label, -count), y = count)) +
   geom_bar(stat = "identity") +
   theme_bw() +
-  labs(title = "Proportion of Missing Values") +
+  labs(title = "Proportion of Missing Values in Observations",
+       x = "Proportion (%)") +
   theme(plot.title = element_text(face = "bold")) +
   geom_label(aes(label = count))
 
@@ -1457,7 +1458,9 @@ In the output of model 2, the p-value of Year as a fixed effect is significant a
 Based on simple ANOVA comparison, model 2 is a better model 1. Both models are statistically different (P-value < 0.001) and the improvement of AIC, BIC, logLik is significant. 
 
 ```{r}
-anova(model1, model2)
+anova(model1, model2) %>%
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 
 ```
 
@@ -1486,7 +1489,9 @@ summary(model3)
 Model 3 is better and statistically different from model 2 (p-value of less than 0.001) in terms of the improvements of AIC, BIC, and logLik. Model 3 is a better fit of the data than model 2.
 
 ```{r}
-anova(model3, model2)
+anova(model3, model2)%>%
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 
 ```
 
@@ -1510,7 +1515,9 @@ model4 <- lme(Life.expectancy ~ Status*Year + Status*Total.expenditure +
 Model 4 is better statistically than model 3 (p-value < 0.0001) with following statistics.
 
 ```{r}
-anova(model3, model4)
+anova(model3, model4)%>%
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 ```
 
 ```{r}

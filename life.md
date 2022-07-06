@@ -297,231 +297,7 @@ Schooling
 <tr>
 <td style="text-align:left;">
 
-Mexico
-
-</td>
-<td style="text-align:right;">
-
-2010
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-75.6
-
-</td>
-<td style="text-align:right;">
-
-127
-
-</td>
-<td style="text-align:right;">
-
-35
-
-</td>
-<td style="text-align:right;">
-
-5.21
-
-</td>
-<td style="text-align:right;">
-
-1033.03974
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-6.1
-
-</td>
-<td style="text-align:right;">
-
-40
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-6.39
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-8959.5814
-
-</td>
-<td style="text-align:right;">
-
-117318941
-
-</td>
-<td style="text-align:right;">
-
-1.6
-
-</td>
-<td style="text-align:right;">
-
-1.6
-
-</td>
-<td style="text-align:right;">
-
-0.739
-
-</td>
-<td style="text-align:right;">
-
-12.5
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Rwanda
-
-</td>
-<td style="text-align:right;">
-
-2000
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-48.3
-
-</td>
-<td style="text-align:right;">
-
-426
-
-</td>
-<td style="text-align:right;">
-
-34
-
-</td>
-<td style="text-align:right;">
-
-7.13
-
-</td>
-<td style="text-align:right;">
-
-18.41792
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-2095
-
-</td>
-<td style="text-align:right;">
-
-13.2
-
-</td>
-<td style="text-align:right;">
-
-57
-
-</td>
-<td style="text-align:right;">
-
-9
-
-</td>
-<td style="text-align:right;">
-
-4.22
-
-</td>
-<td style="text-align:right;">
-
-9
-
-</td>
-<td style="text-align:right;">
-
-8.5
-
-</td>
-<td style="text-align:right;">
-
-216.1727
-
-</td>
-<td style="text-align:right;">
-
-82573
-
-</td>
-<td style="text-align:right;">
-
-7.6
-
-</td>
-<td style="text-align:right;">
-
-7.7
-
-</td>
-<td style="text-align:right;">
-
-0.318
-
-</td>
-<td style="text-align:right;">
-
-6.6
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Cuba
+Jordan
 
 </td>
 <td style="text-align:right;">
@@ -536,159 +312,27 @@ Developing
 </td>
 <td style="text-align:right;">
 
-78.1
+73.0
 
 </td>
 <td style="text-align:right;">
 
-14
+12
 
 </td>
 <td style="text-align:right;">
 
-1
+4
 
 </td>
 <td style="text-align:right;">
 
-4.13
+0.60
 
 </td>
 <td style="text-align:right;">
 
-750.71476
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-55.4
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-99
-
-</td>
-<td style="text-align:right;">
-
-1.42
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-5184.4942
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-3.4
-
-</td>
-<td style="text-align:right;">
-
-3.2
-
-</td>
-<td style="text-align:right;">
-
-0.754
-
-</td>
-<td style="text-align:right;">
-
-16.0
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Qatar
-
-</td>
-<td style="text-align:right;">
-
-2008
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-76.8
-
-</td>
-<td style="text-align:right;">
-
-82
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-1.37
-
-</td>
-<td style="text-align:right;">
-
-5484.14331
-
-</td>
-<td style="text-align:right;">
-
-97
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-65.2
-
-</td>
-<td style="text-align:right;">
-
-0
+373.262864
 
 </td>
 <td style="text-align:right;">
@@ -698,12 +342,32 @@ Developing
 </td>
 <td style="text-align:right;">
 
-1.87
+41
 
 </td>
 <td style="text-align:right;">
 
-97
+59.3
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+8.35
+
+</td>
+<td style="text-align:right;">
+
+98
 
 </td>
 <td style="text-align:right;">
@@ -713,44 +377,44 @@ Developing
 </td>
 <td style="text-align:right;">
 
-82967.3723
+2762.8635
 
 </td>
 <td style="text-align:right;">
 
-NA
+6193191
 
 </td>
 <td style="text-align:right;">
 
-5.0
+3.8
 
 </td>
 <td style="text-align:right;">
 
-4.5
+3.8
 
 </td>
 <td style="text-align:right;">
 
-0.825
+0.736
 
 </td>
 <td style="text-align:right;">
 
-11.7
+13.6
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Antigua and Barbuda
+Myanmar
 
 </td>
 <td style="text-align:right;">
 
-2006
+2000
 
 </td>
 <td style="text-align:left;">
@@ -760,12 +424,124 @@ Developing
 </td>
 <td style="text-align:right;">
 
-74.8
+62.1
 
 </td>
 <td style="text-align:right;">
 
-145
+243
+
+</td>
+<td style="text-align:right;">
+
+73
+
+</td>
+<td style="text-align:right;">
+
+0.35
+
+</td>
+<td style="text-align:right;">
+
+2.511437
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+845
+
+</td>
+<td style="text-align:right;">
+
+13.6
+
+</td>
+<td style="text-align:right;">
+
+100
+
+</td>
+<td style="text-align:right;">
+
+88
+
+</td>
+<td style="text-align:right;">
+
+1.84
+
+</td>
+<td style="text-align:right;">
+
+82
+
+</td>
+<td style="text-align:right;">
+
+0.4
+
+</td>
+<td style="text-align:right;">
+
+193.1875
+
+</td>
+<td style="text-align:right;">
+
+4695462
+
+</td>
+<td style="text-align:right;">
+
+13.3
+
+</td>
+<td style="text-align:right;">
+
+13.7
+
+</td>
+<td style="text-align:right;">
+
+0.417
+
+</td>
+<td style="text-align:right;">
+
+7.5
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Seychelles
+
+</td>
+<td style="text-align:right;">
+
+2003
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+72.1
+
+</td>
+<td style="text-align:right;">
+
+185
 
 </td>
 <td style="text-align:right;">
@@ -775,12 +551,12 @@ Developing
 </td>
 <td style="text-align:right;">
 
-8.93
+7.41
 
 </td>
 <td style="text-align:right;">
 
-216.31469
+843.118666
 
 </td>
 <td style="text-align:right;">
@@ -795,7 +571,7 @@ Developing
 </td>
 <td style="text-align:right;">
 
-42.0
+28.7
 
 </td>
 <td style="text-align:right;">
@@ -810,7 +586,7 @@ Developing
 </td>
 <td style="text-align:right;">
 
-4.34
+4.64
 
 </td>
 <td style="text-align:right;">
@@ -825,44 +601,44 @@ Developing
 </td>
 <td style="text-align:right;">
 
-12724.3938
+8524.9612
 
 </td>
 <td style="text-align:right;">
 
-NA
+82781
 
 </td>
 <td style="text-align:right;">
 
-3.4
+6.1
 
 </td>
 <td style="text-align:right;">
 
-3.4
+6.5
 
 </td>
 <td style="text-align:right;">
 
-0.773
+0.713
 
 </td>
 <td style="text-align:right;">
 
-14.7
+12.1
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-United Arab Emirates
+Myanmar
 
 </td>
 <td style="text-align:right;">
 
-2006
+2003
 
 </td>
 <td style="text-align:left;">
@@ -872,209 +648,97 @@ Developing
 </td>
 <td style="text-align:right;">
 
-75.4
+63.2
 
 </td>
 <td style="text-align:right;">
 
-89
+231
 
 </td>
 <td style="text-align:right;">
 
-1
+69
 
 </td>
 <td style="text-align:right;">
 
-1.74
+0.40
 
 </td>
 <td style="text-align:right;">
 
-3749.94162
+3.824212
 
 </td>
 <td style="text-align:right;">
 
-92
+8
 
 </td>
 <td style="text-align:right;">
 
-0
+830
 
 </td>
 <td style="text-align:right;">
 
-55.8
+15.2
 
 </td>
 <td style="text-align:right;">
 
-1
+93
 
 </td>
 <td style="text-align:right;">
 
-94
+86
 
 </td>
 <td style="text-align:right;">
 
-2.33
+1.97
 
 </td>
 <td style="text-align:right;">
 
-92
+78
 
 </td>
 <td style="text-align:right;">
 
-0.1
+0.5
 
 </td>
 <td style="text-align:right;">
 
-42372.2217
+219.7823
 
 </td>
 <td style="text-align:right;">
 
-NA
+47624894
 
 </td>
 <td style="text-align:right;">
 
-5.1
+13.3
 
 </td>
 <td style="text-align:right;">
 
-4.9
+13.6
 
 </td>
 <td style="text-align:right;">
 
-0.823
+0.445
 
 </td>
 <td style="text-align:right;">
 
-12.8
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Republic of Korea
-
-</td>
-<td style="text-align:right;">
-
-2008
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-83.0
-
-</td>
-<td style="text-align:right;">
-
-75
-
-</td>
-<td style="text-align:right;">
-
-2
-
-</td>
-<td style="text-align:right;">
-
-9.31
-
-</td>
-<td style="text-align:right;">
-
-0.00000
-
-</td>
-<td style="text-align:right;">
-
-94
-
-</td>
-<td style="text-align:right;">
-
-2
-
-</td>
-<td style="text-align:right;">
-
-28.6
-
-</td>
-<td style="text-align:right;">
-
-2
-
-</td>
-<td style="text-align:right;">
-
-92
-
-</td>
-<td style="text-align:right;">
-
-6.16
-
-</td>
-<td style="text-align:right;">
-
-94
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-1.5
-
-</td>
-<td style="text-align:right;">
-
-1.0
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-NA
+7.7
 
 </td>
 </tr>
@@ -1116,7 +780,7 @@ Developing
 </td>
 <td style="text-align:right;">
 
-225.06200
+225.061996
 
 </td>
 <td style="text-align:right;">
@@ -1193,159 +857,27 @@ NA
 <tr>
 <td style="text-align:left;">
 
-Algeria
+Malta
 
 </td>
 <td style="text-align:right;">
 
-2009
+2008
 
 </td>
 <td style="text-align:left;">
 
-Developing
+Developed
 
 </td>
 <td style="text-align:right;">
 
-74.4
+80.0
 
 </td>
 <td style="text-align:right;">
 
-123
-
-</td>
-<td style="text-align:right;">
-
-20
-
-</td>
-<td style="text-align:right;">
-
-0.50
-
-</td>
-<td style="text-align:right;">
-
-352.06364
-
-</td>
-<td style="text-align:right;">
-
-94
-
-</td>
-<td style="text-align:right;">
-
-107
-
-</td>
-<td style="text-align:right;">
-
-52.8
-
-</td>
-<td style="text-align:right;">
-
-23
-
-</td>
-<td style="text-align:right;">
-
-94
-
-</td>
-<td style="text-align:right;">
-
-5.36
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-3868.8312
-
-</td>
-<td style="text-align:right;">
-
-3546576
-
-</td>
-<td style="text-align:right;">
-
-6.0
-
-</td>
-<td style="text-align:right;">
-
-5.9
-
-</td>
-<td style="text-align:right;">
-
-0.705
-
-</td>
-<td style="text-align:right;">
-
-13.1
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Costa Rica
-
-</td>
-<td style="text-align:right;">
-
-2015
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-79.6
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-0.00000
-
-</td>
-<td style="text-align:right;">
-
-92
+64
 
 </td>
 <td style="text-align:right;">
@@ -1355,7 +887,17 @@ NA
 </td>
 <td style="text-align:right;">
 
-6.5
+7.14
+
+</td>
+<td style="text-align:right;">
+
+2655.573684
+
+</td>
+<td style="text-align:right;">
+
+86
 
 </td>
 <td style="text-align:right;">
@@ -1365,17 +907,27 @@ NA
 </td>
 <td style="text-align:right;">
 
-92
+66.6
 
 </td>
 <td style="text-align:right;">
 
-NA
+0
 
 </td>
 <td style="text-align:right;">
 
-92
+72
+
+</td>
+<td style="text-align:right;">
+
+8.15
+
+</td>
+<td style="text-align:right;">
+
+72
 
 </td>
 <td style="text-align:right;">
@@ -1385,32 +937,480 @@ NA
 </td>
 <td style="text-align:right;">
 
-1146.3627
+21928.7670
 
 </td>
 <td style="text-align:right;">
 
-487852
+49379
 
 </td>
 <td style="text-align:right;">
 
-1.7
+0.7
 
 </td>
 <td style="text-align:right;">
 
-1.7
+0.7
 
 </td>
 <td style="text-align:right;">
 
-0.775
+0.813
 
 </td>
 <td style="text-align:right;">
 
-14.2
+14.6
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Kuwait
+
+</td>
+<td style="text-align:right;">
+
+2007
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.7
+
+</td>
+<td style="text-align:right;">
+
+89
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+0.03
+
+</td>
+<td style="text-align:right;">
+
+2555.303869
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+67.1
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+2.13
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+45793.9761
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+3.2
+
+</td>
+<td style="text-align:right;">
+
+3.1
+
+</td>
+<td style="text-align:right;">
+
+0.787
+
+</td>
+<td style="text-align:right;">
+
+13.9
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Central African Republic
+
+</td>
+<td style="text-align:right;">
+
+2000
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+46.0
+
+</td>
+<td style="text-align:right;">
+
+49
+
+</td>
+<td style="text-align:right;">
+
+16
+
+</td>
+<td style="text-align:right;">
+
+1.51
+
+</td>
+<td style="text-align:right;">
+
+30.783827
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+3207
+
+</td>
+<td style="text-align:right;">
+
+16.5
+
+</td>
+<td style="text-align:right;">
+
+25
+
+</td>
+<td style="text-align:right;">
+
+38
+
+</td>
+<td style="text-align:right;">
+
+4.24
+
+</td>
+<td style="text-align:right;">
+
+37
+
+</td>
+<td style="text-align:right;">
+
+14.3
+
+</td>
+<td style="text-align:right;">
+
+243.5429
+
+</td>
+<td style="text-align:right;">
+
+3754986
+
+</td>
+<td style="text-align:right;">
+
+1.5
+
+</td>
+<td style="text-align:right;">
+
+1.5
+
+</td>
+<td style="text-align:right;">
+
+0.312
+
+</td>
+<td style="text-align:right;">
+
+5.2
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Vanuatu
+
+</td>
+<td style="text-align:right;">
+
+2013
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+71.6
+
+</td>
+<td style="text-align:right;">
+
+135
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+0.01
+
+</td>
+<td style="text-align:right;">
+
+447.545645
+
+</td>
+<td style="text-align:right;">
+
+64
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+51.7
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+65
+
+</td>
+<td style="text-align:right;">
+
+3.92
+
+</td>
+<td style="text-align:right;">
+
+64
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+3167.3436
+
+</td>
+<td style="text-align:right;">
+
+253142
+
+</td>
+<td style="text-align:right;">
+
+1.5
+
+</td>
+<td style="text-align:right;">
+
+1.4
+
+</td>
+<td style="text-align:right;">
+
+0.591
+
+</td>
+<td style="text-align:right;">
+
+10.8
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Saint Lucia
+
+</td>
+<td style="text-align:right;">
+
+2008
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+74.1
+
+</td>
+<td style="text-align:right;">
+
+149
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+12.09
+
+</td>
+<td style="text-align:right;">
+
+0.000000
+
+</td>
+<td style="text-align:right;">
+
+96
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+42.2
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+96
+
+</td>
+<td style="text-align:right;">
+
+7.43
+
+</td>
+<td style="text-align:right;">
+
+96
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+4.3
+
+</td>
+<td style="text-align:right;">
+
+4.4
+
+</td>
+<td style="text-align:right;">
+
+0.710
+
+</td>
+<td style="text-align:right;">
+
+12.6
 
 </td>
 </tr>
@@ -3323,7 +3323,7 @@ df_horiz_na <- life %>%
   arrange(-count) %>% 
   mutate(total.column = 22,
          propor.NA.per.row = paste0(round(count/total.column*100,1), "%"),
-         label = paste0(propor.NA.per.row, " (", count, "/22)"),
+         label = paste0(propor.NA.per.row, "\n (", count, "/22)"),
          label = as.factor(label)) 
 
 df_horiz_na %>%
@@ -3332,7 +3332,8 @@ df_horiz_na %>%
   ggplot(aes(x = fct_reorder(label, -count), y = count)) +
   geom_bar(stat = "identity") +
   theme_bw() +
-  labs(title = "Proportion of Missing Values") +
+  labs(title = "Proportion of Missing Values in Observations",
+       x = "Proportion (%)") +
   theme(plot.title = element_text(face = "bold")) +
   geom_label(aes(label = count))
 ```
@@ -5974,16 +5975,169 @@ models are statistically different (P-value \< 0.001) and the
 improvement of AIC, BIC, logLik is significant.
 
 ``` r
-anova(model1, model2)
+anova(model1, model2) %>%
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 ```
 
-<div data-pagedtable="false">
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["call"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Model"],"name":[2],"type":["int"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[7],"type":["fct"],"align":["left"]},{"label":["L.Ratio"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["p-value"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"lme.formula(fixed = Life.expectancy ~ 1, data = df8, random = ~1 |     Country, method = \"ML\")","2":"1","3":"3","4":"15116.05","5":"15134.01","6":"-7555.026","7":"","8":"NA","9":"NA","_rn_":"model1"},{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~1 |     Country, method = \"ML\")","2":"2","3":"4","4":"13765.89","5":"13789.83","6":"-6878.946","7":"1 vs 2","8":"1352.159","9":"0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005229801","_rn_":"model2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+call
 
-</div>
+</th>
+<th style="text-align:right;">
+
+Model
+
+</th>
+<th style="text-align:right;">
+
+df
+
+</th>
+<th style="text-align:right;">
+
+AIC
+
+</th>
+<th style="text-align:right;">
+
+BIC
+
+</th>
+<th style="text-align:right;">
+
+logLik
+
+</th>
+<th style="text-align:left;">
+
+Test
+
+</th>
+<th style="text-align:right;">
+
+L.Ratio
+
+</th>
+<th style="text-align:right;">
+
+p-value
+
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+
+model1
+
+</td>
+<td style="text-align:left;">
+
+lme.formula(fixed = Life.expectancy \~ 1, data = df8, random = \~1 \|
+Country, method = “ML”)
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+3
+
+</td>
+<td style="text-align:right;">
+
+15116.05
+
+</td>
+<td style="text-align:right;">
+
+15134.01
+
+</td>
+<td style="text-align:right;">
+
+-7555.026
+
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+model2
+
+</td>
+<td style="text-align:left;">
+
+lme.formula(fixed = Life.expectancy \~ Year, data = df8, random = \~1 \|
+Country, method = “ML”)
+
+</td>
+<td style="text-align:right;">
+
+2
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+13765.89
+
+</td>
+<td style="text-align:right;">
+
+13789.83
+
+</td>
+<td style="text-align:right;">
+
+-6878.946
+
+</td>
+<td style="text-align:left;">
+
+1 vs 2
+
+</td>
+<td style="text-align:right;">
+
+1352.159
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+</tr>
+</tbody>
+</table>
 
 **Model 3 - Year as fixed and random**
 
@@ -6049,16 +6203,169 @@ less than 0.001) in terms of the improvements of AIC, BIC, and logLik.
 Model 3 is a better fit of the data than model 2.
 
 ``` r
-anova(model3, model2)
+anova(model3, model2)%>%
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 ```
 
-<div data-pagedtable="false">
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["call"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Model"],"name":[2],"type":["int"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[7],"type":["fct"],"align":["left"]},{"label":["L.Ratio"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["p-value"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~Year |     Country, method = \"ML\")","2":"1","3":"6","4":"12774.88","5":"12810.79","6":"-6381.438","7":"","8":"NA","9":"NA","_rn_":"model3"},{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~1 |     Country, method = \"ML\")","2":"2","3":"4","4":"13765.89","5":"13789.83","6":"-6878.946","7":"1 vs 2","8":"995.0166","9":"0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000860758","_rn_":"model2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+call
 
-</div>
+</th>
+<th style="text-align:right;">
+
+Model
+
+</th>
+<th style="text-align:right;">
+
+df
+
+</th>
+<th style="text-align:right;">
+
+AIC
+
+</th>
+<th style="text-align:right;">
+
+BIC
+
+</th>
+<th style="text-align:right;">
+
+logLik
+
+</th>
+<th style="text-align:left;">
+
+Test
+
+</th>
+<th style="text-align:right;">
+
+L.Ratio
+
+</th>
+<th style="text-align:right;">
+
+p-value
+
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+
+model3
+
+</td>
+<td style="text-align:left;">
+
+lme.formula(fixed = Life.expectancy \~ Year, data = df8, random = \~Year
+\| Country, method = “ML”)
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+6
+
+</td>
+<td style="text-align:right;">
+
+12774.88
+
+</td>
+<td style="text-align:right;">
+
+12810.79
+
+</td>
+<td style="text-align:right;">
+
+-6381.438
+
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+model2
+
+</td>
+<td style="text-align:left;">
+
+lme.formula(fixed = Life.expectancy \~ Year, data = df8, random = \~1 \|
+Country, method = “ML”)
+
+</td>
+<td style="text-align:right;">
+
+2
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+13765.89
+
+</td>
+<td style="text-align:right;">
+
+13789.83
+
+</td>
+<td style="text-align:right;">
+
+-6878.946
+
+</td>
+<td style="text-align:left;">
+
+1 vs 2
+
+</td>
+<td style="text-align:right;">
+
+995.0166
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ### 7.8.6 Conditional Growth Model
 
@@ -6080,16 +6387,171 @@ Model 4 is better statistically than model 3 (p-value \< 0.0001) with
 following statistics.
 
 ``` r
-anova(model3, model4)
+anova(model3, model4)%>%
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 ```
 
-<div data-pagedtable="false">
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["call"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Model"],"name":[2],"type":["int"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Test"],"name":[7],"type":["fct"],"align":["left"]},{"label":["L.Ratio"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["p-value"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"lme.formula(fixed = Life.expectancy ~ Year, data = df8, random = ~Year |     Country, method = \"ML\")","2":"1","3":"6","4":"12774.88","5":"12810.79","6":"-6381.438","7":"","8":"NA","9":"NA","_rn_":"model3"},{"1":"lme.formula(fixed = Life.expectancy ~ Status * Year + Status *     Total.expenditure + Measles + HIV.AIDS + Status * Schooling +     Hepatitis.B + Polio, data = df8, random = ~Year | Country,     method = \"ML\")","2":"2","3":"16","4":"12559.95","5":"12655.72","6":"-6263.975","7":"1 vs 2","8":"234.9257","9":"0.000000000000000000000000000000000000000000007958605","_rn_":"model4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+call
 
-</div>
+</th>
+<th style="text-align:right;">
+
+Model
+
+</th>
+<th style="text-align:right;">
+
+df
+
+</th>
+<th style="text-align:right;">
+
+AIC
+
+</th>
+<th style="text-align:right;">
+
+BIC
+
+</th>
+<th style="text-align:right;">
+
+logLik
+
+</th>
+<th style="text-align:left;">
+
+Test
+
+</th>
+<th style="text-align:right;">
+
+L.Ratio
+
+</th>
+<th style="text-align:right;">
+
+p-value
+
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+
+model3
+
+</td>
+<td style="text-align:left;">
+
+lme.formula(fixed = Life.expectancy \~ Year, data = df8, random = \~Year
+\| Country, method = “ML”)
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+6
+
+</td>
+<td style="text-align:right;">
+
+12774.88
+
+</td>
+<td style="text-align:right;">
+
+12810.79
+
+</td>
+<td style="text-align:right;">
+
+-6381.438
+
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+model4
+
+</td>
+<td style="text-align:left;">
+
+lme.formula(fixed = Life.expectancy \~ Status \* Year + Status \*
+Total.expenditure + Measles + HIV.AIDS + Status \* Schooling +
+Hepatitis.B + Polio, data = df8, random = \~Year \| Country, method =
+“ML”)
+
+</td>
+<td style="text-align:right;">
+
+2
+
+</td>
+<td style="text-align:right;">
+
+16
+
+</td>
+<td style="text-align:right;">
+
+12559.95
+
+</td>
+<td style="text-align:right;">
+
+12655.72
+
+</td>
+<td style="text-align:right;">
+
+-6263.975
+
+</td>
+<td style="text-align:left;">
+
+1 vs 2
+
+</td>
+<td style="text-align:right;">
+
+234.9257
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ``` r
 summary(model4)
