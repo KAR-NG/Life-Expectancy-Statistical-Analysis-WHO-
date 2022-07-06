@@ -27,7 +27,7 @@ During data processing, data were thoroughly checked (horizontally and verticall
 
 Multiple linear regression model that passed the assumption tests shown that the positively correlated significant variables (p < 0.05) in relation to life expectancy are schooling (Coeff. Est: 1.15), total expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP (Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est: 0.03) and Polio (Coeff. Est: 0.02), whereas, the negatively correlated significant variables (p < 0.05) are developing country status (Coeff. Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002) (adjusted R-squared: 0.85, F(15, 2775) = 1087, p < 0.001). A partial analysis from the full model of longitudinal multilevel modeling supports similar outcomes and it detected that if a country has lower initial life expectancy in year-2000, it would have a higher rate in life expectancy improvement across the year between 2000 and 2015 (intercept-slope corr = -0.55). It implies improvement of life expectancy in developing countries that associated with lower life expectancy since 2000 to 2015. The full model also concludes that life expectancy of human increases each year by 0.25 year on average, with a confidence level between 0.16 year and 0.34 year (p < 0.001). 
 
-**Highlights**
+*Highlights*
 
 ![](https://raw.githubusercontent.com/KAR-NG/life/main/pic1_graphs.png)
 
@@ -1612,11 +1612,7 @@ A full model that considered the trends of life expectancy between 2000 to 2015 
 The full model detected that if a country has lower initial life expectancy in year-2000, it would have a higher slope in life expectancy across the year between 2000 and 2015 (intercept-slope corr = -0.55). It implies improvement of life expectancy in developing countries since 2000 to 2015. The full model also concludes that life expectancy of human increases each year by 0.25 year on average, with a confidence level between 0.16 year and 0.34 year (p < 0.001). 
 
 
-*Thank you for reading*
-
 # ACKNOWLEDGEMENTS
-
-Many thanks to 
 
 The data used in this project was collected from WHO and United Nations website with the help of Deeksha Russell and Duan Wang (KUMARRAJARSHI 2018).
 
@@ -1634,4 +1630,8 @@ Kassambara.A n.d., *COMPARING MULTIPLE MEANS IN R*, viewed 1 July 2022, https://
 
 Kumarrajarshi 2018, "Life Expectancy (WHO)", viewed 23 June 2022, https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who 
 
+***
 
+*Thank you for reading*
+
+***
