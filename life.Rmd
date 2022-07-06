@@ -7,6 +7,7 @@ output:
     toc: true
     toc_depth: 4
     df_print: paged
+    number_sections: true
 always_allow_html: yes
   
 ---
@@ -1541,7 +1542,7 @@ performance::icc(model4)
 There is 98% of clustering taking place when model has no predictors (model 3). After addition of predictors in the full model (model 4), ICC is now at 94.5%. Both of ICC values are still considered at a very high level, which indicates that there are still a high amount of unexplained clustering taking place. Therefore, the researcher who are interested in this research question should consider including more variables to capture the unexplained information. 
 
 
-# Conclusion
+# CONCLUSION
 
 **Question 1: What are the predicting variables actually affecting the life expectancy?**
 
@@ -1588,6 +1589,8 @@ The full model detected that if a country has lower initial life expectancy in y
 *Thank you for reading*
 
 # ACKNOWLEDGEMENTS
+
+Many thanks to 
 
 The data used in this project was collected from WHO and United Nations website with the help of Deeksha Russell and Duan Wang (KUMARRAJARSHI 2018).
 

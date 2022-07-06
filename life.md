@@ -3,67 +3,76 @@ Life Expectancy Statistical Analysis (WHO)
 Kar Ng
 2022-07
 
--   [ABSTRACT](#abstract)
--   [R PACKAGES](#r-packages)
--   [DATA PREPARATION](#data-preparation)
-    -   [Data Import](#data-import)
-    -   [Data Description](#data-description)
-    -   [Data Exploration](#data-exploration)
-        -   [Data type and structure](#data-type-and-structure)
-        -   [Vertical NA Check (Column)](#vertical-na-check-column)
-        -   [Horizontal NA Check (Row)](#horizontal-na-check-row)
--   [DATA CLEANING](#data-cleaning)
-    -   [White Space Trimming and punctuation
-        remove](#white-space-trimming-and-punctuation-remove)
-    -   [Rename Levels](#rename-levels)
-    -   [Factor conversion](#factor-conversion)
-    -   [Bag imputation](#bag-imputation)
--   [EDA](#eda)
-    -   [Histogram for Distribution](#histogram-for-distribution)
-    -   [Boxplot for Outliers](#boxplot-for-outliers)
-    -   [MFA](#mfa)
--   [SUMMARY STATISTICS](#summary-statistics)
-    -   [Categorical variables](#categorical-variables)
-    -   [Sample size assessment](#sample-size-assessment)
-    -   [Central tendency statistics](#central-tendency-statistics)
--   [STATISTICAL ANALYSIS](#statistical-analysis)
-    -   [Q1. Factors that Affecting Life
-        Expectancy](#q1-factors-that-affecting-life-expectancy)
-        -   [Multicollinearity Test](#multicollinearity-test)
-        -   [MLR Model](#mlr-model)
-        -   [VIF check](#vif-check)
-        -   [Assumptions diagnostic](#assumptions-diagnostic)
-        -   [MLR Model 2](#mlr-model-2)
-        -   [Model Interpretation](#model-interpretation)
-    -   [Q2. Investigate the Effectiveness of Health
-        Expenditure](#q2-investigate-the-effectiveness-of-health-expenditure)
-        -   [Welch’s T-test](#welchs-t-test)
-    -   [Q3. Infant and Adult Mortality versus Life
-        Expectancy](#q3-infant-and-adult-mortality-versus-life-expectancy)
-    -   [Q4. Correlation of schooling, BMI, and alcohol with Life
-        Expectancy](#q4-correlation-of-schooling-bmi-and-alcohol-with-life-expectancy)
-        -   [Correlation](#correlation)
-        -   [PCA](#pca)
-        -   [Regression](#regression)
-    -   [Q5. Population versus lower life
-        expectancy?](#q5-population-versus-lower-life-expectancy)
-    -   [Q6. Does developed countries have higher life
-        expectancy?](#q6-does-developed-countries-have-higher-life-expectancy)
-        -   [Shapiro-Wilk test](#shapiro-wilk-test)
-        -   [Wilcoxon Signed Rank Test](#wilcoxon-signed-rank-test)
-    -   [Q7. What is the impact of Immunization coverage on life
-        Expectancy?](#q7-what-is-the-impact-of-immunization-coverage-on-life-expectancy)
-    -   [Q8 Longiditudinal Multilevel Modeling with
-        Years](#q8-longiditudinal-multilevel-modeling-with-years)
-        -   [Time-transformation](#time-transformation)
-        -   [Multicollinearity Check](#multicollinearity-check)
-        -   [Visualisation](#visualisation)
-        -   [Unconditional Mean Model](#unconditional-mean-model)
-        -   [Unconditional Growth Model](#unconditional-growth-model)
-        -   [Conditional Growth Model](#conditional-growth-model)
--   [Conclusion](#conclusion)
--   [ACKNOWLEDGEMENTS](#acknowledgements)
--   [REFERENCE](#reference)
+-   [1 ABSTRACT](#1-abstract)
+-   [2 R PACKAGES](#2-r-packages)
+-   [3 DATA PREPARATION](#3-data-preparation)
+    -   [3.1 Data Import](#31-data-import)
+    -   [3.2 Data Description](#32-data-description)
+    -   [3.3 Data Exploration](#33-data-exploration)
+        -   [3.3.1 Data type and
+            structure](#331-data-type-and-structure)
+        -   [3.3.2 Vertical NA Check
+            (Column)](#332-vertical-na-check-column)
+        -   [3.3.3 Horizontal NA Check
+            (Row)](#333-horizontal-na-check-row)
+-   [4 DATA CLEANING](#4-data-cleaning)
+    -   [4.1 White Space Trimming and punctuation
+        remove](#41-white-space-trimming-and-punctuation-remove)
+    -   [4.2 Rename Levels](#42-rename-levels)
+    -   [4.3 Factor conversion](#43-factor-conversion)
+    -   [4.4 Bag imputation](#44-bag-imputation)
+-   [5 EDA](#5-eda)
+    -   [5.1 Histogram for Distribution](#51-histogram-for-distribution)
+    -   [5.2 Boxplot for Outliers](#52-boxplot-for-outliers)
+    -   [5.3 MFA](#53-mfa)
+-   [6 SUMMARY STATISTICS](#6-summary-statistics)
+    -   [6.1 Categorical variables](#61-categorical-variables)
+    -   [6.2 Sample size assessment](#62-sample-size-assessment)
+    -   [6.3 Central tendency
+        statistics](#63-central-tendency-statistics)
+-   [7 STATISTICAL ANALYSIS](#7-statistical-analysis)
+    -   [7.1 Q1. Factors that Affecting Life
+        Expectancy](#71-q1-factors-that-affecting-life-expectancy)
+        -   [7.1.1 Multicollinearity Test](#711-multicollinearity-test)
+        -   [7.1.2 MLR Model](#712-mlr-model)
+        -   [7.1.3 VIF check](#713-vif-check)
+        -   [7.1.4 Assumptions diagnostic](#714-assumptions-diagnostic)
+        -   [7.1.5 MLR Model 2](#715-mlr-model-2)
+        -   [7.1.6 Model Interpretation](#716-model-interpretation)
+    -   [7.2 Q2. Investigate the Effectiveness of Health
+        Expenditure](#72-q2-investigate-the-effectiveness-of-health-expenditure)
+        -   [7.2.1 Welch’s T-test](#721-welchs-t-test)
+    -   [7.3 Q3. Infant and Adult Mortality versus Life
+        Expectancy](#73-q3-infant-and-adult-mortality-versus-life-expectancy)
+    -   [7.4 Q4. Correlation of schooling, BMI, and alcohol with Life
+        Expectancy](#74-q4-correlation-of-schooling-bmi-and-alcohol-with-life-expectancy)
+        -   [7.4.1 Correlation](#741-correlation)
+        -   [7.4.2 PCA](#742-pca)
+        -   [7.4.3 Regression](#743-regression)
+    -   [7.5 Q5. Population versus lower life
+        expectancy?](#75-q5-population-versus-lower-life-expectancy)
+    -   [7.6 Q6. Does developed countries have higher life
+        expectancy?](#76-q6-does-developed-countries-have-higher-life-expectancy)
+        -   [7.6.1 Shapiro-Wilk test](#761-shapiro-wilk-test)
+        -   [7.6.2 Wilcoxon Signed Rank
+            Test](#762-wilcoxon-signed-rank-test)
+    -   [7.7 Q7. What is the impact of Immunization coverage on life
+        Expectancy?](#77-q7-what-is-the-impact-of-immunization-coverage-on-life-expectancy)
+    -   [7.8 Q8 Longiditudinal Multilevel Modeling with
+        Years](#78-q8-longiditudinal-multilevel-modeling-with-years)
+        -   [7.8.1 Time-transformation](#781-time-transformation)
+        -   [7.8.2 Multicollinearity
+            Check](#782-multicollinearity-check)
+        -   [7.8.3 Visualisation](#783-visualisation)
+        -   [7.8.4 Unconditional Mean
+            Model](#784-unconditional-mean-model)
+        -   [7.8.5 Unconditional Growth
+            Model](#785-unconditional-growth-model)
+        -   [7.8.6 Conditional Growth
+            Model](#786-conditional-growth-model)
+-   [8 CONCLUSION](#8-conclusion)
+-   [9 ACKNOWLEDGEMENTS](#9-acknowledgements)
+-   [10 REFERENCE](#10-reference)
 
 ------------------------------------------------------------------------
 
@@ -71,7 +80,7 @@ Kar Ng
 
 ------------------------------------------------------------------------
 
-# ABSTRACT
+# 1 ABSTRACT
 
 This project analyses the factors related to life expectancy based on a
 public dataset from WHO. The data was collected between 2000 and 2015.
@@ -118,7 +127,7 @@ confidence level between 0.16 year and 0.34 year (p \< 0.001).
 
 ![](https://raw.githubusercontent.com/KAR-NG/life/main/pic1_graphs.png)
 
-# R PACKAGES
+# 2 R PACKAGES
 
 Following R packages are loaded for this project.
 
@@ -149,7 +158,7 @@ library(nlme)
 library(performance)
 ```
 
-# DATA PREPARATION
+# 3 DATA PREPARATION
 
 Dataset used in this project is publicly available on *Kaggle* website.
 *Kaggle* is a well-known platform for data analysts and data scientists
@@ -157,25 +166,1258 @@ for sharing data, codes, resources, and ideas. The dataset is accessible
 via this
 [Link](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who).
 
-## Data Import
+## 3.1 Data Import
 
 Following are 10 randomly selected observations (rows) from the dataset:
 
 ``` r
 life <- read.csv("Life Expectancy Data.csv")
   
-sample_n(life, 10)
+sample_n(life, 10) %>% 
+  kbl() %>% 
+  kable_material_dark()
 ```
 
-<div data-pagedtable="false">
+<table class=" lightable-material-dark" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["int"],"align":["right"]},{"label":["Status"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Life.expectancy"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Adult.Mortality"],"name":[5],"type":["int"],"align":["right"]},{"label":["infant.deaths"],"name":[6],"type":["int"],"align":["right"]},{"label":["Alcohol"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["percentage.expenditure"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Hepatitis.B"],"name":[9],"type":["int"],"align":["right"]},{"label":["Measles"],"name":[10],"type":["int"],"align":["right"]},{"label":["BMI"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["under.five.deaths"],"name":[12],"type":["int"],"align":["right"]},{"label":["Polio"],"name":[13],"type":["int"],"align":["right"]},{"label":["Total.expenditure"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["Diphtheria"],"name":[15],"type":["int"],"align":["right"]},{"label":["HIV.AIDS"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["GDP"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["Population"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["thinness..1.19.years"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["thinness.5.9.years"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["Income.composition.of.resources"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["Schooling"],"name":[22],"type":["dbl"],"align":["right"]}],"data":[{"1":"Montenegro","2":"2014","3":"Developing","4":"75.9","5":"17","6":"0","7":"0.01","8":"726.029176","9":"87","10":"0","11":"61.3","12":"0","13":"91","14":"6.42","15":"91","16":"0.1","17":"7378.3453","18":"62181","19":"1.8","20":"1.9","21":"0.803","22":"15.1"},{"1":"Argentina","2":"2004","3":"Developing","4":"74.7","5":"13","6":"11","7":"7.63","8":"719.366380","9":"81","10":"0","11":"56.3","12":"12","13":"91","14":"6.84","15":"98","16":"0.1","17":"4251.5743","18":"38728696","19":"1.1","20":"1.0","21":"0.775","22":"16.3"},{"1":"Sweden","2":"2013","3":"Developed","4":"81.9","5":"57","6":"0","7":"7.30","8":"1212.666327","9":"67","10":"51","11":"58.5","12":"0","13":"98","14":"11.97","15":"98","16":"0.1","17":"6283.2452","18":"96379","19":"1.4","20":"1.3","21":"0.904","22":"15.8"},{"1":"Panama","2":"2008","3":"Developing","4":"76.5","5":"127","6":"1","7":"6.74","8":"956.822976","9":"86","10":"0","11":"52.7","12":"2","13":"86","14":"6.75","15":"86","16":"0.1","17":"6973.9284","18":"3516268","19":"2.0","20":"2.0","21":"0.750","22":"12.8"},{"1":"Mexico","2":"2010","3":"Developing","4":"75.6","5":"127","6":"35","7":"5.21","8":"1033.039737","9":"93","10":"0","11":"6.1","12":"40","13":"95","14":"6.39","15":"95","16":"0.1","17":"8959.5814","18":"117318941","19":"1.6","20":"1.6","21":"0.739","22":"12.5"},{"1":"Oman","2":"2006","3":"Developing","4":"74.7","5":"115","6":"1","7":"0.58","8":"78.511410","9":"99","10":"13","11":"5.1","12":"1","13":"98","14":"2.31","15":"98","16":"0.1","17":"1448.5500","18":"NA","19":"7.0","20":"6.8","21":"0.748","22":"11.6"},{"1":"Vanuatu","2":"2008","3":"Developing","4":"75.0","5":"153","6":"0","7":"1.18","8":"345.339056","9":"61","10":"0","11":"47.4","12":"0","13":"66","14":"3.66","15":"67","16":"0.1","17":"2697.9614","18":"22534","19":"1.5","20":"1.5","21":"0.582","22":"10.7"},{"1":"Cameroon","2":"2015","3":"Developing","4":"57.3","5":"357","6":"45","7":"NA","8":"0.000000","9":"84","10":"1809","11":"29.0","12":"68","13":"83","14":"NA","15":"84","16":"3.5","17":"1244.4294","18":"22834522","19":"5.6","20":"5.5","21":"0.514","22":"10.4"},{"1":"Hungary","2":"2002","3":"Developed","4":"72.5","5":"184","6":"1","7":"13.29","8":"8.986198","9":"NA","10":"0","11":"57.1","12":"1","13":"98","14":"7.47","15":"99","16":"0.1","17":"665.6443","18":"115868","19":"2.2","20":"2.2","21":"0.775","22":"14.6"},{"1":"Mali","2":"2007","3":"Developing","4":"55.0","5":"282","6":"56","7":"0.55","8":"81.840501","9":"74","10":"2","11":"19.0","12":"96","13":"76","14":"6.97","15":"74","16":"1.7","17":"595.6368","18":"1367566","19":"9.4","20":"9.3","21":"0.363","22":"6.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+Country
 
-</div>
+</th>
+<th style="text-align:right;">
 
-## Data Description
+Year
+
+</th>
+<th style="text-align:left;">
+
+Status
+
+</th>
+<th style="text-align:right;">
+
+Life.expectancy
+
+</th>
+<th style="text-align:right;">
+
+Adult.Mortality
+
+</th>
+<th style="text-align:right;">
+
+infant.deaths
+
+</th>
+<th style="text-align:right;">
+
+Alcohol
+
+</th>
+<th style="text-align:right;">
+
+percentage.expenditure
+
+</th>
+<th style="text-align:right;">
+
+Hepatitis.B
+
+</th>
+<th style="text-align:right;">
+
+Measles
+
+</th>
+<th style="text-align:right;">
+
+BMI
+
+</th>
+<th style="text-align:right;">
+
+under.five.deaths
+
+</th>
+<th style="text-align:right;">
+
+Polio
+
+</th>
+<th style="text-align:right;">
+
+Total.expenditure
+
+</th>
+<th style="text-align:right;">
+
+Diphtheria
+
+</th>
+<th style="text-align:right;">
+
+HIV.AIDS
+
+</th>
+<th style="text-align:right;">
+
+GDP
+
+</th>
+<th style="text-align:right;">
+
+Population
+
+</th>
+<th style="text-align:right;">
+
+thinness..1.19.years
+
+</th>
+<th style="text-align:right;">
+
+thinness.5.9.years
+
+</th>
+<th style="text-align:right;">
+
+Income.composition.of.resources
+
+</th>
+<th style="text-align:right;">
+
+Schooling
+
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+
+Equatorial Guinea
+
+</td>
+<td style="text-align:right;">
+
+2012
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+56.7
+
+</td>
+<td style="text-align:right;">
+
+337
+
+</td>
+<td style="text-align:right;">
+
+3
+
+</td>
+<td style="text-align:right;">
+
+11.89
+
+</td>
+<td style="text-align:right;">
+
+1500.41263
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+1190
+
+</td>
+<td style="text-align:right;">
+
+23.0
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+3
+
+</td>
+<td style="text-align:right;">
+
+4.00
+
+</td>
+<td style="text-align:right;">
+
+24
+
+</td>
+<td style="text-align:right;">
+
+8.2
+
+</td>
+<td style="text-align:right;">
+
+21557.6528
+
+</td>
+<td style="text-align:right;">
+
+138593
+
+</td>
+<td style="text-align:right;">
+
+8.7
+
+</td>
+<td style="text-align:right;">
+
+8.7
+
+</td>
+<td style="text-align:right;">
+
+0.583
+
+</td>
+<td style="text-align:right;">
+
+9.2
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Namibia
+
+</td>
+<td style="text-align:right;">
+
+2009
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+62.4
+
+</td>
+<td style="text-align:right;">
+
+36
+
+</td>
+<td style="text-align:right;">
+
+3
+
+</td>
+<td style="text-align:right;">
+
+7.99
+
+</td>
+<td style="text-align:right;">
+
+575.67481
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+4076
+
+</td>
+<td style="text-align:right;">
+
+31.0
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+83
+
+</td>
+<td style="text-align:right;">
+
+8.50
+
+</td>
+<td style="text-align:right;">
+
+83
+
+</td>
+<td style="text-align:right;">
+
+8.7
+
+</td>
+<td style="text-align:right;">
+
+4153.4979
+
+</td>
+<td style="text-align:right;">
+
+21374
+
+</td>
+<td style="text-align:right;">
+
+1.9
+
+</td>
+<td style="text-align:right;">
+
+1.9
+
+</td>
+<td style="text-align:right;">
+
+0.598
+
+</td>
+<td style="text-align:right;">
+
+11.4
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Samoa
+
+</td>
+<td style="text-align:right;">
+
+2014
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.8
+
+</td>
+<td style="text-align:right;">
+
+128
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+0.01
+
+</td>
+<td style="text-align:right;">
+
+660.27779
+
+</td>
+<td style="text-align:right;">
+
+56
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+74.3
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+58
+
+</td>
+<td style="text-align:right;">
+
+7.22
+
+</td>
+<td style="text-align:right;">
+
+63
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+4178.9734
+
+</td>
+<td style="text-align:right;">
+
+19229
+
+</td>
+<td style="text-align:right;">
+
+0.2
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+0.701
+
+</td>
+<td style="text-align:right;">
+
+12.9
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Libya
+
+</td>
+<td style="text-align:right;">
+
+2015
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+72.7
+
+</td>
+<td style="text-align:right;">
+
+138
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+0.00000
+
+</td>
+<td style="text-align:right;">
+
+97
+
+</td>
+<td style="text-align:right;">
+
+82
+
+</td>
+<td style="text-align:right;">
+
+64.8
+
+</td>
+<td style="text-align:right;">
+
+2
+
+</td>
+<td style="text-align:right;">
+
+97
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+97
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+5.8
+
+</td>
+<td style="text-align:right;">
+
+5.5
+
+</td>
+<td style="text-align:right;">
+
+0.719
+
+</td>
+<td style="text-align:right;">
+
+13.4
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Kiribati
+
+</td>
+<td style="text-align:right;">
+
+2005
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+64.9
+
+</td>
+<td style="text-align:right;">
+
+213
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+0.60
+
+</td>
+<td style="text-align:right;">
+
+111.73921
+
+</td>
+<td style="text-align:right;">
+
+5
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+72.1
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+74
+
+</td>
+<td style="text-align:right;">
+
+1.60
+
+</td>
+<td style="text-align:right;">
+
+79
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+1214.5567
+
+</td>
+<td style="text-align:right;">
+
+92325
+
+</td>
+<td style="text-align:right;">
+
+0.2
+
+</td>
+<td style="text-align:right;">
+
+0.2
+
+</td>
+<td style="text-align:right;">
+
+0.000
+
+</td>
+<td style="text-align:right;">
+
+12.2
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Sierra Leone
+
+</td>
+<td style="text-align:right;">
+
+2015
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+51.0
+
+</td>
+<td style="text-align:right;">
+
+413
+
+</td>
+<td style="text-align:right;">
+
+22
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+0.00000
+
+</td>
+<td style="text-align:right;">
+
+86
+
+</td>
+<td style="text-align:right;">
+
+607
+
+</td>
+<td style="text-align:right;">
+
+24.4
+
+</td>
+<td style="text-align:right;">
+
+30
+
+</td>
+<td style="text-align:right;">
+
+86
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+86
+
+</td>
+<td style="text-align:right;">
+
+0.5
+
+</td>
+<td style="text-align:right;">
+
+587.5382
+
+</td>
+<td style="text-align:right;">
+
+723725
+
+</td>
+<td style="text-align:right;">
+
+7.4
+
+</td>
+<td style="text-align:right;">
+
+7.3
+
+</td>
+<td style="text-align:right;">
+
+0.431
+
+</td>
+<td style="text-align:right;">
+
+9.5
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Syrian Arab Republic
+
+</td>
+<td style="text-align:right;">
+
+2005
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.5
+
+</td>
+<td style="text-align:right;">
+
+127
+
+</td>
+<td style="text-align:right;">
+
+9
+
+</td>
+<td style="text-align:right;">
+
+0.92
+
+</td>
+<td style="text-align:right;">
+
+116.25859
+
+</td>
+<td style="text-align:right;">
+
+83
+
+</td>
+<td style="text-align:right;">
+
+375
+
+</td>
+<td style="text-align:right;">
+
+47.6
+
+</td>
+<td style="text-align:right;">
+
+10
+
+</td>
+<td style="text-align:right;">
+
+83
+
+</td>
+<td style="text-align:right;">
+
+4.11
+
+</td>
+<td style="text-align:right;">
+
+8
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+1577.4572
+
+</td>
+<td style="text-align:right;">
+
+18294611
+
+</td>
+<td style="text-align:right;">
+
+6.5
+
+</td>
+<td style="text-align:right;">
+
+6.3
+
+</td>
+<td style="text-align:right;">
+
+0.624
+
+</td>
+<td style="text-align:right;">
+
+11.0
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Lesotho
+
+</td>
+<td style="text-align:right;">
+
+2012
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+52.2
+
+</td>
+<td style="text-align:right;">
+
+513
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+0.01
+
+</td>
+<td style="text-align:right;">
+
+168.13490
+
+</td>
+<td style="text-align:right;">
+
+95
+
+</td>
+<td style="text-align:right;">
+
+179
+
+</td>
+<td style="text-align:right;">
+
+3.8
+
+</td>
+<td style="text-align:right;">
+
+6
+
+</td>
+<td style="text-align:right;">
+
+93
+
+</td>
+<td style="text-align:right;">
+
+11.14
+
+</td>
+<td style="text-align:right;">
+
+95
+
+</td>
+<td style="text-align:right;">
+
+9.0
+
+</td>
+<td style="text-align:right;">
+
+1281.5160
+
+</td>
+<td style="text-align:right;">
+
+289928
+
+</td>
+<td style="text-align:right;">
+
+6.4
+
+</td>
+<td style="text-align:right;">
+
+6.2
+
+</td>
+<td style="text-align:right;">
+
+0.479
+
+</td>
+<td style="text-align:right;">
+
+11.0
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Nicaragua
+
+</td>
+<td style="text-align:right;">
+
+2005
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+71.2
+
+</td>
+<td style="text-align:right;">
+
+194
+
+</td>
+<td style="text-align:right;">
+
+3
+
+</td>
+<td style="text-align:right;">
+
+3.70
+
+</td>
+<td style="text-align:right;">
+
+218.57162
+
+</td>
+<td style="text-align:right;">
+
+86
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+46.4
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+87
+
+</td>
+<td style="text-align:right;">
+
+6.11
+
+</td>
+<td style="text-align:right;">
+
+86
+
+</td>
+<td style="text-align:right;">
+
+0.3
+
+</td>
+<td style="text-align:right;">
+
+1175.1162
+
+</td>
+<td style="text-align:right;">
+
+5379328
+
+</td>
+<td style="text-align:right;">
+
+2.0
+
+</td>
+<td style="text-align:right;">
+
+1.9
+
+</td>
+<td style="text-align:right;">
+
+0.592
+
+</td>
+<td style="text-align:right;">
+
+11.0
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Nicaragua
+
+</td>
+<td style="text-align:right;">
+
+2000
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.0
+
+</td>
+<td style="text-align:right;">
+
+192
+
+</td>
+<td style="text-align:right;">
+
+4
+
+</td>
+<td style="text-align:right;">
+
+3.61
+
+</td>
+<td style="text-align:right;">
+
+15.25519
+
+</td>
+<td style="text-align:right;">
+
+83
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+42.8
+
+</td>
+<td style="text-align:right;">
+
+5
+
+</td>
+<td style="text-align:right;">
+
+85
+
+</td>
+<td style="text-align:right;">
+
+5.39
+
+</td>
+<td style="text-align:right;">
+
+83
+
+</td>
+<td style="text-align:right;">
+
+0.4
+
+</td>
+<td style="text-align:right;">
+
+116.2743
+
+</td>
+<td style="text-align:right;">
+
+526796
+
+</td>
+<td style="text-align:right;">
+
+2.2
+
+</td>
+<td style="text-align:right;">
+
+2.1
+
+</td>
+<td style="text-align:right;">
+
+0.562
+
+</td>
+<td style="text-align:right;">
+
+10.1
+
+</td>
+</tr>
+</tbody>
+</table>
+
+## 3.2 Data Description
 
 ``` r
 No. <- c(1:22)
@@ -237,272 +1479,410 @@ data.frame(No., Variable, Description) %>%
 <thead>
 <tr>
 <th style="text-align:right;">
+
 No. 
+
 </th>
 <th style="text-align:left;">
+
 Variable
+
 </th>
 <th style="text-align:left;">
+
 Description
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:right;">
+
 1
+
 </td>
 <td style="text-align:left;">
+
 Country
+
 </td>
 <td style="text-align:left;">
+
 Country
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 2
+
 </td>
 <td style="text-align:left;">
+
 Year
+
 </td>
 <td style="text-align:left;">
+
 Year
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 3
+
 </td>
 <td style="text-align:left;">
+
 Status
+
 </td>
 <td style="text-align:left;">
+
 Developed or Developing status
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 4
+
 </td>
 <td style="text-align:left;">
+
 Life expectancy
+
 </td>
 <td style="text-align:left;">
+
 Life Expectancy in age
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 5
+
 </td>
 <td style="text-align:left;">
+
 Adult Mortality
+
 </td>
 <td style="text-align:left;">
+
 Adult Mortality Rates of both sexes (probability of dying between 15 and
 60 years per 1000 population)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 6
+
 </td>
 <td style="text-align:left;">
+
 infant deaths
+
 </td>
 <td style="text-align:left;">
+
 Number of Infant Deaths per 1000 population
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 7
+
 </td>
 <td style="text-align:left;">
+
 Alcohol
+
 </td>
 <td style="text-align:left;">
+
 Alcohol, recorded per capita (15+) consumption (in litres of pure
 alcohol)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 8
+
 </td>
 <td style="text-align:left;">
+
 percentage expenditure
+
 </td>
 <td style="text-align:left;">
+
 Expenditure on health as a percentage of Gross Domestic Product per
 capita(%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 9
+
 </td>
 <td style="text-align:left;">
+
 Hepatitis B
+
 </td>
 <td style="text-align:left;">
+
 Hepatitis B (HepB) immunization coverage among 1-year-olds (%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 10
+
 </td>
 <td style="text-align:left;">
+
 Measles
+
 </td>
 <td style="text-align:left;">
+
 Measles - number of reported cases per 1000 population
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 11
+
 </td>
 <td style="text-align:left;">
+
 BMI
+
 </td>
 <td style="text-align:left;">
+
 Average Body Mass Index of entire population
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 12
+
 </td>
 <td style="text-align:left;">
+
 under-five deaths
+
 </td>
 <td style="text-align:left;">
+
 Number of under-five deaths per 1000 population
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 13
+
 </td>
 <td style="text-align:left;">
+
 Polio
+
 </td>
 <td style="text-align:left;">
+
 Polio (Pol3) immunization coverage among 1-year-olds (%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 14
+
 </td>
 <td style="text-align:left;">
+
 Total expenditure
+
 </td>
 <td style="text-align:left;">
+
 General government expenditure on health as a percentage of total
 government expenditure (%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 15
+
 </td>
 <td style="text-align:left;">
+
 Diphtheria
+
 </td>
 <td style="text-align:left;">
+
 Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage
 among 1-year-olds (%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 16
+
 </td>
 <td style="text-align:left;">
+
 HIV/AIDS
+
 </td>
 <td style="text-align:left;">
+
 Deaths per 1 000 live births HIV/AIDS (0-4 years)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 17
+
 </td>
 <td style="text-align:left;">
+
 GDP
+
 </td>
 <td style="text-align:left;">
+
 Gross Domestic Product per capita (in USD)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 18
+
 </td>
 <td style="text-align:left;">
+
 Population
+
 </td>
 <td style="text-align:left;">
+
 Population of the country
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 19
+
 </td>
 <td style="text-align:left;">
+
 thinness 10-19 years
+
 </td>
 <td style="text-align:left;">
+
 Prevalence of thinness among children and adolescents for Age 10 to 19
 (%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 20
+
 </td>
 <td style="text-align:left;">
+
 thinness 5-9 years
+
 </td>
 <td style="text-align:left;">
+
 Prevalence of thinness among children for Age 5 to 9(%)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 21
+
 </td>
 <td style="text-align:left;">
+
 Income composition of resources
+
 </td>
 <td style="text-align:left;">
+
 Human Development Index in terms of income composition of resources
 (index ranging from 0 to 1)
+
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+
 22
+
 </td>
 <td style="text-align:left;">
+
 Schooling
+
 </td>
 <td style="text-align:left;">
+
 Number of years of Schooling(years)
+
 </td>
 </tr>
 </tbody>
 </table>
 
-## Data Exploration
+## 3.3 Data Exploration
 
-### Data type and structure
+### 3.3.1 Data type and structure
 
 There are 2938 rows of observations and 22 columns of variables.
 
@@ -535,7 +1915,7 @@ glimpse(life)
     ## $ Income.composition.of.resources <dbl> 0.479, 0.476, 0.470, 0.463, 0.454, 0.4…
     ## $ Schooling                       <dbl> 10.1, 10.0, 9.9, 9.8, 9.5, 9.2, 8.9, 8…
 
-### Vertical NA Check (Column)
+### 3.3.2 Vertical NA Check (Column)
 
 There are 2 character variables “Country” and “Status”, and the rest of
 the variables are numerical.
@@ -546,76 +1926,108 @@ skim_without_charts(life)
 
 <table style="width: auto;" class="table table-condensed">
 <caption>
+
 Data summary
+
 </caption>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 Name
+
 </td>
 <td style="text-align:left;">
+
 life
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Number of rows
+
 </td>
 <td style="text-align:left;">
+
 2938
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Number of columns
+
 </td>
 <td style="text-align:left;">
+
 22
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Column type frequency:
+
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 character
+
 </td>
 <td style="text-align:left;">
+
 2
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 numeric
+
 </td>
 <td style="text-align:left;">
+
 20
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Group variables
+
 </td>
 <td style="text-align:left;">
+
 None
+
 </td>
 </tr>
 </tbody>
@@ -627,82 +2039,130 @@ None
 <thead>
 <tr>
 <th style="text-align:left;">
+
 skim_variable
+
 </th>
 <th style="text-align:right;">
+
 n_missing
+
 </th>
 <th style="text-align:right;">
+
 complete_rate
+
 </th>
 <th style="text-align:right;">
+
 min
+
 </th>
 <th style="text-align:right;">
+
 max
+
 </th>
 <th style="text-align:right;">
+
 empty
+
 </th>
 <th style="text-align:right;">
+
 n_unique
+
 </th>
 <th style="text-align:right;">
+
 whitespace
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 Country
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1
+
 </td>
 <td style="text-align:right;">
+
 4
+
 </td>
 <td style="text-align:right;">
+
 52
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 193
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Status
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1
+
 </td>
 <td style="text-align:right;">
+
 9
+
 </td>
 <td style="text-align:right;">
+
 10
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 2
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 </tr>
 </tbody>
@@ -714,676 +2174,1096 @@ Status
 <thead>
 <tr>
 <th style="text-align:left;">
+
 skim_variable
+
 </th>
 <th style="text-align:right;">
+
 n_missing
+
 </th>
 <th style="text-align:right;">
+
 complete_rate
+
 </th>
 <th style="text-align:right;">
+
 mean
+
 </th>
 <th style="text-align:right;">
+
 sd
+
 </th>
 <th style="text-align:right;">
+
 p0
+
 </th>
 <th style="text-align:right;">
+
 p25
+
 </th>
 <th style="text-align:right;">
+
 p50
+
 </th>
 <th style="text-align:right;">
+
 p75
+
 </th>
 <th style="text-align:right;">
+
 p100
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 Year
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 2007.52
+
 </td>
 <td style="text-align:right;">
+
 4.61
+
 </td>
 <td style="text-align:right;">
+
 2000.00
+
 </td>
 <td style="text-align:right;">
+
 2004.00
+
 </td>
 <td style="text-align:right;">
+
 2008.00
+
 </td>
 <td style="text-align:right;">
+
 2012.00
+
 </td>
 <td style="text-align:right;">
+
 2015.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Life.expectancy
+
 </td>
 <td style="text-align:right;">
+
 10
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 69.22
+
 </td>
 <td style="text-align:right;">
+
 9.52
+
 </td>
 <td style="text-align:right;">
+
 36.30
+
 </td>
 <td style="text-align:right;">
+
 63.10
+
 </td>
 <td style="text-align:right;">
+
 72.10
+
 </td>
 <td style="text-align:right;">
+
 75.70
+
 </td>
 <td style="text-align:right;">
+
 89.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Adult.Mortality
+
 </td>
 <td style="text-align:right;">
+
 10
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 164.80
+
 </td>
 <td style="text-align:right;">
+
 124.29
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 74.00
+
 </td>
 <td style="text-align:right;">
+
 144.00
+
 </td>
 <td style="text-align:right;">
+
 228.00
+
 </td>
 <td style="text-align:right;">
+
 723.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 infant.deaths
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 30.30
+
 </td>
 <td style="text-align:right;">
+
 117.93
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 3.00
+
 </td>
 <td style="text-align:right;">
+
 22.00
+
 </td>
 <td style="text-align:right;">
+
 1800.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Alcohol
+
 </td>
 <td style="text-align:right;">
+
 194
+
 </td>
 <td style="text-align:right;">
+
 0.93
+
 </td>
 <td style="text-align:right;">
+
 4.60
+
 </td>
 <td style="text-align:right;">
+
 4.05
+
 </td>
 <td style="text-align:right;">
+
 0.01
+
 </td>
 <td style="text-align:right;">
+
 0.88
+
 </td>
 <td style="text-align:right;">
+
 3.76
+
 </td>
 <td style="text-align:right;">
+
 7.70
+
 </td>
 <td style="text-align:right;">
+
 17.87
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 percentage.expenditure
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 738.25
+
 </td>
 <td style="text-align:right;">
+
 1987.91
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 4.69
+
 </td>
 <td style="text-align:right;">
+
 64.91
+
 </td>
 <td style="text-align:right;">
+
 441.53
+
 </td>
 <td style="text-align:right;">
+
 19479.91
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Hepatitis.B
+
 </td>
 <td style="text-align:right;">
+
 553
+
 </td>
 <td style="text-align:right;">
+
 0.81
+
 </td>
 <td style="text-align:right;">
+
 80.94
+
 </td>
 <td style="text-align:right;">
+
 25.07
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 77.00
+
 </td>
 <td style="text-align:right;">
+
 92.00
+
 </td>
 <td style="text-align:right;">
+
 97.00
+
 </td>
 <td style="text-align:right;">
+
 99.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Measles
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 2419.59
+
 </td>
 <td style="text-align:right;">
+
 11467.27
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 17.00
+
 </td>
 <td style="text-align:right;">
+
 360.25
+
 </td>
 <td style="text-align:right;">
+
 212183.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 BMI
+
 </td>
 <td style="text-align:right;">
+
 34
+
 </td>
 <td style="text-align:right;">
+
 0.99
+
 </td>
 <td style="text-align:right;">
+
 38.32
+
 </td>
 <td style="text-align:right;">
+
 20.04
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 19.30
+
 </td>
 <td style="text-align:right;">
+
 43.50
+
 </td>
 <td style="text-align:right;">
+
 56.20
+
 </td>
 <td style="text-align:right;">
+
 87.30
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 under.five.deaths
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 42.04
+
 </td>
 <td style="text-align:right;">
+
 160.45
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 4.00
+
 </td>
 <td style="text-align:right;">
+
 28.00
+
 </td>
 <td style="text-align:right;">
+
 2500.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Polio
+
 </td>
 <td style="text-align:right;">
+
 19
+
 </td>
 <td style="text-align:right;">
+
 0.99
+
 </td>
 <td style="text-align:right;">
+
 82.55
+
 </td>
 <td style="text-align:right;">
+
 23.43
+
 </td>
 <td style="text-align:right;">
+
 3.00
+
 </td>
 <td style="text-align:right;">
+
 78.00
+
 </td>
 <td style="text-align:right;">
+
 93.00
+
 </td>
 <td style="text-align:right;">
+
 97.00
+
 </td>
 <td style="text-align:right;">
+
 99.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Total.expenditure
+
 </td>
 <td style="text-align:right;">
+
 226
+
 </td>
 <td style="text-align:right;">
+
 0.92
+
 </td>
 <td style="text-align:right;">
+
 5.94
+
 </td>
 <td style="text-align:right;">
+
 2.50
+
 </td>
 <td style="text-align:right;">
+
 0.37
+
 </td>
 <td style="text-align:right;">
+
 4.26
+
 </td>
 <td style="text-align:right;">
+
 5.76
+
 </td>
 <td style="text-align:right;">
+
 7.49
+
 </td>
 <td style="text-align:right;">
+
 17.60
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Diphtheria
+
 </td>
 <td style="text-align:right;">
+
 19
+
 </td>
 <td style="text-align:right;">
+
 0.99
+
 </td>
 <td style="text-align:right;">
+
 82.32
+
 </td>
 <td style="text-align:right;">
+
 23.72
+
 </td>
 <td style="text-align:right;">
+
 2.00
+
 </td>
 <td style="text-align:right;">
+
 78.00
+
 </td>
 <td style="text-align:right;">
+
 93.00
+
 </td>
 <td style="text-align:right;">
+
 97.00
+
 </td>
 <td style="text-align:right;">
+
 99.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 HIV.AIDS
+
 </td>
 <td style="text-align:right;">
+
 0
+
 </td>
 <td style="text-align:right;">
+
 1.00
+
 </td>
 <td style="text-align:right;">
+
 1.74
+
 </td>
 <td style="text-align:right;">
+
 5.08
+
 </td>
 <td style="text-align:right;">
+
 0.10
+
 </td>
 <td style="text-align:right;">
+
 0.10
+
 </td>
 <td style="text-align:right;">
+
 0.10
+
 </td>
 <td style="text-align:right;">
+
 0.80
+
 </td>
 <td style="text-align:right;">
+
 50.60
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 GDP
+
 </td>
 <td style="text-align:right;">
+
 448
+
 </td>
 <td style="text-align:right;">
+
 0.85
+
 </td>
 <td style="text-align:right;">
+
 7483.16
+
 </td>
 <td style="text-align:right;">
+
 14270.17
+
 </td>
 <td style="text-align:right;">
+
 1.68
+
 </td>
 <td style="text-align:right;">
+
 463.94
+
 </td>
 <td style="text-align:right;">
+
 1766.95
+
 </td>
 <td style="text-align:right;">
+
 5910.81
+
 </td>
 <td style="text-align:right;">
+
 119172.74
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Population
+
 </td>
 <td style="text-align:right;">
+
 652
+
 </td>
 <td style="text-align:right;">
+
 0.78
+
 </td>
 <td style="text-align:right;">
+
 12753375.12
+
 </td>
 <td style="text-align:right;">
+
 61012096.51
+
 </td>
 <td style="text-align:right;">
+
 34.00
+
 </td>
 <td style="text-align:right;">
+
 195793.25
+
 </td>
 <td style="text-align:right;">
+
 1386542.00
+
 </td>
 <td style="text-align:right;">
+
 7420359.00
+
 </td>
 <td style="text-align:right;">
+
 1293859294.00
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 thinness..1.19.years
+
 </td>
 <td style="text-align:right;">
+
 34
+
 </td>
 <td style="text-align:right;">
+
 0.99
+
 </td>
 <td style="text-align:right;">
+
 4.84
+
 </td>
 <td style="text-align:right;">
+
 4.42
+
 </td>
 <td style="text-align:right;">
+
 0.10
+
 </td>
 <td style="text-align:right;">
+
 1.60
+
 </td>
 <td style="text-align:right;">
+
 3.30
+
 </td>
 <td style="text-align:right;">
+
 7.20
+
 </td>
 <td style="text-align:right;">
+
 27.70
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 thinness.5.9.years
+
 </td>
 <td style="text-align:right;">
+
 34
+
 </td>
 <td style="text-align:right;">
+
 0.99
+
 </td>
 <td style="text-align:right;">
+
 4.87
+
 </td>
 <td style="text-align:right;">
+
 4.51
+
 </td>
 <td style="text-align:right;">
+
 0.10
+
 </td>
 <td style="text-align:right;">
+
 1.50
+
 </td>
 <td style="text-align:right;">
+
 3.30
+
 </td>
 <td style="text-align:right;">
+
 7.20
+
 </td>
 <td style="text-align:right;">
+
 28.60
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Income.composition.of.resources
+
 </td>
 <td style="text-align:right;">
+
 167
+
 </td>
 <td style="text-align:right;">
+
 0.94
+
 </td>
 <td style="text-align:right;">
+
 0.63
+
 </td>
 <td style="text-align:right;">
+
 0.21
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 0.49
+
 </td>
 <td style="text-align:right;">
+
 0.68
+
 </td>
 <td style="text-align:right;">
+
 0.78
+
 </td>
 <td style="text-align:right;">
+
 0.95
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Schooling
+
 </td>
 <td style="text-align:right;">
+
 163
+
 </td>
 <td style="text-align:right;">
+
 0.94
+
 </td>
 <td style="text-align:right;">
+
 11.99
+
 </td>
 <td style="text-align:right;">
+
 3.36
+
 </td>
 <td style="text-align:right;">
+
 0.00
+
 </td>
 <td style="text-align:right;">
+
 10.10
+
 </td>
 <td style="text-align:right;">
+
 12.30
+
 </td>
 <td style="text-align:right;">
+
 14.30
+
 </td>
 <td style="text-align:right;">
+
 20.70
+
 </td>
 </tr>
 </tbody>
@@ -1428,7 +3308,7 @@ colSums(is.na(life))
     ## Income.composition.of.resources                       Schooling 
     ##                             167                             163
 
-### Horizontal NA Check (Row)
+### 3.3.3 Horizontal NA Check (Row)
 
 Here performs horizontal missing value check.
 
@@ -1471,9 +3351,9 @@ learning algorithm to fill up these missing values. The algorithm will
 make use of the entire dataset and predict what might the best possible
 estimates for these missing cells.
 
-# DATA CLEANING
+# 4 DATA CLEANING
 
-## White Space Trimming and punctuation remove
+## 4.1 White Space Trimming and punctuation remove
 
 Remove leading and/or trailing white spaces in character variables
 “Country” and “Status”.
@@ -1485,7 +3365,7 @@ life <- life %>%
          Status = trimws(Status))
 ```
 
-## Rename Levels
+## 4.2 Rename Levels
 
 Replacing spaces in some of the country names by underscore. For example
 “Antigua and Barbuda” to “Antigua_and_Barbuda”. This is to avoid
@@ -1496,7 +3376,7 @@ life <- life %>%
   mutate(Country = str_replace_all(Country, " ", "_"))
 ```
 
-## Factor conversion
+## 4.3 Factor conversion
 
 This section converts “Country”, “Year”, and “Status” into factor
 because of their categorical nature.
@@ -1516,7 +3396,7 @@ transformations.
 life2 <- life
 ```
 
-## Bag imputation
+## 4.4 Bag imputation
 
 This section applies imputation model to fill up missing values in the
 dataset. There are many types of imputation methods including using
@@ -1655,9 +3535,9 @@ colSums(is.na(life.data))
     ## Income.composition.of.resources                       Schooling 
     ##                               0                               0
 
-# EDA
+# 5 EDA
 
-## Histogram for Distribution
+## 5.1 Histogram for Distribution
 
 Most of the variables have skewed distribution, except that life
 expectancy, schooling, total expenditure, and income composition of
@@ -1686,7 +3566,7 @@ life.data.num %>%
 
 ![](life_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
-## Boxplot for Outliers
+## 5.2 Boxplot for Outliers
 
 From following boxplot, almost all numerical independent variables have
 outliers except BMI.
@@ -1776,7 +3656,7 @@ definitions (leverage, influential value, and cooks distance values)
 when building a multiple linear regression model in later section.
 Outliers will be defined based on their impact on the regression model.
 
-## MFA
+## 5.3 MFA
 
 Multiple Factor Analysis (MFA) is used in this section to find the
 relationships among all variables at once. It is a type of unsupervised
@@ -2020,9 +3900,9 @@ some general trends.
     at capturing trends clearly in this dataset because of large sample
     size, let’s move on to the next section.
 
-# SUMMARY STATISTICS
+# 6 SUMMARY STATISTICS
 
-## Categorical variables
+## 6.1 Categorical variables
 
 Key points:
 
@@ -2053,7 +3933,7 @@ unique(life.data$Status)
     ## [1] Developing Developed 
     ## Levels: Developed Developing
 
-## Sample size assessment
+## 6.2 Sample size assessment
 
 Sample size needs to be big enough or statistically enough to represent
 the profile of a particular population. There are many theories about
@@ -2141,7 +4021,7 @@ life.data %>% dplyr::select(Country) %>%
 
 ![](life_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
-## Central tendency statistics
+## 6.3 Central tendency statistics
 
 Following show the summary statistics of developed and developing
 countries. The “skew” stands for skewness of data distribution, a 0
@@ -2432,12 +4312,12 @@ Following are general trends detected from the box plot:
     “Income.composition.of.resources” which is the Human Development
     Index in terms of income composition of resources.
 
-# STATISTICAL ANALYSIS
+# 7 STATISTICAL ANALYSIS
 
 In following sections, a series of business questions have been designed
 and will be answered using statistical techniques.
 
-## Q1. Factors that Affecting Life Expectancy
+## 7.1 Q1. Factors that Affecting Life Expectancy
 
 **What are the predicting variables actually affecting the life
 expectancy?**
@@ -2445,7 +4325,7 @@ expectancy?**
 In this question, *life expectancy* will be the dependent variables and
 the other variables are independent variables.
 
-### Multicollinearity Test
+### 7.1.1 Multicollinearity Test
 
 First, I will examine multicollinearity problems among numerical
 independent variables. Multicollinearity is an extreme problem when
@@ -2511,35 +4391,45 @@ Removed_Variables %>% kbl() %>% kable_styling(bootstrap_options = c("bordered", 
 <thead>
 <tr>
 <th style="text-align:left;">
+
 Removed_Variables
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 under.five.deaths
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 thinness.btw.10.19years
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 percentage.expenditure
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Income.composition.of.resources
+
 </td>
 </tr>
 </tbody>
 </table>
 
-### MLR Model
+### 7.1.2 MLR Model
 
 Building the model:
 
@@ -2550,7 +4440,7 @@ res.mlr <- lm(Life.expectancy ~ .- Country - Year - under.five.deaths - thinness
 Before interpreting the model, I will run a series of diagnostic plots
 to make sure the reliability of the statistical outcomes in the model.
 
-### VIF check
+### 7.1.3 VIF check
 
 Applying variance inflation factor (VIF) to check multicollinearity.
 
@@ -2566,129 +4456,191 @@ vifout %>% kbl(col.names = "VIF") %>%
 <th style="text-align:left;">
 </th>
 <th style="text-align:right;">
+
 VIF
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 Status
+
 </td>
 <td style="text-align:right;">
+
 1.899528
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Adult.Mortality
+
 </td>
 <td style="text-align:right;">
+
 1.759069
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 infant.deaths
+
 </td>
 <td style="text-align:right;">
+
 2.204212
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Alcohol
+
 </td>
 <td style="text-align:right;">
+
 1.953773
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Hepatitis.B
+
 </td>
 <td style="text-align:right;">
+
 2.027274
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Measles
+
 </td>
 <td style="text-align:right;">
+
 1.363928
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 BMI
+
 </td>
 <td style="text-align:right;">
+
 1.756366
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Polio
+
 </td>
 <td style="text-align:right;">
+
 1.991569
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Total.expenditure
+
 </td>
 <td style="text-align:right;">
+
 1.185514
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Diphtheria
+
 </td>
 <td style="text-align:right;">
+
 2.525734
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 HIV.AIDS
+
 </td>
 <td style="text-align:right;">
+
 1.417868
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 GDP
+
 </td>
 <td style="text-align:right;">
+
 1.356121
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Population
+
 </td>
 <td style="text-align:right;">
+
 1.467981
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 thinness.btw.5.9years
+
 </td>
 <td style="text-align:right;">
+
 2.025135
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Schooling
+
 </td>
 <td style="text-align:right;">
+
 2.433919
+
 </td>
 </tr>
 </tbody>
@@ -2698,7 +4650,7 @@ VIF of all variables are closed to 1 and 2, which is excellent, and the
 multicollinearity problem can be said has been removed from the model
 with the aid of correlation analysis.
 
-### Assumptions diagnostic
+### 7.1.4 Assumptions diagnostic
 
 Assumptions of multiple linear regression have to be met otherwise the
 output statistics from the linear regression model would be inaccurate.
@@ -2820,7 +4772,7 @@ influential.obs2 <- model.diag.metrics %>%
   slice_head(n = 147)
 ```
 
-### MLR Model 2
+### 7.1.5 MLR Model 2
 
 Anti-join the life.data dataset from the influential.obs table and
 create a new table that has 2791 rows of data (147 large residual
@@ -2854,7 +4806,7 @@ spread and the red line in the middle of the plot has become more
 horizontal. There are no high influential points outside of the cook’s
 distance on the “Residuals vs Leverage” plot.
 
-### Model Interpretation
+### 7.1.6 Model Interpretation
 
 The multiple linear regression show that:
 
@@ -2866,7 +4818,7 @@ The multiple linear regression show that:
     the life expectancy.
 
 -   Variables that has a P-value (“Pr(\>\|t\|)”) less than 0.05 (as
-    indicated with “\*“) are statistically affecting life expectancy.
+    indicated with “\*”) are statistically affecting life expectancy.
 
 ``` r
 summary(res.mlr2)
@@ -2949,78 +4901,118 @@ output.table[-1, ] %>%
 <th style="text-align:left;">
 </th>
 <th style="text-align:right;">
+
 Estimate
+
 </th>
 <th style="text-align:right;">
+
 P.value
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 Schooling
+
 </td>
 <td style="text-align:right;">
+
 1.1536719
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Total.expenditure
+
 </td>
 <td style="text-align:right;">
+
 0.0807905
+
 </td>
 <td style="text-align:right;">
+
 0.007048
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Diphtheria
+
 </td>
 <td style="text-align:right;">
+
 0.0296843
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 BMI
+
 </td>
 <td style="text-align:right;">
+
 0.0268117
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Polio
+
 </td>
 <td style="text-align:right;">
+
 0.0222775
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 GDP
+
 </td>
 <td style="text-align:right;">
+
 0.0000444
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 </tbody>
@@ -3043,62 +5035,90 @@ output.table[-1, ] %>%
 <th style="text-align:left;">
 </th>
 <th style="text-align:right;">
+
 Estimate
+
 </th>
 <th style="text-align:right;">
+
 P.value
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 StatusDeveloping
+
 </td>
 <td style="text-align:right;">
+
 -1.1213082
+
 </td>
 <td style="text-align:right;">
+
 0.000002
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 HIV.AIDS
+
 </td>
 <td style="text-align:right;">
+
 -0.5138597
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Adult.Mortality
+
 </td>
 <td style="text-align:right;">
+
 -0.0221751
+
 </td>
 <td style="text-align:right;">
+
 0.000000
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 infant.deaths
+
 </td>
 <td style="text-align:right;">
+
 -0.0027505
+
 </td>
 <td style="text-align:right;">
+
 0.019346
+
 </td>
 </tr>
 </tbody>
 </table>
 
-## Q2. Investigate the Effectiveness of Health Expenditure
+## 7.2 Q2. Investigate the Effectiveness of Health Expenditure
 
 **Question: Should a country having a lower life expectancy value(\<65)
 increase its healthcare expenditure in order to improve its average
@@ -3122,7 +5142,7 @@ predicting variables constant.
 
 *Reason 2*: Governments in countries with higher life expectancy value
 (\>65) spent more on healthcare statistically than countries with lower
-life expectancy (\<65). (Welch‘s Two Sample t-test: t = -8.6583, df =
+life expectancy (\<65). (Welch’s Two Sample t-test: t = -8.6583, df =
 1821.2, p-value \< 0.001). In short, government of longer lifespan
 countries spend more on healthcare.
 
@@ -3152,7 +5172,7 @@ distance between mean and median in the box plots as well as the overall
 shape of their boxplot. Technically, the boxes of both of the plot are
 symmetrical with mean and median located at the center.
 
-### Welch’s T-test
+### 7.2.1 Welch’s T-test
 
 Performing **Welch’s T test** and the P-value of less than 0.05
 concludes the difference between the both groups is statistically
@@ -3177,7 +5197,7 @@ t.test(df2$Total.expenditure~df2$my.group)
     ## mean in group LifeExp<65 mean in group LifeExp>65 
     ##                 5.391601                 6.183254
 
-## Q3. Infant and Adult Mortality versus Life Expectancy
+## 7.3 Q3. Infant and Adult Mortality versus Life Expectancy
 
 **Question: How does Infant and Adult mortality rates affect life
 expectancy?**
@@ -3210,7 +5230,7 @@ ggplot(df3, aes(y = Life.expectancy, x = myval, color = myvar)) +
 
 ![](life_files/figure-gfm/unnamed-chunk-52-1.png)<!-- -->
 
-## Q4. Correlation of schooling, BMI, and alcohol with Life Expectancy
+## 7.4 Q4. Correlation of schooling, BMI, and alcohol with Life Expectancy
 
 **Question: Does Life Expectancy has positive or negative correlation
 with schooling, BMI, drinking alcohol etc.**
@@ -3221,7 +5241,7 @@ Setting up dataframe for this section.
 df4 <- life.data %>% dplyr::select(Status, Life.expectancy, Alcohol, BMI, Schooling)
 ```
 
-### Correlation
+### 7.4.1 Correlation
 
 Correlation is a measure of association between variables **without
 making any assumption whether life expectancy is dependent on alcohol,
@@ -3243,7 +5263,7 @@ corrplot(cor.data, method = "number", type = "lower")
 
 ![](life_files/figure-gfm/unnamed-chunk-54-1.png)<!-- -->
 
-### PCA
+### 7.4.2 PCA
 
 A PCA and various scatter plots are graphed to act as visual aid.
 
@@ -3289,7 +5309,7 @@ plot_grid(top, bottom, ncol = 1)
 
 ![](life_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
 
-### Regression
+### 7.4.3 Regression
 
 If attempt to describe the dependence of life expectancy on alcohol, BMI
 and schooling, a multiple linear regression model can be created. Output
@@ -3395,7 +5415,7 @@ one unit increase in schooling, life expectancy is expected to increase
 1.15 year on average (Adjusted R-squared: 0.8538, F(15, 2775) = 1087, P
 \< 0.01).
 
-## Q5. Population versus lower life expectancy?
+## 7.5 Q5. Population versus lower life expectancy?
 
 **Question: Do densely populated countries tend to have lower life
 expectancy?**
@@ -3452,7 +5472,7 @@ many variables, as specified in the multiple linear regression model I
 have built previously. Many factors are related and are required to
 understand the variability in the life expectancy.
 
-## Q6. Does developed countries have higher life expectancy?
+## 7.6 Q6. Does developed countries have higher life expectancy?
 
 Getting the data frame:
 
@@ -3463,7 +5483,7 @@ df6 <- df5 %>% dplyr::select(Status, Life.expectancy) %>%
          Country.Status = paste0(Status, " (n=", count, ")")) 
 ```
 
-### Shapiro-Wilk test
+### 7.6.1 Shapiro-Wilk test
 
 The formal normality test is called Shapiro-Wilk test with a null
 hypothesis that the distribution is normal. The shapiro-wilk test
@@ -3534,7 +5554,7 @@ fits a bell curve shape.
     box is symmetrical with the mean and median in the center) but the
     data distribution of developing countries is not normal.
 
-### Wilcoxon Signed Rank Test
+### 7.6.2 Wilcoxon Signed Rank Test
 
 A non-parametric, median-based comparison test is run and concludes that
 the difference between life expectancy in developed and developing
@@ -3552,7 +5572,7 @@ wilcox.test(df6$Life.expectancy~df6$Country.Status, paired = F)
     ## W = 1136054, p-value < 0.00000000000000022
     ## alternative hypothesis: true location shift is not equal to 0
 
-## Q7. What is the impact of Immunization coverage on life Expectancy?
+## 7.7 Q7. What is the impact of Immunization coverage on life Expectancy?
 
 Immunization coverage has positive correlation with life expectancy, as
 indicated by the immunisation of Hepatitis B, Polio, and Diphtheria at
@@ -3602,7 +5622,7 @@ suggests that:
     life expectancy, which means that having an increment in Hepatitis B
     immunisation can lead to zero increment in life expectancy.
 
-## Q8 Longiditudinal Multilevel Modeling with Years
+## 7.8 Q8 Longiditudinal Multilevel Modeling with Years
 
 **Question: How life expectancy has changed over the years in developed
 and developing countries? Please also find the impacts of “Status”,
@@ -3624,55 +5644,73 @@ variables %>% kbl(col.names = "Associated Predictors") %>% kable_styling(full_wi
 <thead>
 <tr>
 <th style="text-align:left;">
+
 Associated Predictors
+
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+
 Status
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Total.expenditure
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Measles
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 HIV.AIDS
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Schooling
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Diphtheria
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Hepatitis.B
+
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+
 Polio
+
 </td>
 </tr>
 </tbody>
 </table>
 
-### Time-transformation
+### 7.8.1 Time-transformation
 
 There are following levels within the variable “year”.
 
@@ -3731,7 +5769,7 @@ glimpse(df8)
     ## $ Hepatitis.B       <dbl> 65, 62, 64, 67, 68, 66, 63, 64, 63, 64, 66, 67, 65, …
     ## $ Polio             <dbl> 6, 58, 62, 67, 68, 66, 63, 64, 63, 58, 58, 5, 41, 36…
 
-### Multicollinearity Check
+### 7.8.2 Multicollinearity Check
 
 One of the assumption of linear mixed models is predictors are free from
 multicollinearity issues. I will be using correlation matrix for this
@@ -3757,7 +5795,7 @@ closed to 0.7 and therefore there might be a risk of multicollinearity.
 df8 <- df8 %>% dplyr::select(-Diphtheria)
 ```
 
-### Visualisation
+### 7.8.3 Visualisation
 
 The purposes of visualisation here are to see confirm visually that,
 
@@ -3806,7 +5844,7 @@ ggplot(df8, aes(x = Year, y = Life.expectancy)) +
     countries. For example, some developing countries have higher values
     for their life expectancy.
 
-### Unconditional Mean Model
+### 7.8.4 Unconditional Mean Model
 
 **Model 1**
 
@@ -3871,7 +5909,7 @@ intervals(model1)
     ##    lower     est.    upper 
     ## 2.611774 2.681770 2.753641
 
-### Unconditional Growth Model
+### 7.8.5 Unconditional Growth Model
 
 **Model 2 - Year as fixed**
 
@@ -4007,7 +6045,7 @@ anova(model3, model2)
 
 </div>
 
-### Conditional Growth Model
+### 7.8.6 Conditional Growth Model
 
 **Model 4 - Year as fixed and random**
 
@@ -4208,7 +6246,7 @@ clustering taking place. Therefore, the researcher who are interested in
 this research question should consider including more variables to
 capture the unexplained information.
 
-# Conclusion
+# 8 CONCLUSION
 
 **Question 1: What are the predicting variables actually affecting the
 life expectancy?**
@@ -4232,7 +6270,7 @@ expectancy will increase by 0.081 (29.5 days) on average, while keep all
 other predicting variables constant (p \< 0.05). Governments in
 countries with higher life expectancy value (\>65) spent more on
 healthcare statistically than countries with lower life expectancy
-(\<65) (Welch‘s Two Sample t-test: t = -8.6583, df = 1821.2, p \<
+(\<65) (Welch’s Two Sample t-test: t = -8.6583, df = 1821.2, p \<
 0.001).
 
 **Question 3: How does Infant and Adult mortality rates affect life
@@ -4317,13 +6355,15 @@ level between 0.16 year and 0.34 year (p \< 0.001).
 
 *Thank you for reading*
 
-# ACKNOWLEDGEMENTS
+# 9 ACKNOWLEDGEMENTS
+
+Many thanks to
 
 The data used in this project was collected from WHO and United Nations
 website with the help of Deeksha Russell and Duan Wang (KUMARRAJARSHI
 2018).
 
-# REFERENCE
+# 10 REFERENCE
 
 Anderson D.R., Sweeney D.J, Williams T.A., 2006, *Essentials of
 Statistics for Business & Economics*, South-Western, Division of Thomson
