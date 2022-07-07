@@ -855,7 +855,9 @@ plot(res.mlr, which = 1:5)
 ```{r}
 model.diag.metrics <- augment(res.mlr) %>% dplyr::select(.fitted, .resid, .hat, .cooksd, .std.resid)
 model.diag.metrics %>% filter(.std.resid <= -3 |
-                              .std.resid >= 3)
+                              .std.resid >= 3) %>% 
+    kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 
 ```
   

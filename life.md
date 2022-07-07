@@ -297,383 +297,27 @@ Schooling
 <tr>
 <td style="text-align:left;">
 
-Mongolia
+Norway
 
 </td>
 <td style="text-align:right;">
 
-2007
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-65.9
-
-</td>
-<td style="text-align:right;">
-
-26
-
-</td>
-<td style="text-align:right;">
-
-2
-
-</td>
-<td style="text-align:right;">
-
-3.79
-
-</td>
-<td style="text-align:right;">
-
-126.698109
-
-</td>
-<td style="text-align:right;">
-
-98
-
-</td>
-<td style="text-align:right;">
-
-12
-
-</td>
-<td style="text-align:right;">
-
-43.9
-
-</td>
-<td style="text-align:right;">
-
-2
-
-</td>
-<td style="text-align:right;">
-
-99
-
-</td>
-<td style="text-align:right;">
-
-5.60
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-1634.81431
-
-</td>
-<td style="text-align:right;">
-
-259167
-
-</td>
-<td style="text-align:right;">
-
-2.2
-
-</td>
-<td style="text-align:right;">
-
-2.4
-
-</td>
-<td style="text-align:right;">
-
-0.661
-
-</td>
-<td style="text-align:right;">
-
-13.0
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Thailand
-
-</td>
-<td style="text-align:right;">
-
-2003
+2014
 
 </td>
 <td style="text-align:left;">
 
-Developing
+Developed
 
 </td>
 <td style="text-align:right;">
 
-71.7
+81.6
 
 </td>
 <td style="text-align:right;">
 
-189
-
-</td>
-<td style="text-align:right;">
-
-15
-
-</td>
-<td style="text-align:right;">
-
-6.14
-
-</td>
-<td style="text-align:right;">
-
-282.836461
-
-</td>
-<td style="text-align:right;">
-
-96
-
-</td>
-<td style="text-align:right;">
-
-4519
-
-</td>
-<td style="text-align:right;">
-
-2.9
-
-</td>
-<td style="text-align:right;">
-
-18
-
-</td>
-<td style="text-align:right;">
-
-98
-
-</td>
-<td style="text-align:right;">
-
-3.58
-
-</td>
-<td style="text-align:right;">
-
-98
-
-</td>
-<td style="text-align:right;">
-
-0.6
-
-</td>
-<td style="text-align:right;">
-
-2358.93629
-
-</td>
-<td style="text-align:right;">
-
-64554952
-
-</td>
-<td style="text-align:right;">
-
-9.1
-
-</td>
-<td style="text-align:right;">
-
-9.3
-
-</td>
-<td style="text-align:right;">
-
-0.666
-
-</td>
-<td style="text-align:right;">
-
-11.8
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Niger
-
-</td>
-<td style="text-align:right;">
-
-2013
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-69.0
-
-</td>
-<td style="text-align:right;">
-
-227
-
-</td>
-<td style="text-align:right;">
-
-49
-
-</td>
-<td style="text-align:right;">
-
-0.01
-
-</td>
-<td style="text-align:right;">
-
-31.502432
-
-</td>
-<td style="text-align:right;">
-
-67
-
-</td>
-<td style="text-align:right;">
-
-1224
-
-</td>
-<td style="text-align:right;">
-
-18.5
-
-</td>
-<td style="text-align:right;">
-
-89
-
-</td>
-<td style="text-align:right;">
-
-56
-
-</td>
-<td style="text-align:right;">
-
-5.90
-
-</td>
-<td style="text-align:right;">
-
-67
-
-</td>
-<td style="text-align:right;">
-
-0.6
-
-</td>
-<td style="text-align:right;">
-
-416.14838
-
-</td>
-<td style="text-align:right;">
-
-18426372
-
-</td>
-<td style="text-align:right;">
-
-1.0
-
-</td>
-<td style="text-align:right;">
-
-9.9
-
-</td>
-<td style="text-align:right;">
-
-0.341
-
-</td>
-<td style="text-align:right;">
-
-5.3
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Chile
-
-</td>
-<td style="text-align:right;">
-
-2008
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-79.6
-
-</td>
-<td style="text-align:right;">
-
-88
-
-</td>
-<td style="text-align:right;">
-
-2
-
-</td>
-<td style="text-align:right;">
-
-7.31
-
-</td>
-<td style="text-align:right;">
-
-241.553338
-
-</td>
-<td style="text-align:right;">
-
-95
+61
 
 </td>
 <td style="text-align:right;">
@@ -683,27 +327,47 @@ Developing
 </td>
 <td style="text-align:right;">
 
-59.3
+6.06
 
 </td>
 <td style="text-align:right;">
 
-2
+177.638288
 
 </td>
 <td style="text-align:right;">
 
-95
+NA
 
 </td>
 <td style="text-align:right;">
 
-6.87
+3
 
 </td>
 <td style="text-align:right;">
 
-95
+6.8
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+93
+
+</td>
+<td style="text-align:right;">
+
+9.72
+
+</td>
+<td style="text-align:right;">
+
+93
 
 </td>
 <td style="text-align:right;">
@@ -713,39 +377,151 @@ Developing
 </td>
 <td style="text-align:right;">
 
-1781.36680
+975.49856
 
 </td>
 <td style="text-align:right;">
 
-16661942
+5137232
 
 </td>
 <td style="text-align:right;">
 
-0.9
+0.8
 
 </td>
 <td style="text-align:right;">
 
-0.9
+0.7
 
 </td>
 <td style="text-align:right;">
 
-0.804
+0.945
 
 </td>
 <td style="text-align:right;">
 
-15.2
+17.7
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Equatorial Guinea
+Lebanon
+
+</td>
+<td style="text-align:right;">
+
+2001
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.0
+
+</td>
+<td style="text-align:right;">
+
+11
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+2.19
+
+</td>
+<td style="text-align:right;">
+
+510.603517
+
+</td>
+<td style="text-align:right;">
+
+8
+
+</td>
+<td style="text-align:right;">
+
+8
+
+</td>
+<td style="text-align:right;">
+
+58.6
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+8
+
+</td>
+<td style="text-align:right;">
+
+1.90
+
+</td>
+<td style="text-align:right;">
+
+8
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+5253.12260
+
+</td>
+<td style="text-align:right;">
+
+3359859
+
+</td>
+<td style="text-align:right;">
+
+4.9
+
+</td>
+<td style="text-align:right;">
+
+4.7
+
+</td>
+<td style="text-align:right;">
+
+0.000
+
+</td>
+<td style="text-align:right;">
+
+15.0
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Namibia
 
 </td>
 <td style="text-align:right;">
@@ -760,17 +536,17 @@ Developing
 </td>
 <td style="text-align:right;">
 
-58.2
+65.8
 
 </td>
 <td style="text-align:right;">
 
-32
+248
 
 </td>
 <td style="text-align:right;">
 
-3
+2
 
 </td>
 <td style="text-align:right;">
@@ -785,27 +561,27 @@ NA
 </td>
 <td style="text-align:right;">
 
-16
+92
 
 </td>
 <td style="text-align:right;">
 
-1250
+212
 
 </td>
 <td style="text-align:right;">
 
-24.5
+35.7
 
 </td>
 <td style="text-align:right;">
 
-4
+3
 
 </td>
 <td style="text-align:right;">
 
-17
+92
 
 </td>
 <td style="text-align:right;">
@@ -815,54 +591,54 @@ NA
 </td>
 <td style="text-align:right;">
 
-16
+92
 
 </td>
 <td style="text-align:right;">
 
-4.2
+2.1
 
 </td>
 <td style="text-align:right;">
 
-1347.31257
+4737.66996
 
 </td>
 <td style="text-align:right;">
 
-1175389
+2425561
 
 </td>
 <td style="text-align:right;">
 
-8.4
+8.2
 
 </td>
 <td style="text-align:right;">
 
-8.3
+8.1
 
 </td>
 <td style="text-align:right;">
 
-0.582
+0.637
 
 </td>
 <td style="text-align:right;">
 
-9.2
+11.7
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Gambia
+Jordan
 
 </td>
 <td style="text-align:right;">
 
-2013
+2005
 
 </td>
 <td style="text-align:left;">
@@ -872,104 +648,216 @@ Developing
 </td>
 <td style="text-align:right;">
 
-66.0
+72.4
 
 </td>
 <td style="text-align:right;">
 
-266
+127
 
 </td>
 <td style="text-align:right;">
 
-3
+4
 
 </td>
 <td style="text-align:right;">
 
-0.01
+0.55
 
 </td>
 <td style="text-align:right;">
 
-0.000000
+27.442523
 
 </td>
 <td style="text-align:right;">
 
-97
+95
 
 </td>
 <td style="text-align:right;">
 
-0
+28
 
 </td>
 <td style="text-align:right;">
 
-26.0
+57.8
 
 </td>
 <td style="text-align:right;">
 
-5
+4
 
 </td>
 <td style="text-align:right;">
 
-96
+95
 
 </td>
 <td style="text-align:right;">
 
-6.49
+8.88
 
 </td>
 <td style="text-align:right;">
 
-97
+95
 
 </td>
 <td style="text-align:right;">
 
-1.6
+0.1
 
 </td>
 <td style="text-align:right;">
 
-NA
+223.83787
 
 </td>
 <td style="text-align:right;">
 
-NA
+5714111
 
 </td>
 <td style="text-align:right;">
 
-7.6
+3.9
 
 </td>
 <td style="text-align:right;">
 
-7.5
+3.8
 
 </td>
 <td style="text-align:right;">
 
-0.445
+0.730
 
 </td>
 <td style="text-align:right;">
 
-8.9
+13.8
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Bolivia (Plurinational State of)
+Colombia
+
+</td>
+<td style="text-align:right;">
+
+2011
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+74.2
+
+</td>
+<td style="text-align:right;">
+
+144
+
+</td>
+<td style="text-align:right;">
+
+12
+
+</td>
+<td style="text-align:right;">
+
+4.37
+
+</td>
+<td style="text-align:right;">
+
+184.307362
+
+</td>
+<td style="text-align:right;">
+
+85
+
+</td>
+<td style="text-align:right;">
+
+6
+
+</td>
+<td style="text-align:right;">
+
+55.0
+
+</td>
+<td style="text-align:right;">
+
+14
+
+</td>
+<td style="text-align:right;">
+
+85
+
+</td>
+<td style="text-align:right;">
+
+6.64
+
+</td>
+<td style="text-align:right;">
+
+85
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+7227.73968
+
+</td>
+<td style="text-align:right;">
+
+4646646
+
+</td>
+<td style="text-align:right;">
+
+2.2
+
+</td>
+<td style="text-align:right;">
+
+2.0
+
+</td>
+<td style="text-align:right;">
+
+0.700
+
+</td>
+<td style="text-align:right;">
+
+13.0
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Serbia
 
 </td>
 <td style="text-align:right;">
@@ -984,32 +872,32 @@ Developing
 </td>
 <td style="text-align:right;">
 
-69.8
+74.9
 
 </td>
 <td style="text-align:right;">
 
-194
+126
 
 </td>
 <td style="text-align:right;">
 
-8
+1
 
 </td>
 <td style="text-align:right;">
 
-3.89
+9.38
 
 </td>
 <td style="text-align:right;">
 
-0.000000
+742.510971
 
 </td>
 <td style="text-align:right;">
 
-93
+97
 
 </td>
 <td style="text-align:right;">
@@ -1019,27 +907,27 @@ Developing
 </td>
 <td style="text-align:right;">
 
-5.6
+58.3
 
 </td>
 <td style="text-align:right;">
 
-11
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-5.56
+1
 
 </td>
 <td style="text-align:right;">
 
 93
+
+</td>
+<td style="text-align:right;">
+
+9.89
+
+</td>
+<td style="text-align:right;">
+
+91
 
 </td>
 <td style="text-align:right;">
@@ -1049,44 +937,44 @@ Developing
 </td>
 <td style="text-align:right;">
 
-NA
+5659.38240
 
 </td>
 <td style="text-align:right;">
 
-NA
+719977
 
 </td>
 <td style="text-align:right;">
 
-1.2
+2.1
 
 </td>
 <td style="text-align:right;">
 
-1.1
+2.1
 
 </td>
 <td style="text-align:right;">
 
-0.655
+0.767
 
 </td>
 <td style="text-align:right;">
 
-13.8
+14.0
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Chad
+Mauritius
 
 </td>
 <td style="text-align:right;">
 
-2007
+2005
 
 </td>
 <td style="text-align:left;">
@@ -1096,109 +984,109 @@ Developing
 </td>
 <td style="text-align:right;">
 
-49.4
+72.1
 
 </td>
 <td style="text-align:right;">
 
-394
+168
 
 </td>
 <td style="text-align:right;">
 
-46
+0
 
 </td>
 <td style="text-align:right;">
 
-0.42
+3.94
 
 </td>
 <td style="text-align:right;">
 
-5.962923
+479.923408
 
 </td>
 <td style="text-align:right;">
 
-NA
+97
 
 </td>
 <td style="text-align:right;">
 
-441
+7
 
 </td>
 <td style="text-align:right;">
 
-16.1
+28.0
 
 </td>
 <td style="text-align:right;">
 
-80
+0
 
 </td>
 <td style="text-align:right;">
 
-38
+97
 
 </td>
 <td style="text-align:right;">
 
-3.35
+4.47
 
 </td>
 <td style="text-align:right;">
 
-28
+97
 
 </td>
 <td style="text-align:right;">
 
-4.9
+0.1
 
 </td>
 <td style="text-align:right;">
 
-81.68388
+5116.45424
 
 </td>
 <td style="text-align:right;">
 
-177578
+1228254
 
 </td>
 <td style="text-align:right;">
 
-1.0
+7.7
 
 </td>
 <td style="text-align:right;">
 
-1.0
+7.6
 
 </td>
 <td style="text-align:right;">
 
-0.306
+0.704
 
 </td>
 <td style="text-align:right;">
 
-5.7
+13.0
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Kyrgyzstan
+Belarus
 
 </td>
 <td style="text-align:right;">
 
-2000
+2010
 
 </td>
 <td style="text-align:left;">
@@ -1208,22 +1096,134 @@ Developing
 </td>
 <td style="text-align:right;">
 
-66.6
+73.0
 
 </td>
 <td style="text-align:right;">
 
-225
+222
 
 </td>
 <td style="text-align:right;">
 
-4
+0
 
 </td>
 <td style="text-align:right;">
 
-2.13
+14.44
+
+</td>
+<td style="text-align:right;">
+
+8.494095
+
+</td>
+<td style="text-align:right;">
+
+96
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+59.3
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+5.55
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+63.38877
+
+</td>
+<td style="text-align:right;">
+
+949583
+
+</td>
+<td style="text-align:right;">
+
+2.0
+
+</td>
+<td style="text-align:right;">
+
+2.2
+
+</td>
+<td style="text-align:right;">
+
+0.780
+
+</td>
+<td style="text-align:right;">
+
+15.5
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Dominican Republic
+
+</td>
+<td style="text-align:right;">
+
+2015
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.9
+
+</td>
+<td style="text-align:right;">
+
+152
+
+</td>
+<td style="text-align:right;">
+
+6
+
+</td>
+<td style="text-align:right;">
+
+NA
 
 </td>
 <td style="text-align:right;">
@@ -1233,42 +1233,27 @@ Developing
 </td>
 <td style="text-align:right;">
 
-44
+81
 
 </td>
 <td style="text-align:right;">
 
-16
+0
 
 </td>
 <td style="text-align:right;">
 
-35.6
+58.9
 
 </td>
 <td style="text-align:right;">
 
-5
+7
 
 </td>
 <td style="text-align:right;">
 
-99
-
-</td>
-<td style="text-align:right;">
-
-4.68
-
-</td>
-<td style="text-align:right;">
-
-99
-
-</td>
-<td style="text-align:right;">
-
-0.1
+87
 
 </td>
 <td style="text-align:right;">
@@ -1278,54 +1263,69 @@ NA
 </td>
 <td style="text-align:right;">
 
-NA
+85
 
 </td>
 <td style="text-align:right;">
 
-3.6
+0.3
 
 </td>
 <td style="text-align:right;">
 
-3.6
+6468.47165
 
 </td>
 <td style="text-align:right;">
 
-0.586
+1528394
 
 </td>
 <td style="text-align:right;">
 
-11.4
+3.3
+
+</td>
+<td style="text-align:right;">
+
+3.2
+
+</td>
+<td style="text-align:right;">
+
+0.718
+
+</td>
+<td style="text-align:right;">
+
+13.2
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Namibia
+Germany
 
 </td>
 <td style="text-align:right;">
 
-2002
+2000
 
 </td>
 <td style="text-align:left;">
 
-Developing
+Developed
 
 </td>
 <td style="text-align:right;">
 
-55.7
+78.0
 
 </td>
 <td style="text-align:right;">
 
-452
+95
 
 </td>
 <td style="text-align:right;">
@@ -1335,27 +1335,27 @@ Developing
 </td>
 <td style="text-align:right;">
 
-5.09
+12.91
 
 </td>
 <td style="text-align:right;">
 
-203.732289
+4238.540035
 
 </td>
 <td style="text-align:right;">
 
-NA
+84
 
 </td>
 <td style="text-align:right;">
 
-1278
+0
 
 </td>
 <td style="text-align:right;">
 
-25.8
+55.1
 
 </td>
 <td style="text-align:right;">
@@ -1365,52 +1365,52 @@ NA
 </td>
 <td style="text-align:right;">
 
-78
+94
 
 </td>
 <td style="text-align:right;">
 
-6.17
+1.10
 
 </td>
 <td style="text-align:right;">
 
-77
+9
 
 </td>
 <td style="text-align:right;">
 
-24.6
+0.1
 
 </td>
 <td style="text-align:right;">
 
-1713.47594
+23718.74670
 
 </td>
 <td style="text-align:right;">
 
-1962147
+8221158
 
 </td>
 <td style="text-align:right;">
 
-14.7
+1.2
 
 </td>
 <td style="text-align:right;">
 
-14.8
+1.2
 
 </td>
 <td style="text-align:right;">
 
-0.556
+0.855
 
 </td>
 <td style="text-align:right;">
 
-11.8
+16.2
 
 </td>
 </tr>
@@ -4720,16 +4720,800 @@ plot(res.mlr, which = 1:5)
 ``` r
 model.diag.metrics <- augment(res.mlr) %>% dplyr::select(.fitted, .resid, .hat, .cooksd, .std.resid)
 model.diag.metrics %>% filter(.std.resid <= -3 |
-                              .std.resid >= 3)
+                              .std.resid >= 3) %>% 
+    kbl() %>% 
+  kable_styling(bootstrap_options = c("bordered"))
 ```
 
-<div data-pagedtable="false">
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[".fitted"],"name":[1],"type":["dbl"],"align":["right"]},{"label":[".resid"],"name":[2],"type":["dbl"],"align":["right"]},{"label":[".hat"],"name":[3],"type":["dbl"],"align":["right"]},{"label":[".cooksd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":[".std.resid"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"59.50363","2":"-13.80363","3":"0.005986491","4":"0.004302873","5":"-3.381031"},{"1":"57.58831","2":"-12.28831","3":"0.009230709","4":"0.005292472","5":"-3.014797"},{"1":"58.74472","2":"15.85528","3":"0.015464175","4":"0.014948425","5":"3.902205"},{"1":"56.46936","2":"17.93064","3":"0.013618969","4":"0.016773754","5":"4.408850"},{"1":"56.99407","2":"17.20593","3":"0.014171757","4":"0.016090210","5":"4.231844"},{"1":"58.26555","2":"15.73445","3":"0.014263284","4":"0.013545188","5":"3.870109"},{"1":"58.33738","2":"15.46262","3":"0.014483516","4":"0.013289122","5":"3.803672"},{"1":"58.12256","2":"15.47744","3":"0.014116775","4":"0.012967809","5":"3.806609"},{"1":"58.32929","2":"16.27071","3":"0.012250890","4":"0.012389996","5":"3.997929"},{"1":"67.04915","2":"-14.24915","3":"0.001937917","4":"0.001472252","5":"-3.483071"},{"1":"54.34012","2":"-18.04012","3":"0.010741858","4":"0.013314448","5":"-4.429316"},{"1":"64.93418","2":"-12.63418","3":"0.007808775","4":"0.004719219","5":"-3.097428"},{"1":"64.72020","2":"-14.72020","3":"0.004134083","4":"0.003366581","5":"-3.602179"},{"1":"57.47184","2":"16.02816","3":"0.011921551","4":"0.011692329","5":"3.937675"},{"1":"57.24180","2":"16.15820","3":"0.011441661","4":"0.011393426","5":"3.968659"},{"1":"57.19590","2":"16.10410","3":"0.011338419","4":"0.011212801","5":"3.955165"},{"1":"57.05414","2":"15.94586","3":"0.010942589","4":"0.010601247","5":"3.915518"},{"1":"68.52088","2":"-14.52088","3":"0.004879685","4":"0.003872673","5":"-3.554735"},{"1":"63.51611","2":"-18.21611","3":"0.004547012","4":"0.005675184","5":"-4.458588"},{"1":"64.19961","2":"-20.89961","3":"0.006296331","4":"0.010380878","5":"-5.119903"},{"1":"55.41965","2":"-13.11965","3":"0.006946440","4":"0.004519032","5":"-3.215051"},{"1":"63.93310","2":"-22.43310","3":"0.005981545","4":"0.011354995","5":"-5.494700"},{"1":"53.07235","2":"-14.07235","3":"0.011285007","4":"0.008520728","5":"-3.456074"},{"1":"33.13501","2":"13.26499","3":"0.033804105","4":"0.023748557","5":"3.295539"},{"1":"34.07662","2":"13.02338","3":"0.032343966","4":"0.021836485","5":"3.233071"},{"1":"35.96729","2":"12.43271","3":"0.029227833","4":"0.017868074","5":"3.081479"},{"1":"59.64470","2":"-13.24470","3":"0.008181235","4":"0.005437793","5":"-3.247716"},{"1":"58.56055","2":"-13.06055","3":"0.009299937","4":"0.006024241","5":"-3.204367"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+.fitted
 
-</div>
+</th>
+<th style="text-align:right;">
+
+.resid
+
+</th>
+<th style="text-align:right;">
+
+.hat
+
+</th>
+<th style="text-align:right;">
+
+.cooksd
+
+</th>
+<th style="text-align:right;">
+
+.std.resid
+
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+
+59.50363
+
+</td>
+<td style="text-align:right;">
+
+-13.80363
+
+</td>
+<td style="text-align:right;">
+
+0.0059865
+
+</td>
+<td style="text-align:right;">
+
+0.0043029
+
+</td>
+<td style="text-align:right;">
+
+-3.381031
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+57.58831
+
+</td>
+<td style="text-align:right;">
+
+-12.28831
+
+</td>
+<td style="text-align:right;">
+
+0.0092307
+
+</td>
+<td style="text-align:right;">
+
+0.0052925
+
+</td>
+<td style="text-align:right;">
+
+-3.014797
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+58.74472
+
+</td>
+<td style="text-align:right;">
+
+15.85528
+
+</td>
+<td style="text-align:right;">
+
+0.0154642
+
+</td>
+<td style="text-align:right;">
+
+0.0149484
+
+</td>
+<td style="text-align:right;">
+
+3.902205
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+56.46936
+
+</td>
+<td style="text-align:right;">
+
+17.93064
+
+</td>
+<td style="text-align:right;">
+
+0.0136190
+
+</td>
+<td style="text-align:right;">
+
+0.0167738
+
+</td>
+<td style="text-align:right;">
+
+4.408850
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+56.99407
+
+</td>
+<td style="text-align:right;">
+
+17.20593
+
+</td>
+<td style="text-align:right;">
+
+0.0141718
+
+</td>
+<td style="text-align:right;">
+
+0.0160902
+
+</td>
+<td style="text-align:right;">
+
+4.231844
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+58.26555
+
+</td>
+<td style="text-align:right;">
+
+15.73445
+
+</td>
+<td style="text-align:right;">
+
+0.0142633
+
+</td>
+<td style="text-align:right;">
+
+0.0135452
+
+</td>
+<td style="text-align:right;">
+
+3.870109
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+58.33738
+
+</td>
+<td style="text-align:right;">
+
+15.46262
+
+</td>
+<td style="text-align:right;">
+
+0.0144835
+
+</td>
+<td style="text-align:right;">
+
+0.0132891
+
+</td>
+<td style="text-align:right;">
+
+3.803672
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+58.12256
+
+</td>
+<td style="text-align:right;">
+
+15.47744
+
+</td>
+<td style="text-align:right;">
+
+0.0141168
+
+</td>
+<td style="text-align:right;">
+
+0.0129678
+
+</td>
+<td style="text-align:right;">
+
+3.806609
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+58.32929
+
+</td>
+<td style="text-align:right;">
+
+16.27071
+
+</td>
+<td style="text-align:right;">
+
+0.0122509
+
+</td>
+<td style="text-align:right;">
+
+0.0123900
+
+</td>
+<td style="text-align:right;">
+
+3.997929
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+67.04915
+
+</td>
+<td style="text-align:right;">
+
+-14.24915
+
+</td>
+<td style="text-align:right;">
+
+0.0019379
+
+</td>
+<td style="text-align:right;">
+
+0.0014723
+
+</td>
+<td style="text-align:right;">
+
+-3.483071
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+54.34012
+
+</td>
+<td style="text-align:right;">
+
+-18.04012
+
+</td>
+<td style="text-align:right;">
+
+0.0107419
+
+</td>
+<td style="text-align:right;">
+
+0.0133144
+
+</td>
+<td style="text-align:right;">
+
+-4.429316
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+64.93418
+
+</td>
+<td style="text-align:right;">
+
+-12.63418
+
+</td>
+<td style="text-align:right;">
+
+0.0078088
+
+</td>
+<td style="text-align:right;">
+
+0.0047192
+
+</td>
+<td style="text-align:right;">
+
+-3.097428
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+64.72020
+
+</td>
+<td style="text-align:right;">
+
+-14.72020
+
+</td>
+<td style="text-align:right;">
+
+0.0041341
+
+</td>
+<td style="text-align:right;">
+
+0.0033666
+
+</td>
+<td style="text-align:right;">
+
+-3.602179
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+57.47184
+
+</td>
+<td style="text-align:right;">
+
+16.02816
+
+</td>
+<td style="text-align:right;">
+
+0.0119216
+
+</td>
+<td style="text-align:right;">
+
+0.0116923
+
+</td>
+<td style="text-align:right;">
+
+3.937675
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+57.24180
+
+</td>
+<td style="text-align:right;">
+
+16.15820
+
+</td>
+<td style="text-align:right;">
+
+0.0114417
+
+</td>
+<td style="text-align:right;">
+
+0.0113934
+
+</td>
+<td style="text-align:right;">
+
+3.968659
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+57.19590
+
+</td>
+<td style="text-align:right;">
+
+16.10410
+
+</td>
+<td style="text-align:right;">
+
+0.0113384
+
+</td>
+<td style="text-align:right;">
+
+0.0112128
+
+</td>
+<td style="text-align:right;">
+
+3.955165
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+57.05414
+
+</td>
+<td style="text-align:right;">
+
+15.94586
+
+</td>
+<td style="text-align:right;">
+
+0.0109426
+
+</td>
+<td style="text-align:right;">
+
+0.0106012
+
+</td>
+<td style="text-align:right;">
+
+3.915518
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+68.52088
+
+</td>
+<td style="text-align:right;">
+
+-14.52088
+
+</td>
+<td style="text-align:right;">
+
+0.0048797
+
+</td>
+<td style="text-align:right;">
+
+0.0038727
+
+</td>
+<td style="text-align:right;">
+
+-3.554735
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+63.51611
+
+</td>
+<td style="text-align:right;">
+
+-18.21611
+
+</td>
+<td style="text-align:right;">
+
+0.0045470
+
+</td>
+<td style="text-align:right;">
+
+0.0056752
+
+</td>
+<td style="text-align:right;">
+
+-4.458588
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+64.19961
+
+</td>
+<td style="text-align:right;">
+
+-20.89961
+
+</td>
+<td style="text-align:right;">
+
+0.0062963
+
+</td>
+<td style="text-align:right;">
+
+0.0103809
+
+</td>
+<td style="text-align:right;">
+
+-5.119903
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+55.41965
+
+</td>
+<td style="text-align:right;">
+
+-13.11965
+
+</td>
+<td style="text-align:right;">
+
+0.0069464
+
+</td>
+<td style="text-align:right;">
+
+0.0045190
+
+</td>
+<td style="text-align:right;">
+
+-3.215051
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+63.93310
+
+</td>
+<td style="text-align:right;">
+
+-22.43310
+
+</td>
+<td style="text-align:right;">
+
+0.0059815
+
+</td>
+<td style="text-align:right;">
+
+0.0113550
+
+</td>
+<td style="text-align:right;">
+
+-5.494700
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+53.07235
+
+</td>
+<td style="text-align:right;">
+
+-14.07235
+
+</td>
+<td style="text-align:right;">
+
+0.0112850
+
+</td>
+<td style="text-align:right;">
+
+0.0085207
+
+</td>
+<td style="text-align:right;">
+
+-3.456074
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+33.13501
+
+</td>
+<td style="text-align:right;">
+
+13.26499
+
+</td>
+<td style="text-align:right;">
+
+0.0338041
+
+</td>
+<td style="text-align:right;">
+
+0.0237486
+
+</td>
+<td style="text-align:right;">
+
+3.295539
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+34.07662
+
+</td>
+<td style="text-align:right;">
+
+13.02338
+
+</td>
+<td style="text-align:right;">
+
+0.0323440
+
+</td>
+<td style="text-align:right;">
+
+0.0218365
+
+</td>
+<td style="text-align:right;">
+
+3.233071
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+35.96729
+
+</td>
+<td style="text-align:right;">
+
+12.43271
+
+</td>
+<td style="text-align:right;">
+
+0.0292278
+
+</td>
+<td style="text-align:right;">
+
+0.0178681
+
+</td>
+<td style="text-align:right;">
+
+3.081479
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+59.64470
+
+</td>
+<td style="text-align:right;">
+
+-13.24470
+
+</td>
+<td style="text-align:right;">
+
+0.0081812
+
+</td>
+<td style="text-align:right;">
+
+0.0054378
+
+</td>
+<td style="text-align:right;">
+
+-3.247716
+
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+
+58.56055
+
+</td>
+<td style="text-align:right;">
+
+-13.06055
+
+</td>
+<td style="text-align:right;">
+
+0.0092999
+
+</td>
+<td style="text-align:right;">
+
+0.0060242
+
+</td>
+<td style="text-align:right;">
+
+-3.204367
+
+</td>
+</tr>
+</tbody>
+</table>
 
 -   Compared to outliers, I will instead look at cook distance metric to
     decide whether a data point should be removed. Applying a rule of
