@@ -17,8 +17,9 @@ Kar Ng
             (Row)](#333-horizontal-na-check-row)
 -   [4 DATA CLEANING](#4-data-cleaning)
     -   [4.1 White Space Trimming and punctuation
-        remove](#41-white-space-trimming-and-punctuation-remove)
-    -   [4.2 Rename Levels](#42-rename-levels)
+        removal](#41-white-space-trimming-and-punctuation-removal)
+    -   [4.2 Country names
+        transformation](#42-country-names-transformation)
     -   [4.3 Factor conversion](#43-factor-conversion)
     -   [4.4 Bag imputation](#44-bag-imputation)
 -   [5 EDA](#5-eda)
@@ -84,21 +85,22 @@ Kar Ng
 
 This project analyses the factors related to life expectancy based on a
 public dataset from WHO. The data was collected between 2000 and 2015.
-Studied factors include development status of a country, GDP,
-population, schooling years, alcohol consumption, BMI, government
-expenditure on health, per-capital expenditure on health, various
-immunisation coverage, thinness disease, measles cases, HIV/AIDS deaths,
-and mortality rate of adult, children, and infants.
+Studied factors included development status of a country (developed
+versus developing), GDP, population, schooling years, alcohol
+consumption, BMI, government expenditure on health, per-capital
+expenditure on health, various immunisation coverage, thinness disease,
+measles cases, HIV/AIDS deaths, and mortality rate of adult, children,
+and infants.
 
 During data processing, data were thoroughly checked (horizontally and
 vertically), cleaned, and transformed. Missing values were imputed using
 Bagged-trees algorithm. During exploratory data analysis (EDA), box and
 whisker plot, histogram, and multiple factor analysis (MFA) were applied
-to explore and mine the overall trends within the data. MFA is an
-unsupervised machine learning technique. 8 questions were designed and
-answered statistically in this project. Depending on the nature of each
-question, multiple analysis techniques were applied such as multiple
-linear regression, correlation matrix, VIF, assumption diagnostic plots,
+to explore and mine the trends within the data. MFA is an unsupervised
+machine learning technique. 8 questions were designed and answered
+statistically in this project. Depending on the nature of each question,
+multiple analysis techniques were applied such as multiple linear
+regression, correlation matrix, VIF, assumption diagnostic plots,
 Welch’s t-test, principal component analysis (PCA), Shapiro-wilk test,
 Wilcoxon signed-rank test, and longitudinal multilevel mixed-effect
 modelling.
@@ -297,231 +299,7 @@ Schooling
 <tr>
 <td style="text-align:left;">
 
-Norway
-
-</td>
-<td style="text-align:right;">
-
-2014
-
-</td>
-<td style="text-align:left;">
-
-Developed
-
-</td>
-<td style="text-align:right;">
-
-81.6
-
-</td>
-<td style="text-align:right;">
-
-61
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-6.06
-
-</td>
-<td style="text-align:right;">
-
-177.638288
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-3
-
-</td>
-<td style="text-align:right;">
-
-6.8
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-9.72
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-975.49856
-
-</td>
-<td style="text-align:right;">
-
-5137232
-
-</td>
-<td style="text-align:right;">
-
-0.8
-
-</td>
-<td style="text-align:right;">
-
-0.7
-
-</td>
-<td style="text-align:right;">
-
-0.945
-
-</td>
-<td style="text-align:right;">
-
-17.7
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Lebanon
-
-</td>
-<td style="text-align:right;">
-
-2001
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-73.0
-
-</td>
-<td style="text-align:right;">
-
-11
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-2.19
-
-</td>
-<td style="text-align:right;">
-
-510.603517
-
-</td>
-<td style="text-align:right;">
-
-8
-
-</td>
-<td style="text-align:right;">
-
-8
-
-</td>
-<td style="text-align:right;">
-
-58.6
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-8
-
-</td>
-<td style="text-align:right;">
-
-1.90
-
-</td>
-<td style="text-align:right;">
-
-8
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-5253.12260
-
-</td>
-<td style="text-align:right;">
-
-3359859
-
-</td>
-<td style="text-align:right;">
-
-4.9
-
-</td>
-<td style="text-align:right;">
-
-4.7
-
-</td>
-<td style="text-align:right;">
-
-0.000
-
-</td>
-<td style="text-align:right;">
-
-15.0
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Namibia
+Myanmar
 
 </td>
 <td style="text-align:right;">
@@ -536,52 +314,17 @@ Developing
 </td>
 <td style="text-align:right;">
 
-65.8
+66.6
 
 </td>
 <td style="text-align:right;">
 
-248
+199
 
 </td>
 <td style="text-align:right;">
 
-2
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-0.000000
-
-</td>
-<td style="text-align:right;">
-
-92
-
-</td>
-<td style="text-align:right;">
-
-212
-
-</td>
-<td style="text-align:right;">
-
-35.7
-
-</td>
-<td style="text-align:right;">
-
-3
-
-</td>
-<td style="text-align:right;">
-
-92
+39
 
 </td>
 <td style="text-align:right;">
@@ -591,201 +334,12 @@ NA
 </td>
 <td style="text-align:right;">
 
-92
+0.00000
 
 </td>
 <td style="text-align:right;">
 
-2.1
-
-</td>
-<td style="text-align:right;">
-
-4737.66996
-
-</td>
-<td style="text-align:right;">
-
-2425561
-
-</td>
-<td style="text-align:right;">
-
-8.2
-
-</td>
-<td style="text-align:right;">
-
-8.1
-
-</td>
-<td style="text-align:right;">
-
-0.637
-
-</td>
-<td style="text-align:right;">
-
-11.7
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Jordan
-
-</td>
-<td style="text-align:right;">
-
-2005
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-72.4
-
-</td>
-<td style="text-align:right;">
-
-127
-
-</td>
-<td style="text-align:right;">
-
-4
-
-</td>
-<td style="text-align:right;">
-
-0.55
-
-</td>
-<td style="text-align:right;">
-
-27.442523
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-28
-
-</td>
-<td style="text-align:right;">
-
-57.8
-
-</td>
-<td style="text-align:right;">
-
-4
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-8.88
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-223.83787
-
-</td>
-<td style="text-align:right;">
-
-5714111
-
-</td>
-<td style="text-align:right;">
-
-3.9
-
-</td>
-<td style="text-align:right;">
-
-3.8
-
-</td>
-<td style="text-align:right;">
-
-0.730
-
-</td>
-<td style="text-align:right;">
-
-13.8
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Colombia
-
-</td>
-<td style="text-align:right;">
-
-2011
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-74.2
-
-</td>
-<td style="text-align:right;">
-
-144
-
-</td>
-<td style="text-align:right;">
-
-12
-
-</td>
-<td style="text-align:right;">
-
-4.37
-
-</td>
-<td style="text-align:right;">
-
-184.307362
-
-</td>
-<td style="text-align:right;">
-
-85
+89
 
 </td>
 <td style="text-align:right;">
@@ -795,57 +349,47 @@ Developing
 </td>
 <td style="text-align:right;">
 
-55.0
+23.8
 
 </td>
 <td style="text-align:right;">
 
-14
+50
 
 </td>
 <td style="text-align:right;">
 
-85
+89
 
 </td>
 <td style="text-align:right;">
 
-6.64
+NA
 
 </td>
 <td style="text-align:right;">
 
-85
+89
 
 </td>
 <td style="text-align:right;">
 
-0.1
+0.3
 
 </td>
 <td style="text-align:right;">
 
-7227.73968
+1194.5914
 
 </td>
 <td style="text-align:right;">
 
-4646646
+5243669
 
 </td>
 <td style="text-align:right;">
 
-2.2
-
-</td>
-<td style="text-align:right;">
-
-2.0
-
-</td>
-<td style="text-align:right;">
-
-0.700
+12.8
 
 </td>
 <td style="text-align:right;">
@@ -853,235 +397,21 @@ Developing
 13.0
 
 </td>
-</tr>
-<tr>
-<td style="text-align:left;">
+<td style="text-align:right;">
 
-Serbia
+0.552
 
 </td>
 <td style="text-align:right;">
 
-2012
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-74.9
-
-</td>
-<td style="text-align:right;">
-
-126
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-9.38
-
-</td>
-<td style="text-align:right;">
-
-742.510971
-
-</td>
-<td style="text-align:right;">
-
-97
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-58.3
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-93
-
-</td>
-<td style="text-align:right;">
-
-9.89
-
-</td>
-<td style="text-align:right;">
-
-91
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-5659.38240
-
-</td>
-<td style="text-align:right;">
-
-719977
-
-</td>
-<td style="text-align:right;">
-
-2.1
-
-</td>
-<td style="text-align:right;">
-
-2.1
-
-</td>
-<td style="text-align:right;">
-
-0.767
-
-</td>
-<td style="text-align:right;">
-
-14.0
+9.1
 
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 
-Mauritius
-
-</td>
-<td style="text-align:right;">
-
-2005
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-72.1
-
-</td>
-<td style="text-align:right;">
-
-168
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-3.94
-
-</td>
-<td style="text-align:right;">
-
-479.923408
-
-</td>
-<td style="text-align:right;">
-
-97
-
-</td>
-<td style="text-align:right;">
-
-7
-
-</td>
-<td style="text-align:right;">
-
-28.0
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-97
-
-</td>
-<td style="text-align:right;">
-
-4.47
-
-</td>
-<td style="text-align:right;">
-
-97
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-5116.45424
-
-</td>
-<td style="text-align:right;">
-
-1228254
-
-</td>
-<td style="text-align:right;">
-
-7.7
-
-</td>
-<td style="text-align:right;">
-
-7.6
-
-</td>
-<td style="text-align:right;">
-
-0.704
-
-</td>
-<td style="text-align:right;">
-
-13.0
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Belarus
+Solomon Islands
 
 </td>
 <td style="text-align:right;">
@@ -1096,144 +426,12 @@ Developing
 </td>
 <td style="text-align:right;">
 
-73.0
+68.3
 
 </td>
 <td style="text-align:right;">
 
-222
-
-</td>
-<td style="text-align:right;">
-
-0
-
-</td>
-<td style="text-align:right;">
-
-14.44
-
-</td>
-<td style="text-align:right;">
-
-8.494095
-
-</td>
-<td style="text-align:right;">
-
-96
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-59.3
-
-</td>
-<td style="text-align:right;">
-
-1
-
-</td>
-<td style="text-align:right;">
-
-99
-
-</td>
-<td style="text-align:right;">
-
-5.55
-
-</td>
-<td style="text-align:right;">
-
-98
-
-</td>
-<td style="text-align:right;">
-
-0.1
-
-</td>
-<td style="text-align:right;">
-
-63.38877
-
-</td>
-<td style="text-align:right;">
-
-949583
-
-</td>
-<td style="text-align:right;">
-
-2.0
-
-</td>
-<td style="text-align:right;">
-
-2.2
-
-</td>
-<td style="text-align:right;">
-
-0.780
-
-</td>
-<td style="text-align:right;">
-
-15.5
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Dominican Republic
-
-</td>
-<td style="text-align:right;">
-
-2015
-
-</td>
-<td style="text-align:left;">
-
-Developing
-
-</td>
-<td style="text-align:right;">
-
-73.9
-
-</td>
-<td style="text-align:right;">
-
-152
-
-</td>
-<td style="text-align:right;">
-
-6
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-0.000000
-
-</td>
-<td style="text-align:right;">
-
-81
+188
 
 </td>
 <td style="text-align:right;">
@@ -1243,109 +441,17 @@ NA
 </td>
 <td style="text-align:right;">
 
-58.9
+1.10
 
 </td>
 <td style="text-align:right;">
 
-7
+29.52080
 
 </td>
 <td style="text-align:right;">
 
-87
-
-</td>
-<td style="text-align:right;">
-
-NA
-
-</td>
-<td style="text-align:right;">
-
-85
-
-</td>
-<td style="text-align:right;">
-
-0.3
-
-</td>
-<td style="text-align:right;">
-
-6468.47165
-
-</td>
-<td style="text-align:right;">
-
-1528394
-
-</td>
-<td style="text-align:right;">
-
-3.3
-
-</td>
-<td style="text-align:right;">
-
-3.2
-
-</td>
-<td style="text-align:right;">
-
-0.718
-
-</td>
-<td style="text-align:right;">
-
-13.2
-
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-
-Germany
-
-</td>
-<td style="text-align:right;">
-
-2000
-
-</td>
-<td style="text-align:left;">
-
-Developed
-
-</td>
-<td style="text-align:right;">
-
-78.0
-
-</td>
-<td style="text-align:right;">
-
-95
-
-</td>
-<td style="text-align:right;">
-
-3
-
-</td>
-<td style="text-align:right;">
-
-12.91
-
-</td>
-<td style="text-align:right;">
-
-4238.540035
-
-</td>
-<td style="text-align:right;">
-
-84
+9
 
 </td>
 <td style="text-align:right;">
@@ -1355,12 +461,12 @@ Developed
 </td>
 <td style="text-align:right;">
 
-55.1
+46.4
 
 </td>
 <td style="text-align:right;">
 
-4
+0
 
 </td>
 <td style="text-align:right;">
@@ -1370,7 +476,7 @@ Developed
 </td>
 <td style="text-align:right;">
 
-1.10
+7.47
 
 </td>
 <td style="text-align:right;">
@@ -1385,17 +491,12 @@ Developed
 </td>
 <td style="text-align:right;">
 
-23718.74670
+1272.4482
 
 </td>
 <td style="text-align:right;">
 
-8221158
-
-</td>
-<td style="text-align:right;">
-
-1.2
+52779
 
 </td>
 <td style="text-align:right;">
@@ -1405,12 +506,913 @@ Developed
 </td>
 <td style="text-align:right;">
 
-0.855
+1.2
 
 </td>
 <td style="text-align:right;">
 
-16.2
+0.492
+
+</td>
+<td style="text-align:right;">
+
+9.3
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Croatia
+
+</td>
+<td style="text-align:right;">
+
+2010
+
+</td>
+<td style="text-align:left;">
+
+Developed
+
+</td>
+<td style="text-align:right;">
+
+76.6
+
+</td>
+<td style="text-align:right;">
+
+16
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+12.10
+
+</td>
+<td style="text-align:right;">
+
+206.88682
+
+</td>
+<td style="text-align:right;">
+
+97
+
+</td>
+<td style="text-align:right;">
+
+7
+
+</td>
+<td style="text-align:right;">
+
+6.6
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+97
+
+</td>
+<td style="text-align:right;">
+
+8.25
+
+</td>
+<td style="text-align:right;">
+
+97
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+1355.7459
+
+</td>
+<td style="text-align:right;">
+
+4417781
+
+</td>
+<td style="text-align:right;">
+
+1.6
+
+</td>
+<td style="text-align:right;">
+
+1.6
+
+</td>
+<td style="text-align:right;">
+
+0.803
+
+</td>
+<td style="text-align:right;">
+
+14.2
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Sri Lanka
+
+</td>
+<td style="text-align:right;">
+
+2002
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.7
+
+</td>
+<td style="text-align:right;">
+
+149
+
+</td>
+<td style="text-align:right;">
+
+5
+
+</td>
+<td style="text-align:right;">
+
+1.62
+
+</td>
+<td style="text-align:right;">
+
+59.63596
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+139
+
+</td>
+<td style="text-align:right;">
+
+15.1
+
+</td>
+<td style="text-align:right;">
+
+5
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+3.89
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+873.1472
+
+</td>
+<td style="text-align:right;">
+
+18939
+
+</td>
+<td style="text-align:right;">
+
+15.4
+
+</td>
+<td style="text-align:right;">
+
+15.6
+
+</td>
+<td style="text-align:right;">
+
+0.699
+
+</td>
+<td style="text-align:right;">
+
+12.6
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Antigua and Barbuda
+
+</td>
+<td style="text-align:right;">
+
+2010
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+75.6
+
+</td>
+<td style="text-align:right;">
+
+138
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+7.84
+
+</td>
+<td style="text-align:right;">
+
+1983.95694
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+44.4
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+5.63
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+12126.8761
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+3.3
+
+</td>
+<td style="text-align:right;">
+
+3.3
+
+</td>
+<td style="text-align:right;">
+
+0.783
+
+</td>
+<td style="text-align:right;">
+
+14.1
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Thailand
+
+</td>
+<td style="text-align:right;">
+
+2009
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+73.7
+
+</td>
+<td style="text-align:right;">
+
+16
+
+</td>
+<td style="text-align:right;">
+
+11
+
+</td>
+<td style="text-align:right;">
+
+5.88
+
+</td>
+<td style="text-align:right;">
+
+547.21014
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+6071
+
+</td>
+<td style="text-align:right;">
+
+26.8
+
+</td>
+<td style="text-align:right;">
+
+12
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+4.11
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+0.3
+
+</td>
+<td style="text-align:right;">
+
+4212.5492
+
+</td>
+<td style="text-align:right;">
+
+66881867
+
+</td>
+<td style="text-align:right;">
+
+8.3
+
+</td>
+<td style="text-align:right;">
+
+8.5
+
+</td>
+<td style="text-align:right;">
+
+0.706
+
+</td>
+<td style="text-align:right;">
+
+13.0
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Uzbekistan
+
+</td>
+<td style="text-align:right;">
+
+2009
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+68.0
+
+</td>
+<td style="text-align:right;">
+
+183
+
+</td>
+<td style="text-align:right;">
+
+21
+
+</td>
+<td style="text-align:right;">
+
+2.56
+
+</td>
+<td style="text-align:right;">
+
+92.81480
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+4.0
+
+</td>
+<td style="text-align:right;">
+
+24
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+6.31
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+0.2
+
+</td>
+<td style="text-align:right;">
+
+1213.2653
+
+</td>
+<td style="text-align:right;">
+
+277674
+
+</td>
+<td style="text-align:right;">
+
+3.1
+
+</td>
+<td style="text-align:right;">
+
+3.1
+
+</td>
+<td style="text-align:right;">
+
+0.651
+
+</td>
+<td style="text-align:right;">
+
+11.8
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Oman
+
+</td>
+<td style="text-align:right;">
+
+2000
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+72.6
+
+</td>
+<td style="text-align:right;">
+
+138
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+0.38
+
+</td>
+<td style="text-align:right;">
+
+62.86658
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+15
+
+</td>
+<td style="text-align:right;">
+
+45.9
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+3.70
+
+</td>
+<td style="text-align:right;">
+
+99
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+861.1860
+
+</td>
+<td style="text-align:right;">
+
+NA
+
+</td>
+<td style="text-align:right;">
+
+7.2
+
+</td>
+<td style="text-align:right;">
+
+6.9
+
+</td>
+<td style="text-align:right;">
+
+0.000
+
+</td>
+<td style="text-align:right;">
+
+10.4
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Algeria
+
+</td>
+<td style="text-align:right;">
+
+2014
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+75.4
+
+</td>
+<td style="text-align:right;">
+
+11
+
+</td>
+<td style="text-align:right;">
+
+21
+
+</td>
+<td style="text-align:right;">
+
+0.01
+
+</td>
+<td style="text-align:right;">
+
+54.23732
+
+</td>
+<td style="text-align:right;">
+
+95
+
+</td>
+<td style="text-align:right;">
+
+0
+
+</td>
+<td style="text-align:right;">
+
+58.4
+
+</td>
+<td style="text-align:right;">
+
+24
+
+</td>
+<td style="text-align:right;">
+
+95
+
+</td>
+<td style="text-align:right;">
+
+7.21
+
+</td>
+<td style="text-align:right;">
+
+95
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+547.8517
+
+</td>
+<td style="text-align:right;">
+
+39113313
+
+</td>
+<td style="text-align:right;">
+
+6.0
+
+</td>
+<td style="text-align:right;">
+
+5.8
+
+</td>
+<td style="text-align:right;">
+
+0.741
+
+</td>
+<td style="text-align:right;">
+
+14.4
+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+
+Israel
+
+</td>
+<td style="text-align:right;">
+
+2009
+
+</td>
+<td style="text-align:left;">
+
+Developing
+
+</td>
+<td style="text-align:right;">
+
+81.5
+
+</td>
+<td style="text-align:right;">
+
+63
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+2.55
+
+</td>
+<td style="text-align:right;">
+
+508.66454
+
+</td>
+<td style="text-align:right;">
+
+98
+
+</td>
+<td style="text-align:right;">
+
+5
+
+</td>
+<td style="text-align:right;">
+
+62.6
+
+</td>
+<td style="text-align:right;">
+
+1
+
+</td>
+<td style="text-align:right;">
+
+96
+
+</td>
+<td style="text-align:right;">
+
+7.46
+
+</td>
+<td style="text-align:right;">
+
+96
+
+</td>
+<td style="text-align:right;">
+
+0.1
+
+</td>
+<td style="text-align:right;">
+
+27795.8767
+
+</td>
+<td style="text-align:right;">
+
+74856
+
+</td>
+<td style="text-align:right;">
+
+1.2
+
+</td>
+<td style="text-align:right;">
+
+1.1
+
+</td>
+<td style="text-align:right;">
+
+0.876
+
+</td>
+<td style="text-align:right;">
+
+15.6
 
 </td>
 </tr>
@@ -3369,7 +3371,7 @@ estimates for these missing cells.
 
 # 4 DATA CLEANING
 
-## 4.1 White Space Trimming and punctuation remove
+## 4.1 White Space Trimming and punctuation removal
 
 Remove leading and/or trailing white spaces in character variables
 “Country” and “Status”.
@@ -3381,7 +3383,7 @@ life <- life %>%
          Status = trimws(Status))
 ```
 
-## 4.2 Rename Levels
+## 4.2 Country names transformation
 
 Replacing spaces in some of the country names by underscore. For example
 “Antigua and Barbuda” to “Antigua_and_Barbuda”. This is to avoid
@@ -5523,13 +5525,15 @@ model.diag.metrics %>% filter(.std.resid <= -3 |
     observations (2938 rows of data in our case) and p is the number of
     predictor variables (15 predictors in our case).
 
-$$
+------------------------------------------------------------------------
 
 4/(n - p - 1) = 4/(2938 - 15 -1) = 0.001368925
 
-$$ \* From following computation, there are 212 data points from the
-dataset (7.215%) are associated with large residuals and removal of them
-may help improve the model.
+------------------------------------------------------------------------
+
+-   From following computation, there are 212 data points from the
+    dataset (7.215%) are associated with large residuals and removal of
+    them may help improve the model.
 
 ``` r
 influential.obs <- model.diag.metrics %>% 

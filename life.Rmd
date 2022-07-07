@@ -21,9 +21,9 @@ always_allow_html: yes
 
 # ABSTRACT
 
-This project analyses the factors related to life expectancy based on a public dataset from WHO. The data was collected between 2000 and 2015. Studied factors include development status of a country, GDP, population, schooling years, alcohol consumption, BMI, government expenditure on health, per-capital expenditure on health, various immunisation coverage, thinness disease, measles cases, HIV/AIDS deaths, and mortality rate of adult, children, and infants.
+This project analyses the factors related to life expectancy based on a public dataset from WHO. The data was collected between 2000 and 2015. Studied factors included development status of a country (developed versus developing), GDP, population, schooling years, alcohol consumption, BMI, government expenditure on health, per-capital expenditure on health, various immunisation coverage, thinness disease, measles cases, HIV/AIDS deaths, and mortality rate of adult, children, and infants.
 
-During data processing, data were thoroughly checked (horizontally and vertically), cleaned, and transformed. Missing values were imputed using Bagged-trees algorithm. During exploratory data analysis (EDA), box and whisker plot, histogram, and multiple factor analysis (MFA) were applied to explore and mine the overall trends within the data. MFA is an unsupervised machine learning technique. 8 questions were designed and answered statistically in this project. Depending on the nature of each question, multiple analysis techniques were applied such as multiple linear regression, correlation matrix, VIF, assumption diagnostic plots, Welch’s t-test, principal component analysis (PCA), Shapiro-wilk test, Wilcoxon signed-rank test, and longitudinal multilevel mixed-effect modelling. 
+During data processing, data were thoroughly checked (horizontally and vertically), cleaned, and transformed. Missing values were imputed using Bagged-trees algorithm. During exploratory data analysis (EDA), box and whisker plot, histogram, and multiple factor analysis (MFA) were applied to explore and mine the trends within the data. MFA is an unsupervised machine learning technique. 8 questions were designed and answered statistically in this project. Depending on the nature of each question, multiple analysis techniques were applied such as multiple linear regression, correlation matrix, VIF, assumption diagnostic plots, Welch’s t-test, principal component analysis (PCA), Shapiro-wilk test, Wilcoxon signed-rank test, and longitudinal multilevel mixed-effect modelling. 
 
 Multiple linear regression model that passed the assumption tests shown that the positively correlated significant variables (p < 0.05) in relation to life expectancy are schooling (Coeff. Est: 1.15), total expenditure by government on health (Coeff. Est: 0.08), BMI (0.03), GDP (Coeff. Est: 0.00004), and the immunisation of Diphtheria (Coeff. Est: 0.03) and Polio (Coeff. Est: 0.02), whereas, the negatively correlated significant variables (p < 0.05) are developing country status (Coeff. Est: -1.12), HIV/AIDS Death rate (Coeff. Est: -0.51), Adult mortality rate (Coeff. Est: -0.02), and infant deaths (Coeff. Est: -0.002) (adjusted R-squared: 0.85, F(15, 2775) = 1087, p < 0.001). A partial analysis from the full model of longitudinal multilevel modeling supports similar outcomes and it detected that if a country has lower initial life expectancy in year-2000, it would have a higher rate in life expectancy improvement across the year between 2000 and 2015 (intercept-slope corr = -0.55). It implies improvement of life expectancy in developing countries that associated with lower life expectancy since 2000 to 2015. The full model also concludes that life expectancy of human increases each year by 0.25 year on average, with a confidence level between 0.16 year and 0.34 year (p < 0.001). 
 
@@ -224,7 +224,7 @@ In this project, I will adopt an imputation method using machine learning algori
 
 # DATA CLEANING
 
-## White Space Trimming and punctuation remove
+## White Space Trimming and punctuation removal
 
 Remove leading and/or trailing white spaces in character variables "Country" and "Status".
 
@@ -237,7 +237,7 @@ life <- life %>%
 ```
 
 
-## Rename Levels
+## Country names transformation
 
 Replacing spaces in some of the country names by underscore. For example "Antigua and Barbuda" to "Antigua_and_Barbuda". This is to avoid complication during imputation using the machine learning technique. 
 
@@ -863,11 +863,12 @@ model.diag.metrics %>% filter(.std.resid <= -3 |
   
   * Compared to outliers, I will instead look at cook distance metric to decide whether a data point should be removed. Applying a rule of thumb established by P. Bruce and Bruce 2017, an observation is considered having a high influence to the model if its Cook's distance is higher than 4/(n - p - 1), where n is the number of observations (2938 rows of data in our case) and p is the number of predictor variables (15 predictors in our case). 
 
-$$
+***
 
 4/(n - p - 1) = 4/(2938 - 15 -1) = 0.001368925
 
-$$
+***
+
   * From following computation, there are 212 data points from the dataset (7.215%) are associated with large residuals and removal of them may help improve the model. 
 
 ```{r}
