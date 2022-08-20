@@ -3,13 +3,15 @@ title: "Life Expectancy Statistical Analysis (WHO)"
 author: "Kar Ng"
 date: '2022-07'
 output: 
+  html_document:
+    toc: true
+    toc_depth: 4
   github_document: 
     toc: true
     toc_depth: 4
     df_print: paged
     number_sections: true
 always_allow_html: yes
-  
 ---
 
 
